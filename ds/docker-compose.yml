@@ -1,0 +1,42 @@
+version: "3.3"
+services:
+  admin:
+    image: openjdk:8u312-jre-slim
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./app:/app
+      - ./upload:/upload
+    command: java -jar admin.jar
+    ports:
+      - 10005:8080
+    environment:
+      - spring.profiles.active=dev
+  redis:
+    restart: unless-stopped
+    image: redis:alpine
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./redis/data:/data
+  db:
+    image: mysql:8.0
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./init-sql:/docker-entrypoint-initdb.d
+      - ./db/logs:/var/log/mysql
+      - ./db/data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: unless-stopped
+    environment:
+      - "MYSQL_ROOT_PASSWORD=toor"
+      - "MYSQL_DATABASE=db"
+      - "TZ=Asia/Shanghai"
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 10003:8080
