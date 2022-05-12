@@ -292,7 +292,7 @@ public interface Constant {
             KVR BEIAN_IPC = new KVR("BEIAN_IPC", "", "网站备案号");
             KVR BEIAN_MIIT = new KVR("BEIAN_MIIT", "https://beian.miit.gov.cn/", "公信部连接");
 
-            KVR JWT_SECRETKEY = new KVR("JWT_SECRETKEY", "JWT_SECRETKEY", "用户登录token加密密钥");
+            KVR JWT_SECRET_KEY = new KVR("JWT_SECRET_KEY", "JWT_SECRET_KEY", "用户登录token加密密钥");
             KVR JWT_EXPIRATION = new KVR("JWT_EXPIRATION", String.valueOf(3600), "jwt过期时间(秒), 默认" + 3600 / 60 + "分钟");
 
             Map<String, KVR> CONF_MAP = new HashMap<>(12);
@@ -308,7 +308,7 @@ public interface Constant {
                 CONF_MAP.put(STATIC_VERSION.getCode(), STATIC_VERSION);
                 CONF_MAP.put(BEIAN_IPC.getCode(), BEIAN_IPC);
                 CONF_MAP.put(BEIAN_MIIT.getCode(), BEIAN_MIIT);
-                CONF_MAP.put(JWT_SECRETKEY.getCode(), JWT_SECRETKEY);
+                CONF_MAP.put(JWT_SECRET_KEY.getCode(), JWT_SECRET_KEY);
                 CONF_MAP.put(JWT_EXPIRATION.getCode(), JWT_EXPIRATION);
             }
         }
