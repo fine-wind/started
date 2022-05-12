@@ -33,8 +33,10 @@ services:
     restart: unless-stopped
     environment:
       - "MYSQL_ROOT_PASSWORD=toor"
-      - "MYSQL_DATABASE=db"
+      - "MYSQL_DATABASE=started"
       - "TZ=Asia/Shanghai"
+    ports:
+      - 3306:3306
   adminer:
     image: adminer
     restart: unless-stopped
