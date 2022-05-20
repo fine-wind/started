@@ -2,14 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.example</groupId>
+        <artifactId>started</artifactId>
+        <version>${revision}</version>
     </parent>
-    <groupId>com.example</groupId>
     <artifactId>admin</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <packaging>jar</packaging>
 
     <name>admin</name>
@@ -18,7 +16,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <started.version>0.0.1</started.version>
 
         <mail.version>1.6.2</mail.version>
     </properties>
@@ -27,7 +24,7 @@
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>started-sys</artifactId>
-            <version>${started.version}</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -76,7 +73,7 @@
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>started-common</artifactId>
-            <version>0.0.2</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
