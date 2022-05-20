@@ -53,7 +53,6 @@ public class RequestFilter implements Filter {
             log.error(e.getMessage());
         }
 
-        // todo 设置当前线程的操作用户
         // 获取请求中的流如何，将取出来的字符串，再次转换成流，然后把它放入到新request对象中。
         // 在chain.doFiler方法中传递新的request对象
         if (requestWrapper == null) {
