@@ -3,13 +3,13 @@
     <parent>
         <groupId>com.example</groupId>
         <artifactId>started</artifactId>
-        <version>0.0.1</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>started-common</artifactId>
     <packaging>jar</packaging>
+    <version>${parent.version}</version>
     <description>started-common</description>
-    <version>0.0.2</version>
 
     <properties>
         <captcha.version>1.6.2</captcha.version>
@@ -90,8 +90,10 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.13</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>
