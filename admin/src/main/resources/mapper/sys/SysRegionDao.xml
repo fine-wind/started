@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.modules.sys.dao.SysRegionDao">
+
+    <select id="getTreeList" resultType="map">
+        select id, pid, name from sys_region order by sort
+    </select>
+
+    <select id="getListByLevel" resultType="com.example.modules.sys.entity.SysRegionEntity">
+        select id, pid, name from sys_region where level = #{value} order by sort
+    </select>
+</mapper>

@@ -1,0 +1,46 @@
+package com.example.admin.logcontroller;
+
+import com.example.common.constant.Constant;
+import com.example.common.data.page.PageData;
+import com.example.common.utils.Result;
+import com.example.modules.log.bo.SysLogErrorBo;
+import com.example.modules.log.dto.SysLogErrorDTO;
+import com.example.modules.log.service.SysLogErrorService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+
+/**
+ * 异常日志
+ *
+ * @since 1.0.0
+ */
+@RestController
+@RequestMapping("sys/log/error")
+@Api(tags = "异常日志")
+public class SysLogErrorController {
+    @Autowired
+    private SysLogErrorService sysLogErrorService;
+
+    @PostMapping("page")
+    @ApiOperation("分页")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = Constant.PAGE.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.PAGE.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.PAGE.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.PAGE.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String")
+    })
+
+    public Result<PageData<SysLogErrorDTO>> page(@ApiIgnore @RequestBody SysLogErrorBo params) {
+        PageData<SysLogErrorDTO> page = sysLogErrorService.page(params);
+
+        return new Result<PageData<SysLogErrorDTO>>().ok(page);
+    }
+
+}

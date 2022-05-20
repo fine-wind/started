@@ -1,0 +1,67 @@
+# 测试环境
+server:
+  port: 802
+
+spring:
+  redis: # redis配置
+    host: redis
+    port: 6379
+    password:  # 密码（默认为空）
+    database: 0
+    timeout: 5s
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  freemarker:
+    enabled: true
+    content-type: text/html
+    suffix: .ftl
+    charset: utf-8
+    template-loader-path: classpath:/templates/,classpath:/,
+  datasource:
+    druid:
+      #MySQL
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: toor
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 6000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      #Oracle需要打开注释
+      #validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        #login-username: admin
+        #login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: false
+        wall:
+          config:
+            multi-statement-allow: true
+# 日志配置
+logging:
+  level:
+    org:
+      mybatis: debug
+    com:
+      example: debug
+  file:
+    name: log/log.log
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
