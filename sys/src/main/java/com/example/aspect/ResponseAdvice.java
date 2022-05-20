@@ -60,7 +60,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         long l2 = System.currentTimeMillis();
 
         if (body instanceof Result) {
-            Result result = (Result) body;
+            Result<?> result = (Result) body;
             /* 刷新token*/
             String token = reToken(request);
             /* 设置返回的cookie*/
@@ -76,7 +76,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         long p1 = l2 - l1;
         /* 刷新token*/
         long p11 = l3 - l2;
-        log.info("翻译 耗时{}ms reToken时间:{}ms {}返回-> {}", p1, p11, request.getURI(), JSON.toJSONString(body));
+        log.info("翻译 耗时{}ms reToken:{}ms {}返回-> {}", p1, p11, request.getURI(), JSON.toJSONString(body));
         return body;
     }
 
