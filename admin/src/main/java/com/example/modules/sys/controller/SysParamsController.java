@@ -81,7 +81,7 @@ public class SysParamsController {
 
         sysParamsService.update(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @DeleteMapping

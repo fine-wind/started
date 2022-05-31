@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 启动后运行数据
+ */
 @Service
 public class CommandLineRunnerTask implements CommandLineRunner {
 
