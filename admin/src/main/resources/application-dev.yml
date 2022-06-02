@@ -1,6 +1,6 @@
 # 测试环境
 server:
-  port: 802
+  port: 80
 
 spring:
   redis: # redis配置
