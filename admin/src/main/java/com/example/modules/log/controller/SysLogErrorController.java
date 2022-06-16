@@ -1,4 +1,4 @@
-package com.example.admin.logcontroller;
+package com.example.modules.log.controller;
 
 import com.example.common.constant.Constant;
 import com.example.common.data.page.PageData;

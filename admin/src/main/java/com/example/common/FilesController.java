@@ -23,7 +23,7 @@ import java.util.Objects;
  * @since 1.0.0 2020-06-23
  */
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/files")
 @Api(tags = "文件信息表")
 @Log4j2
 public class FilesController {

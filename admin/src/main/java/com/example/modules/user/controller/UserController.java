@@ -55,7 +55,7 @@ public class UserController {
         return new Result<>().ok("");
     }
 
-    @PostMapping("/api/user/userInfo")
+    @PostMapping("/user/userInfo")
     @ApiOperation("根据token 获取用户信息")
     // @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Result<SecurityUserDetails> userInfo(@RequestHeader(name = Constant.REQUEST.HEADER.TOKEN, required = false) String token) {
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @Login
-    @PostMapping("/api/user/updateUserInfo")
+    @PostMapping("/user/updateUserInfo")
     @ApiOperation("更新用户信息和头像")
     public Result<?> updateUserInfo(@ApiIgnore @LoginUser SysUserEntity user, @RequestBody UserDto userDTO) {
         //效验数据
@@ -89,13 +89,13 @@ public class UserController {
     /**
      * todo xing 重置密码
      *
-     * @param email
-     * @param confirmpassword
-     * @param newpassword
-     * @param code
-     * @return
+     * @param email           .
+     * @param confirmpassword .
+     * @param newpassword     .
+     * @param code            .
+     * @return .
      */
-    @PostMapping("/api/user/restPwd")
+    @PostMapping("/user/restPwd")
     @ApiOperation("重置密码")
     public Result<?> restPwd(@RequestParam(value = "email") String email,
                              @RequestParam("confirmpassword") String confirmpassword,

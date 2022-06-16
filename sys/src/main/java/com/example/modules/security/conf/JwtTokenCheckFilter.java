@@ -1,20 +1,20 @@
 package com.example.modules.security.conf;
 
-import com.example.cache.redis.RedisUtils;
 import com.example.cache.constant.CacheCommonKeys;
+import com.example.cache.redis.RedisUtils;
 import com.example.common.constant.Constant;
+import com.example.common.security.JwtUtils;
 import com.example.common.utils.CookieUtils;
 import com.example.common.utils.Result;
 import com.example.common.utils.StringUtil;
-import com.example.common.security.JwtUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,12 +26,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @Log4j2
 public class JwtTokenCheckFilter extends OncePerRequestFilter {
 
+    @Autowired
+    org.springframework.boot.autoconfigure.web.ServerProperties serverProperties;
     @Autowired
     RedisUtils cacheService;
 
@@ -50,7 +53,7 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
         String method = request.getMethod();
         String path = request.getRequestURI();
         /* 基本数据 静态文件的判断*/
-        if (pass(method, path)) {
+        if (this.pass(method, path)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -85,6 +88,12 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
      * todo xing jwt过滤需要改成以配置参数的形式控制
      */
     private boolean pass(String method, String path) {
+
+        String contextPath = serverProperties.getServlet().getContextPath();
+        if (path.startsWith(contextPath)) {
+            path = path.substring(contextPath.length());
+        }
+
         boolean post = method.equals(POST.name());
         boolean pass = post && Constant.User.JOIN.equals(path);
         pass = pass || post && Constant.User.LOGIN.equals(path);

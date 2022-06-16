@@ -46,7 +46,7 @@ public class LoginController {
     private SysLogLoginService sysLogLoginService;
 
 
-    @PostMapping("/login")
+    @PostMapping(Constant.User.LOGIN)
     @ApiOperation(value = "登录")
     public Result<?> login(HttpServletRequest request, @RequestBody LoginDTO login) {
         //效验数据

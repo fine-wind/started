@@ -4,6 +4,8 @@ import com.example.cache.constant.CacheCommonKeys;
 import com.example.common.constant.Constant;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static com.example.common.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.*;
 
 /**
@@ -53,8 +55,11 @@ public class SysParamsRedis {
     public long getTokenTime() {
         String key = CacheCommonKeys.getSysParamsKey(JWT_EXPIRATION.getCode());
         Constant.PARAM_CONF.KVR kvr = CONF_MAP.get(key);
+        if (Objects.isNull(kvr)) {
+            return Long.parseLong(JWT_EXPIRATION.getValue());
+        }
+        String value = kvr.getValue();
         try {
-            String value = kvr.getValue();
             return Long.parseLong(value);
         } catch (NumberFormatException ignored) {
             return Long.parseLong(kvr.getDefaultVal());

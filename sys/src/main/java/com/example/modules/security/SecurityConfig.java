@@ -144,7 +144,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowedHeaders(Collections.singletonList("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/*", configuration);
         return source;
     }
 
@@ -162,14 +162,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         );
 
         /* 页面不拦截*/
-        web.ignoring().mvcMatchers("/**/*.html");
+        web.ignoring().mvcMatchers("/*/*.html");
 
         /*静态资源不拦截*/
         web.ignoring().mvcMatchers(
-                "/**/*.js",
-                "/**/*.css",
-                "/img/**",
-                "/static/**",
+                "/*/*.js",
+                "/*/*.css",
+                "/img/*",
+                "/static/*",
                 "/favicon.ico"
         );
     }

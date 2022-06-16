@@ -42,10 +42,10 @@ public interface Constant {
      * 用户相关常量
      */
     interface User {
-        String JOIN = "/api/user/join";
+        String JOIN = "/user/join";
         String WEB_SOCKET = "/ws.io";
-        String LOGIN = "/api/user/logIn";
-        String LOGOUT = "/api/user/logout";
+        String LOGIN = "/user/logIn";
+        String LOGOUT = "/user/logout";
 
         interface Login {
             String USERNAME = "username";
@@ -148,7 +148,7 @@ public interface Constant {
          * @see BaseEntity#getUpdateDate()
          */
         String UPDATE_DATE = "updateDate";
-        String UPDATE_DATE_TABLE = "update_date";
+        // String UPDATE_DATE_TABLE = "update_date";
 
         /**
          * @see BaseEntity#getDelFlag()

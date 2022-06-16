@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0.0 2020-07-06
  */
 @RestController
-@RequestMapping("api/statistics")
+@RequestMapping("/statistics")
 @Api(tags = "统计")
 public class StatisticsController {
 
