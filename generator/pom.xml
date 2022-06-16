@@ -24,7 +24,7 @@
         <commons.io.version>2.7</commons.io.version>
         <commons.configuration.version>1.10</commons.configuration.version>
         <fastjson.version>1.2.58</fastjson.version>
-        <velocity.version>2.2</velocity.version>
+        <velocity.version>2.3</velocity.version>
         <mysql.version>8.0.16</mysql.version>
         <mssql.version>4.0</mssql.version>
         <oracle.version>11.2.0.3</oracle.version>
@@ -76,8 +76,8 @@
             <version>${fastjson.version}</version>
         </dependency>
         <dependency>
-            <artifactId>velocity</artifactId>
             <groupId>org.apache.velocity</groupId>
+            <artifactId>spring-velocity-support</artifactId>
             <version>${velocity.version}</version>
         </dependency>
         <!-- mysql驱动 -->
@@ -123,7 +123,7 @@
         <repository>
             <id>public</id>
             <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://maven.aliyun.com/repository/central</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -133,7 +133,7 @@
         <pluginRepository>
             <id>public</id>
             <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://maven.aliyun.com/repository/central</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
