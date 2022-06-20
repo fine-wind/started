@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 /**
  * 短信服务
@@ -50,7 +51,7 @@ public class SmsController {
     @ApiOperation("保存")
     @LogOperation("保存")
 
-    public Result save(@RequestBody SysSmsDTO dto) {
+    public Result<?> save(@RequestBody SysSmsDTO dto) {
         //校验数据
         if (dto.getPlatform() == Constant.SmsService.ALIYUN.getValue()) {
             //校验阿里云数据
@@ -65,14 +66,14 @@ public class SmsController {
 
         sysSmsService.save(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
 
-    public Result update(@RequestBody SysSmsDTO dto) {
+    public Result<?> update(@RequestBody SysSmsDTO dto) {
         //校验数据
         if (dto.getPlatform() == Constant.SmsService.ALIYUN.getValue()) {
             //校验阿里云数据
@@ -87,7 +88,7 @@ public class SmsController {
 
         sysSmsService.update(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @GetMapping("{id}")
@@ -108,20 +109,20 @@ public class SmsController {
             @ApiImplicitParam(name = "params", value = "参数", paramType = "query", required = true, dataType = "String")
     })
 
-    public Result send(String smsCode, String mobile, String params) {
-        sysSmsService.send(smsCode, mobile, params);
+    public Result<?> send(String smsCode, String mobile, LinkedHashMap<String, String> map) {
+        sysSmsService.send(smsCode, mobile, map);
 
-        return new Result();
+        return new Result<>();
     }
 
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
 
-    public Result delete(@RequestBody Long[] ids) {
+    public Result<?> delete(@RequestBody Long[] ids) {
         sysSmsService.deleteBatchIds(Arrays.asList(ids));
 
-        return new Result();
+        return new Result<>();
     }
 
 }

@@ -1,10 +1,7 @@
 package com.example.modules.message.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.common.data.service.impl.CrudServiceImpl;
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
 import com.example.modules.message.bo.SysMailTemplateBo;
 import com.example.modules.message.dao.SysMailTemplateDao;
 import com.example.modules.message.dto.SysMailTemplateDTO;
@@ -37,15 +34,8 @@ public class SysMailTemplateServiceImpl
     }
 
     @Override
-    public boolean sendMail(Long id, String mailTo, String mailCc, String params) throws Exception {
-        Map<String, Object> map = null;
-        try {
-            if (StringUtils.isNotEmpty(params)) {
-                map = JSON.parseObject(params, Map.class);
-            }
-        } catch (Exception e) {
-            throw new ServerException(UniversalCode.JSON_FORMAT_ERROR);
-        }
+    public boolean sendMail(Long id, String mailTo, String mailCc, Map<String, Object> map) throws Exception {
+
         String[] to = new String[]{mailTo};
         String[] cc = StringUtils.isBlank(mailCc) ? null : new String[]{mailCc};
 

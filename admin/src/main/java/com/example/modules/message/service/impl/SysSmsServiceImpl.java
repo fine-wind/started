@@ -33,13 +33,7 @@ public class SysSmsServiceImpl extends CrudServiceImpl<SysSmsBo, SysSmsDao, SysS
     }
 
     @Override
-    public void send(String smsCode, String mobile, String params) {
-        LinkedHashMap<String, String> map;
-        try {
-            map = JSON.parseObject(params, LinkedHashMap.class);
-        } catch (Exception e) {
-            throw new ServerException(UniversalCode.JSON_FORMAT_ERROR);
-        }
+    public void send(String smsCode, String mobile, LinkedHashMap<String, String> map) {
 
         //短信服务
         AbstractSmsService service = SmsFactory.build(smsCode);

@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(corsConfigurationSource());
 //        http.cors().disable();
         /*禁用csrf跨站请求攻击*/
-        http.csrf().disable();
+        // http.csrf().disable();
 
         http.authorizeRequests()
                 // 设置请求报错403 请求被拒绝

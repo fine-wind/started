@@ -1,8 +1,5 @@
 package com.example.modules.security.oauth2;
 
-import com.example.common.exception.ServerException;
-
-import java.security.MessageDigest;
 import java.util.UUID;
 
 /**
@@ -11,7 +8,7 @@ import java.util.UUID;
 public class TokenGenerator {
 
     public static String generateValue() {
-        return generateValue(UUID.randomUUID().toString());
+        return UUID.randomUUID().toString();
     }
 
     private static final char[] HEX_CODE = "0123456789abcdef".toCharArray();
@@ -28,15 +25,4 @@ public class TokenGenerator {
         return r.toString();
     }
 
-    public static String generateValue(String param) {
-        try {
-            MessageDigest algorithm = MessageDigest.getInstance("MD5");
-            algorithm.reset();
-            algorithm.update(param.getBytes());
-            byte[] messageDigest = algorithm.digest();
-            return toHexString(messageDigest);
-        } catch (Exception e) {
-            throw new ServerException("token invalid", e);
-        }
-    }
 }
