@@ -1,6 +1,5 @@
 package com.example.common.utils.conceal;
 
-import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -30,22 +29,6 @@ public class Md5Utils {
         return hex.toString();
     }
 
-    public static String getMD5String(byte[] bytes) {
-        MessageDigest messagedigest = null;
-        try {
-            messagedigest = MessageDigest.getInstance("MD5");
-
-            messagedigest.update(bytes);
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return bytesToHexString(messagedigest.digest());
-    }
-
-    private static String bufferToHex(byte[] bytes) {
-        return bufferToHex(bytes, 0, bytes.length);
-    }
 
     private static String bufferToHex(byte[] bytes, int m, int n) {
         StringBuilder stringbuffer = new StringBuilder(2 * n);
@@ -82,34 +65,4 @@ public class Md5Utils {
         return stringBuilder.toString();
     }
 
-    /**
-     * 对文件进行MD5
-     *
-     * @param file 文件
-     * @return 文件md5
-     */
-    public static String md5(File file) {
-        FileInputStream fileInputStream = null;
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            fileInputStream = new FileInputStream(file);
-            byte[] buffer = new byte[8192];
-            int length;
-            while ((length = fileInputStream.read(buffer)) != -1) {
-                md5.update(buffer, 0, length);
-            }
-            return bytesToHexString(md5.digest());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (fileInputStream != null) {
-                    fileInputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

@@ -11,7 +11,6 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -283,31 +282,6 @@ public class CommonUtils {
         htmlStr = m_html.replaceAll("");
         //返回文本字符串
         return htmlStr.trim();
-    }
-
-    public static String hryMd5(String string) {
-        return toMd5Code(string.getBytes());
-    }
-
-    private static String toMd5Code(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.reset();
-            md5.update(bytes);
-            byte[] after = md5.digest();
-
-            for (int i = 0; i < after.length; i++) {
-                String hex = Integer.toHexString(0xff & after[i]);
-                if (hex.length() == 1) {
-                    hex = "0" + hex;
-                }
-                sb.append(hex.toUpperCase()).append("-");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return sb.substring(0, sb.length() - 1);
     }
 
     public static boolean isPhone(String phone) {

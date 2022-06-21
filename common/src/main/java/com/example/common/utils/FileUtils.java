@@ -18,12 +18,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
-import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -36,19 +34,12 @@ import java.util.regex.Pattern;
  * @author yqw
  */
 public class FileUtils {
-    /*** 可读权限 ***/
-    public static final int CAN_READ = 1;
-    /*** 可写权限 ***/
-    public static final int CAN_WRITE = 2;
-    /*** 可执行权限 ***/
-    public static final int CAN_EXECUTE = 3;
-
     /**
      * 读取文件到字节数组
      *
-     * @param filePath
-     * @return
-     * @throws IOException
+     * @param filePath .
+     * @return .
+     * @throws IOException .
      */
     public byte[] getContent(String filePath) throws IOException {
         File file = new File(filePath);
@@ -184,104 +175,12 @@ public class FileUtils {
     }
 
     /**
-     * 计算文件的 MD5 值
-     *
-     * @param file
-     * @return
-     */
-    public static String getFileMD5(File file) {
-        if (!file.isFile()) {
-            return null;
-        }
-        MessageDigest digest = null;
-        FileInputStream in = null;
-        byte buffer[] = new byte[8192];
-        int len;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            in = new FileInputStream(file);
-            while ((len = in.read(buffer)) != -1) {
-                digest.update(buffer, 0, len);
-            }
-            BigInteger bigInt = new BigInteger(1, digest.digest());
-            return bigInt.toString(16);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-
-        } finally {
-            try {
-                in.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-    /**
-     * 计算文件的 MD5 值
-     *
-     * @param in
-     * @return
-     */
-    public static String getFileMD5InputStream(InputStream in) {
-
-        MessageDigest digest = null;
-        byte buffer[] = new byte[8192];
-        int len;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            while ((len = in.read(buffer)) != -1) {
-                digest.update(buffer, 0, len);
-            }
-            BigInteger bigInt = new BigInteger(1, digest.digest());
-            return bigInt.toString(16);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                in.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-    /**
-     * 判断文件是否有某权限
-     *
-     * @param path
-     * @param priv
-     * @return
-     */
-    public static boolean HasPriv(String path, int priv) {
-        File file = new File(path);
-        switch (priv) {
-            case CAN_READ:
-                return file.canRead();
-            case CAN_WRITE:
-                return file.canWrite();
-            case CAN_EXECUTE:
-                return file.canExecute();
-        }
-
-        return false;
-    }
-
-    /**
      * 新建一个文件夹
      *
-     * @param folderPath
-     * @return
+     * @param folderPath 路径
+     * @return 是否成功
      */
-    public static boolean CreateFolders(String folderPath) {
+    public static boolean createFolders(String folderPath) {
         String filePath;
         filePath = folderPath;
         File myFilePath = new File(filePath);
@@ -300,10 +199,10 @@ public class FileUtils {
     /**
      * 新建一个文件
      *
-     * @param filePath
-     * @return
+     * @param filePath 文件路径
+     * @return 是否成功
      */
-    public static boolean CreateFile(String filePath) {
+    public static boolean createFile(String filePath) {
         File myFilePath = new File(filePath);
         try {
             // 如果该文件不存在，则生成新的空文件
@@ -321,9 +220,9 @@ public class FileUtils {
      * 遍历删除已存在文件夹
      *
      * @param folderPath
-     * @return
+     * @return 是否成功
      */
-    public static boolean DeleteFolder(String folderPath) {
+    public static boolean deleteFolder(String folderPath) {
         boolean trueflag = false;
         try {
             String filePath;
@@ -373,8 +272,8 @@ public class FileUtils {
     /**
      * 判断某文件或文件夹是否存在
      *
-     * @param fileStr
-     * @return
+     * @param fileStr .
+     * @return .
      */
     public static boolean FileExist(String fileStr) {
         try {
@@ -457,7 +356,7 @@ public class FileUtils {
         File srcFile = new File(srcPath);
         File destFile = new File(destPath);
         // 如果目标文件所在目录不存在，则创建一下
-        CreateFolders(destFile.getParent());
+        createFolders(destFile.getParent());
 
         InputStream is = null;
         OutputStream os = null;
