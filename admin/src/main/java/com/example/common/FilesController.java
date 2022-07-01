@@ -30,8 +30,14 @@ public class FilesController {
     @Autowired
     private SysOssService filesService;
 
-    // todo 这里需要加上浏览器端缓存更新功能
-    //    @ResponseStatus(value = HttpStatus.CREATED)
+    /**
+     * todo 此接口鉴权 成功后301到图片地址 否则就返回其他错误
+     *
+     * @param fileid
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @ApiOperation("展示图片接口")
     @GetMapping(value = "/showImage/{fileid}.png", name = "展示图片接口", produces = MediaType.IMAGE_JPEG_VALUE)
     public void showImage(@ApiParam(value = "文件id", required = true) @PathVariable("fileid") String fileid,

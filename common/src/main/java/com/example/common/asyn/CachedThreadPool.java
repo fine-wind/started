@@ -1,9 +1,6 @@
 package com.example.common.asyn;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 线程池作业
@@ -18,8 +15,12 @@ public class CachedThreadPool {
      *
      * @param task .
      */
-    public static void submit(Runnable task) {
-        executorService.submit(task);
+    public static <T> Future<T> submit(Callable<T> task) {
+        return executorService.submit(task);
+    }
+
+    public static Future<?> submit(Runnable task) {
+        return executorService.submit(task);
     }
 
     /**
@@ -50,5 +51,9 @@ public class CachedThreadPool {
      */
     public static void scheduleAtFixedRate(Runnable task, long initialDelay, long period, TimeUnit timeUnit) {
         executor.scheduleAtFixedRate(task, initialDelay, period, timeUnit);
+    }
+
+    public static void shutdown() {
+        executorService.shutdown();
     }
 }

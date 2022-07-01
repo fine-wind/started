@@ -17,8 +17,13 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
+
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * 默认过期时长为30分钟，单位：秒
@@ -28,10 +33,7 @@ public class RedisUtils {
      * 过期时长为1小时，单位：秒
      */
     public final static long HOUR_ONE_EXPIRE = (long) 60 * 60;
-    /**
-     * 过期时长为6小时，单位：秒
-     */
-    public final static long HOUR_SIX_EXPIRE = 60 * 60 * 6L;
+
     /**
      * 不设置过期时长
      */
@@ -74,6 +76,7 @@ public class RedisUtils {
         redisTemplate.delete(Arrays.asList(keys));
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T get(String key, long expire) {
         T value = (T) redisTemplate.opsForValue().get(key);
         if (value != null) {
@@ -105,6 +108,7 @@ public class RedisUtils {
         return redisTemplate.opsForHash().hasKey(key, field);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T hashGet(String key, String field) {
         return (T) redisTemplate.opsForHash().get(key, field);
     }
@@ -176,6 +180,7 @@ public class RedisUtils {
      * @param key key
      * @return 移除的元素
      */
+    @SuppressWarnings("unchecked")
     public <T> T listRightPop(String key) {
         return (T) redisTemplate.opsForList().rightPop(key);
     }
@@ -203,6 +208,13 @@ public class RedisUtils {
         this.expire(key, expire, TimeUnit.SECONDS);
     }
 
+    /**
+     * 设置缓存时间
+     *
+     * @param key      key
+     * @param expire   过期时间
+     * @param timeUnit 过期时间单位
+     */
     public void expire(String key, long expire, TimeUnit timeUnit) {
         this.redisTemplate.expire(key, expire, timeUnit);
     }

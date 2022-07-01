@@ -1,7 +1,5 @@
 package com.example;
 
-import com.example.cache.redis.RedisUtils;
-import com.example.common.utils.SpringContextUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
