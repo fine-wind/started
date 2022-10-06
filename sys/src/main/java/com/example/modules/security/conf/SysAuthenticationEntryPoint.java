@@ -16,7 +16,7 @@ import java.io.IOException;
 public class SysAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        // log.warn("用户需要登录，访问[{}]失败，AuthenticationException={}", request.getRequestURI(), e);
+
         log.warn("用户需要登录，访问[{}]失败", request.getRequestURI());
 
         SysResponseJSON.render(request, response, new Result<>().error("需要登录"));

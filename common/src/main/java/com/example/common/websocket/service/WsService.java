@@ -48,7 +48,7 @@ public class WsService {
             username = decoder.getSubject();
         } catch (Exception e) {
             log.error("连接ws时token失效");
-            Result<?> result = new Result<>().error(Constant.UniversalCode.UNAUTHORIZED, "登录失效");
+            Result<?> result = new Result<>().error(Constant.UniversalCode.UNAUTHORIZED, "登录失效了");
             sendMessage(session, result);
             return;
         }

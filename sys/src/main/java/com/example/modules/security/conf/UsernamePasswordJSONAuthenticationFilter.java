@@ -3,7 +3,6 @@ package com.example.modules.security.conf;
 import com.example.common.constant.Constant;
 import com.example.common.utils.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

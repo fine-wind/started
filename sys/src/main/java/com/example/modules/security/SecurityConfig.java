@@ -64,24 +64,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 这里使用了前后端分离的模式
-        //
 
-        http.exceptionHandling().accessDeniedHandler((httpServletRequest, httpServletResponse, e) -> {
-        });
         http.cors().configurationSource(corsConfigurationSource());
 //        http.cors().disable();
         /*禁用csrf跨站请求攻击*/
-        // http.csrf().disable();
+        http.csrf().disable();
 
         http.authorizeRequests()
                 // 设置请求报错403 请求被拒绝
                 .and().exceptionHandling()
                 .authenticationEntryPoint(sysAuthenticationEntryPoint)
-//                .accessDeniedHandler(loginUserAccessDeniedHandler)
+                .accessDeniedHandler(loginUserAccessDeniedHandler)
                 // 登出
                 .and()
                 .logout()
                 .logoutUrl(Constant.User.LOGOUT)
+                .addLogoutHandler(logoutSuccessHandler)
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .permitAll()
         // 会话管理
@@ -96,8 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .disable();
         // 超时处理
-//                .invalidSessionStrategy(invalidSessionStrategy)
-        //同一账号同时登录最大用户数
+        // .invalidSessionStrategy(invalidSessionStrategy)
+        //todo 同一账号同时登录最大用户数
     }
 
     //注册自定义的UsernamePasswordAuthenticationFilter
@@ -149,7 +147,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * todo 放行一些静态资源 检查这些是否需要删除
+     * 放行一些静态资源
      *
      * @param web .
      * @throws Exception .
@@ -158,19 +156,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         /* 不拦截的接口*/
         web.ignoring().antMatchers(
-                Constant.User.JOIN
-        );
-
-        /* 页面不拦截*/
-        web.ignoring().mvcMatchers("/*/*.html");
-
-        /*静态资源不拦截*/
-        web.ignoring().mvcMatchers(
-                "/*/*.js",
-                "/*/*.css",
-                "/img/*",
-                "/static/*",
-                "/favicon.ico"
+                Constant.User.JOIN,
+                Constant.User.LOGIN
         );
     }
 }

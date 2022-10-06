@@ -45,6 +45,8 @@ public class TreeUtils {
 
     /**
      * 构建树节点
+     *
+     * @see TreeUtils#build(java.util.List, java.util.function.Function, java.util.function.Function)
      */
     @Deprecated
     public static <T extends TreeNode<T>> List<T> build(List<T> treeNodes) {
@@ -72,15 +74,15 @@ public class TreeUtils {
     /**
      * 使用泛型 动态生成
      *
-     * @param list     .
-     * @param id       .
-     * @param parentId .
-     * @param <T>      .
-     * @return .
+     * @param list     待处理的集合列表
+     * @param id       获取元素id方法
+     * @param parentId 获取元素父id方法
+     * @param <T>      元素类型
+     * @return 构建完毕的树结构
      */
-    public static <T extends TreeInterface> List<T> build(List<T> list, Function<T, Long> id, Function<T, Long> parentId) {
+    public static <T extends TreeInterface> List<T> build(List<T> list, Function<T, Object> id, Function<T, Object> parentId) {
         List<T> result = new ArrayList<>();
-        Map<Long, T> map = new HashMap<>(list.size());
+        Map<Object, T> map = new HashMap<>(list.size());
         list.forEach(e -> map.put(id.apply(e), e));
         list.forEach(e -> {
             if (map.containsKey(parentId.apply(e))) {

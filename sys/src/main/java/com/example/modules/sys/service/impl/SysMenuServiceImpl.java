@@ -2,9 +2,9 @@ package com.example.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.common.constant.Constant;
-import com.example.common.exception.UniversalCode;
-import com.example.common.exception.ServerException;
 import com.example.common.data.service.impl.BaseServiceImpl;
+import com.example.common.exception.ServerException;
+import com.example.common.exception.UniversalCode;
 import com.example.common.utils.ConvertUtils;
 import com.example.common.utils.HttpContextUtils;
 import com.example.common.utils.StringUtil;
@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -117,7 +118,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
     }
 
     @Override
-    public List<String> getListByIds(List<Long> ids) {
+    public Set<String> getListByIds(List<Long> ids) {
 
         if (Objects.nonNull(ids) && ids.size() == 0) {
             ids.add(Constant.Status.FAIL.longValue());
@@ -134,7 +135,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
                 .map(SysResourcesEntity::getPermissions)
                 .distinct()
                 .filter(StringUtil::noAllEmpty)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
 

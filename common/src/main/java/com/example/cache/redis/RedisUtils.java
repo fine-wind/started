@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Component;
 
@@ -65,6 +66,10 @@ public class RedisUtils {
 
     public void setCache(String key, Object value, long expire, TimeUnit timeUnit) {
         this.redisTemplate.opsForValue().set(key, value, expire > NOT_EXPIRE ? expire : DEFAULT_EXPIRE, timeUnit);
+    }
+
+    public SetOperations<String, Object> opsForSet() {
+        return redisTemplate.opsForSet();
     }
 
     /**
@@ -130,6 +135,11 @@ public class RedisUtils {
         }
     }
 
+    /**
+     * @param key   key
+     * @param field field
+     * @param value value
+     */
     public void hashSet(String key, String field, Object value) {
         hashSet(key, field, value, DEFAULT_EXPIRE);
     }

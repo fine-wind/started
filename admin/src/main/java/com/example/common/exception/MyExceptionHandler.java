@@ -56,7 +56,7 @@ public class MyExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Result<?> handleException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        Result<Object> objectResult = new Result<>();
+        Result<Object> objectResult = new Result<>().error();
         if (ex instanceof AccessDeniedException) {
             objectResult.error(Constant.UniversalCode.UNAUTHORIZED, ex.getMessage());
         }

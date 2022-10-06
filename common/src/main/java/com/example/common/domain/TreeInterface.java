@@ -1,5 +1,6 @@
 package com.example.common.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  *
  * @author author
  */
-public interface TreeInterface {
+public interface TreeInterface extends Serializable {
     long serialVersionUID = 132891029031242331L;
 
     /**

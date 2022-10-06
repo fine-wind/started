@@ -1,12 +1,13 @@
 package com.example.modules.security.conf;
 
-import com.example.cache.constant.CacheCommonKeys;
 import com.example.cache.redis.RedisUtils;
 import com.example.common.constant.Constant;
 import com.example.common.security.JwtUtils;
 import com.example.common.utils.CookieUtils;
 import com.example.common.utils.Result;
+import com.example.common.utils.SpringContextUtils;
 import com.example.common.utils.StringUtil;
+import com.example.modules.security.role.SysRoleUserRedis;
 import io.jsonwebtoken.Claims;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpMethod.GET;
@@ -37,6 +38,8 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
     org.springframework.boot.autoconfigure.web.ServerProperties serverProperties;
     @Autowired
     RedisUtils cacheService;
+    @Autowired
+    private SysRoleUserRedis roleUserRedis;
 
     /**
      * 每次请求都会走这个方法
@@ -76,11 +79,13 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
         }
         username = decoder.getSubject();
         /* 这里设置权限*/
-        List<String> roles = cacheService.get(CacheCommonKeys.getSecurityRoleKey(username));
-        roles = Objects.isNull(roles) ? new ArrayList<>(0) : roles;
-        ArrayList<SimpleGrantedAuthority> auths = roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toCollection(ArrayList::new));
+        Set<Object> roles = roleUserRedis.getRoles(username);
+        ArrayList<SimpleGrantedAuthority> auths = roles.stream().map(e -> new SimpleGrantedAuthority(Objects.toString(e))).collect(Collectors.toCollection(ArrayList::new));
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, 1, auths);
         SecurityContextHolder.getContext().setAuthentication(token);
+        // todo 这里校验权限
+        //  增加 接口和权限标识符对应关系
+        SpringContextUtils.getBean(SysRoleUserRedis.class).hasRoles();
         filterChain.doFilter(request, response);
     }
 

@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MasterUserBo extends BaseBo {
+public class SuperUserBo extends BaseBo {
     private static final long serialVersionUID = 1L;
     /**
      * 用户id

@@ -7,6 +7,7 @@ import com.example.modules.sys.dto.SysMenuDTO;
 import com.example.modules.sys.entity.SysResourcesEntity;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单管理
@@ -52,10 +53,10 @@ public interface SysMenuService extends BaseService<SysMenuBo, SysResourcesEntit
     List<SysMenuDTO> getListPid(Long pid);
 
     /**
-     * 根据多个id来获取他们的权限标识
+     * 根据多个id来获取他们的权限标识集合
      *
      * @param ids ids
-     * @return
+     * @return 权限标识集合
      */
-    List<String> getListByIds(List<Long> ids);
+    Set<String> getListByIds(List<Long> ids);
 }

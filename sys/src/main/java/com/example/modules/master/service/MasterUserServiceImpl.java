@@ -1,24 +1,24 @@
 package com.example.modules.master.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.common.constant.Constant;
 import com.example.common.data.service.impl.CrudServiceImpl;
-import com.example.modules.master.bo.MasterUserBo;
+import com.example.modules.master.bo.SuperUserBo;
 import com.example.modules.master.dao.MasterUserDao;
-import com.example.modules.master.dto.MasterUserDto;
-import com.example.modules.master.entity.SysMasterUserEntity;
+import com.example.modules.master.dto.SuperUserDto;
+import com.example.modules.master.entity.SysSuperUserEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 @Service
-public class MasterUserServiceImpl extends CrudServiceImpl<MasterUserBo, MasterUserDao, SysMasterUserEntity, MasterUserDto> implements MasterUserService {
+public class MasterUserServiceImpl extends CrudServiceImpl<SuperUserBo, MasterUserDao, SysSuperUserEntity, SuperUserDto> implements SuperUserService {
 
     @Override
-    public boolean isMaster(Long userId) {
-        MasterUserBo user = new MasterUserBo();
+    public boolean isSuper(Long userId) {
+        SuperUserBo user = new SuperUserBo();
         user.setUserId(userId);
-        List<SysMasterUserEntity> sysMasterUserEntities = baseDao.selectList(this.getQueryWrapper(user));
+        List<SysSuperUserEntity> sysMasterUserEntities = baseDao.selectList(this.getQueryWrapper(user));
         //  for (SysMasterUserEntity item : sysMasterUserEntities) {
         //
         //  }
@@ -26,10 +26,10 @@ public class MasterUserServiceImpl extends CrudServiceImpl<MasterUserBo, MasterU
     }
 
     @Override
-    public LambdaQueryWrapper<SysMasterUserEntity> getQueryWrapper(MasterUserBo params) {
-        LambdaQueryWrapper<SysMasterUserEntity> queryWrapper = super.getQueryWrapper(params);
+    public LambdaQueryWrapper<SysSuperUserEntity> getQueryWrapper(SuperUserBo params) {
+        LambdaQueryWrapper<SysSuperUserEntity> queryWrapper = super.getQueryWrapper(params);
 
-        queryWrapper.eq(Objects.nonNull(params.getUserId()), SysMasterUserEntity::getUserId, params.getUserId());
+        queryWrapper.eq(Objects.nonNull(params.getUserId()), SysSuperUserEntity::getUserId, params.getUserId());
         return queryWrapper;
     }
 }

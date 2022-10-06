@@ -3,7 +3,7 @@ server:
   port: 80
   servlet:
     # 应用的访问路径
-    context-path: /api/
+    context-path: /api
 
 spring:
   redis: # redis配置

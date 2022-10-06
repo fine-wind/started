@@ -3,9 +3,10 @@ package com.example.modules.security.service;
 import com.example.cache.constant.CacheCommonKeys;
 import com.example.cache.redis.RedisUtils;
 import com.example.common.constant.Constant;
+import com.example.modules.security.role.SysRoleUserRedis;
 import com.example.common.data.modules.role.SysRoleUserService;
 import com.example.common.modules.params.redis.SysParamsRedis;
-import com.example.modules.master.service.MasterUserService;
+import com.example.modules.master.service.SuperUserService;
 import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.service.SysMenuService;
 import com.example.modules.sys.service.SysRoleMenuService;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @Log4j2
@@ -29,12 +31,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
     @Autowired
-    private MasterUserService masterUserService;
+    private SuperUserService masterUserService;
     @Autowired
     private RedisUtils redisUtils;
 
     @Autowired
     private SysRoleUserService roleUserService;
+    @Autowired
+    private SysRoleUserRedis roleUserRedis;
 
     @Autowired
     private SysRoleMenuService roleMenuService;
@@ -45,20 +49,27 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        SecurityUserDetails userDetails = redisUtils.getCache(CacheCommonKeys.getSecurityUserKey(username));
+        // todo 此处是否要加缓存
+        // if (Objects.nonNull(userDetails)) {
+        //     return userDetails;
+        // }
+
         UserDto user = userService.getByname(username);
 
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("用户名不存在异常");
         }
 
-        SecurityUserDetails userDetails = new SecurityUserDetails();
+        userDetails = new SecurityUserDetails();
 
         BeanUtils.copyProperties(user, userDetails);
-        boolean master = masterUserService.isMaster(user.getId());
+        boolean master = masterUserService.isSuper(user.getId());
         /* 是否管理员*/
         userDetails.setSuperAdmin(master ? Constant.Status.SUCCESS : Constant.Status.FAIL);
         // 加载用户的所有权限到缓存内
-        List<String> roles;
+        Set<String> roles;
         if (!master) {
             // 查询出角色
             List<Long> roleIdList = roleUserService.getRoleIdList(user.getId());
@@ -73,7 +84,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         long tokenTime = paramsRedis.getTokenTime();
 
         redisUtils.setCache(CacheCommonKeys.getSecurityUserKey(username), userDetails, tokenTime);
-        redisUtils.setCache(CacheCommonKeys.getSecurityRoleKey(username), roles, tokenTime);
+        roleUserRedis.setRoles(username, roles);
         return userDetails;
     }
 }

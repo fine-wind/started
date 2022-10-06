@@ -25,7 +25,7 @@ public class SecurityUser {
     /**
      * 获取用户信息
      *
-     * @param reset 是否强制
+     * @param reset 是否强制刷新缓存
      * @return 用户信息
      */
     public static SecurityUserDetails getUser(boolean reset) {

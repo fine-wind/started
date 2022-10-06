@@ -24,7 +24,7 @@ import java.util.List;
 @Accessors(chain = true)
 @ApiModel(value = "修改用户信息表单")
 @DictTranslationClass
-public class MasterUserDto implements Serializable {
+public class SuperUserDto implements Serializable {
     @ApiModelProperty(value = "id")
     @Null(message = "{id.null}", groups = AddGroup.class)
     @NotNull(message = "{id.require}", groups = UpdateGroup.class)

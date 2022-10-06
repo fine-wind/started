@@ -45,7 +45,14 @@ public class LoginController {
     @Autowired
     private SysLogLoginService sysLogLoginService;
 
-
+    /**
+     * 弃用此接口，走 security认证的
+     *
+     * @param request .
+     * @param login   .
+     * @return .
+     */
+    @Deprecated
     @PostMapping(Constant.User.LOGIN)
     @ApiOperation(value = "登录")
     public Result<?> login(HttpServletRequest request, @RequestBody LoginDTO login) {

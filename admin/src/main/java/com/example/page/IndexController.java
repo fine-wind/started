@@ -22,6 +22,8 @@ public class IndexController {
         map.put("startTime", DateUtil.toString(new Date(startTime)));
         map.put("BindingDomainName", THIS_HOST.getValue());
         map.put("BindingName", THIS_NAME.getValue());
+        // todo 初始化操作
+        map.put("init", Boolean.FALSE);
         return new Result<>().ok(map);
     }
 

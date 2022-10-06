@@ -33,7 +33,7 @@ public class SysParamsController {
     @Autowired
     private SysParamsService sysParamsService;
 
-    @PostMapping("page")
+    @PostMapping("/page")
     @ApiOperation("分页")
     @ApiImplicitParams({
             @ApiImplicitParam(name = Constant.PAGE.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
@@ -42,7 +42,6 @@ public class SysParamsController {
             @ApiImplicitParam(name = Constant.PAGE.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "paramCode", value = "参数编码", paramType = "query", dataType = "String")
     })
-
     public Result<PageData<SysParamsDTO>> page(@RequestBody SysParamsBo params) {
         PageData<SysParamsDTO> page = sysParamsService.page(params);
 
@@ -51,7 +50,6 @@ public class SysParamsController {
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-
     public Result<SysParamsDTO> get(@PathVariable("id") Long id) {
         SysParamsDTO data = sysParamsService.get(id);
 
@@ -61,7 +59,6 @@ public class SysParamsController {
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-
     public Result save(@RequestBody SysParamsDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
@@ -74,7 +71,6 @@ public class SysParamsController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-
     public Result update(@RequestBody SysParamsDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);

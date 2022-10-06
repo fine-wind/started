@@ -52,7 +52,7 @@ public class UserController {
 
         userService.join(logInRegisterDTO);
 
-        return new Result<>().ok("");
+        return new Result<>().ok("注册成功");
     }
 
     @PostMapping("/user/userInfo")
@@ -88,6 +88,7 @@ public class UserController {
 
     /**
      * todo xing 重置密码
+     * 重置密码时 该账号所有登录状态需失效
      *
      * @param email           .
      * @param confirmpassword .

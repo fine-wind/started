@@ -1,16 +1,15 @@
 package com.example.modules.security.conf;
 
-import com.alibaba.fastjson.JSON;
 import com.example.cache.constant.CacheCommonKeys;
 import com.example.cache.redis.RedisUtils;
 import com.example.common.constant.Constant;
 import com.example.common.data.modules.log.entity.SysLogLoginEntity;
 import com.example.common.data.modules.log.service.SysLogLoginService;
 import com.example.common.modules.params.redis.SysParamsRedis;
+import com.example.common.security.JwtUtils;
 import com.example.common.utils.CookieUtils;
 import com.example.common.utils.IpUtils;
 import com.example.common.utils.Result;
-import com.example.common.security.JwtUtils;
 import com.example.common.utils.SpringContextUtils;
 import com.example.modules.log.enums.LoginOperationEnum;
 import com.example.modules.log.enums.LoginStatusEnum;
@@ -78,7 +77,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         /* 添加 jwtcookie*/
         CookieUtils.addCookie(response, Constant.REQUEST.HEADER.TOKEN, jwt, (int) time);
 
-        SysResponseJSON.render(request, response, JSON.toJSONString(result));
+        SysResponseJSON.render(request, response, result);
     }
 
 }

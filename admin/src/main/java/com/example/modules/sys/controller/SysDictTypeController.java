@@ -98,7 +98,7 @@ public class SysDictTypeController {
         return new Result();
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     @ApiOperation("所有字典数据")
     public Result<List<DictType>> all() {
         List<DictType> list = sysDictTypeService.getAllList();
