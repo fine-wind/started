@@ -1,10 +1,10 @@
 package com.example.modules.master.dto;
 
-import com.example.common.annotation.DictTranslationClass;
-import com.example.common.annotation.DictTranslationField;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
+import com.example.common.v0.annotation.DictTranslationClass;
+import com.example.common.v0.annotation.DictTranslationField;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

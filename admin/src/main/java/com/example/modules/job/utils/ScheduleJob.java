@@ -2,9 +2,9 @@ package com.example.modules.job.utils;
 
 import com.example.admin.job.entity.ScheduleJobEntity;
 import com.example.admin.job.entity.ScheduleJobLogEntity;
-import com.example.common.constant.Constant;
-import com.example.common.exception.ExceptionUtils;
-import com.example.common.utils.SpringContextUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.exception.ExceptionUtils;
+import com.example.common.v0.utils.SpringContextUtils;
 import com.example.modules.job.service.ScheduleJobLogService;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;

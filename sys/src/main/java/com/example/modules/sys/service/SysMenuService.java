@@ -1,6 +1,6 @@
 package com.example.modules.sys.service;
 
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.service.BaseService;
 import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.bo.SysMenuBo;
 import com.example.modules.sys.dto.SysMenuDTO;

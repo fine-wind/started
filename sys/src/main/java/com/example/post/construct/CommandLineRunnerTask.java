@@ -1,6 +1,6 @@
 package com.example.post.construct;
 
-import com.example.common.asyn.CachedThreadPool;
+import com.example.common.v0.asyn.CachedThreadPool;
 import com.example.modules.param.service.SysParamsService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;

@@ -1,25 +1,26 @@
 package com.example.modules.user.controller;
 
-import com.example.common.data.dto.LogInRegisterDTO;
-import com.example.common.security.JwtUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.annotation.Login;
+import com.example.common.v0.data.annotation.LoginUser;
+import com.example.common.v0.data.dto.LogInRegisterDTO;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.security.JwtUtils;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
-import com.example.modules.sys.user.dto.UserDto;
-import com.example.modules.sys.user.entity.SysUserEntity;
-import com.example.modules.sys.user.service.UserService;
+import com.example.modules.sys.login.v0.service.LoginService;
+import com.example.modules.sys.user.v1.dto.UserDto;
+import com.example.modules.sys.user.v1.entity.SysUserEntity;
+import com.example.modules.sys.user.v1.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.common.data.annotation.Login;
-import com.example.common.data.annotation.LoginUser;
-import com.example.common.constant.Constant;
-import com.example.common.exception.ServerException;
-import com.example.common.utils.Result;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.UpdateGroup;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,10 +36,12 @@ import java.util.Objects;
 public class UserController {
 
     private final UserService userService;
+    private final LoginService loginService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, LoginService loginService) {
         this.userService = userService;
+        this.loginService = loginService;
     }
 
     @PostMapping(Constant.User.JOIN)
@@ -50,7 +53,7 @@ public class UserController {
         // todo throw new ServerException(Constant.UniversalCode.UNAUTHORIZED, "验证码错误");
 //        }
 
-        userService.join(logInRegisterDTO);
+        loginService.join(logInRegisterDTO);
 
         return new Result<>().ok("注册成功");
     }

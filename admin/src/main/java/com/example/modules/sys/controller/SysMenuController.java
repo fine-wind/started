@@ -1,11 +1,11 @@
 package com.example.modules.sys.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.utils.Result;
-import com.example.common.validator.AssertUtils;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.DefaultGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.AssertUtils;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.DefaultGroup;
 import com.example.modules.security.service.ShiroService;
 import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
@@ -60,10 +60,11 @@ public class SysMenuController {
     @ApiOperation("列表")
     @ApiImplicitParam(name = "type", value = "菜单类型", paramType = "query", dataType = "int")
     public Result<List<SysMenuDTO>> tree(@RequestBody SysMenuBo bo) {
-         List<SysMenuDTO> list = sysMenuService.getAllMenuTree(bo.getType());
+        List<SysMenuDTO> list = sysMenuService.getAllMenuTree(bo.getType());
 
         return new Result<List<SysMenuDTO>>().ok(list);
     }
+
     @PostMapping("list")
     @ApiOperation("列表")
     @ApiImplicitParam(name = "type", value = "菜单类型 0：菜单 1：按钮  null：全部", paramType = "query", dataType = "int")
@@ -86,33 +87,33 @@ public class SysMenuController {
     @ApiOperation("保存")
     @LogOperation("保存")
 
-    public Result save(@RequestBody SysMenuDTO dto) {
+    public Result<?> save(@RequestBody SysMenuDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, DefaultGroup.class);
 
         sysMenuService.save(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
 
-    public Result update(@RequestBody SysMenuDTO dto) {
+    public Result<?> update(@RequestBody SysMenuDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, DefaultGroup.class);
 
         sysMenuService.update(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @DeleteMapping("{id}")
     @ApiOperation("删除")
     @LogOperation("删除")
 
-    public Result delete(@PathVariable("id") Long id) {
+    public Result<?> delete(@PathVariable("id") Long id) {
         //效验数据
         AssertUtils.isNull(id, "id");
 

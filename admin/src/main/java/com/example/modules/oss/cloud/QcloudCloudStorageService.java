@@ -8,8 +8,8 @@ import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.region.Region;
-import com.example.common.exception.UniversalCode;
-import com.example.common.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.exception.ServerException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

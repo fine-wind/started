@@ -1,8 +1,8 @@
 package com.example.modules.oss.cloud;
 
 import com.aliyun.oss.OSSClient;
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

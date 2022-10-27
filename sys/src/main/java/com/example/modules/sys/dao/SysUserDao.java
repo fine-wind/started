@@ -1,8 +1,8 @@
 package com.example.modules.sys.dao;
 
-import com.example.common.data.dao.BaseDao;
-import com.example.modules.sys.user.bo.UserBo;
-import com.example.modules.sys.user.entity.SysUserEntity;
+import com.example.common.v0.data.dao.BaseDao;
+import com.example.common.v0.data.dto.LogInRegisterDTO;
+import com.example.modules.sys.user.v1.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface SysUserDao extends BaseDao<SysUserEntity> {
 
-    List<SysUserEntity> getList(UserBo params);
+    List<SysUserEntity> getList(LogInRegisterDTO params);
 
 
     int updatePassword(@Param("id") Long id, @Param("newPassword") String newPassword);

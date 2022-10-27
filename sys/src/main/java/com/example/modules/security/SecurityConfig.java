@@ -1,6 +1,6 @@
 package com.example.modules.security;
 
-import com.example.common.constant.Constant;
+import com.example.common.v0.constant.Constant;
 import com.example.modules.security.conf.*;
 import com.example.modules.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

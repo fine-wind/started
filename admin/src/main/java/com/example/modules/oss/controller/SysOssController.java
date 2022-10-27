@@ -1,20 +1,20 @@
 package com.example.modules.oss.controller;
 
-import com.example.common.exception.ServerException;
-import com.example.common.utils.StringUtil;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.utils.StringUtil;
 import com.example.modules.oss.bo.SysOssBo;
 import com.example.modules.oss.cloud.AbstractCloudStorageService;
 import com.example.modules.oss.cloud.CloudStorageConfig;
 import com.example.modules.oss.cloud.OSSFactory;
 import com.google.gson.Gson;
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.exception.UniversalCode;
-import com.example.common.data.page.PageData;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AliyunGroup;
-import com.example.common.validator.group.QcloudGroup;
-import com.example.common.validator.group.QiniuGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AliyunGroup;
+import com.example.common.v0.validator.group.QcloudGroup;
+import com.example.common.v0.validator.group.QiniuGroup;
 import com.example.common.sys.oss.entity.SysOssEntity;
 import com.example.modules.oss.service.SysOssService;
 import com.example.modules.param.service.SysParamsService;
@@ -31,7 +31,7 @@ import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.common.utils.Result;
+import com.example.common.v0.utils.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,7 +80,7 @@ public class SysOssController {
     @ApiOperation(value = "保存云存储配置信息")
     @LogOperation("保存云存储配置信息")
 
-    public Result saveConfig(@RequestBody CloudStorageConfig config) {
+    public Result<?> saveConfig(@RequestBody CloudStorageConfig config) {
         //校验类型
         ValidatorUtils.validateEntity(config);
 
@@ -97,7 +97,7 @@ public class SysOssController {
 
         sysParamsService.updateValueByCode(KEY, new Gson().toJson(config));
 
-        return new Result();
+        return new Result<>();
     }
 
     @PostMapping("upload")
@@ -174,10 +174,10 @@ public class SysOssController {
     @ApiOperation(value = "删除")
     @LogOperation("删除")
 
-    public Result delete(@RequestBody Long[] ids) {
+    public Result<?> delete(@RequestBody Long[] ids) {
         sysOssService.deleteBatchIds(Arrays.asList(ids));
 
-        return new Result();
+        return new Result<>();
     }
 
 }

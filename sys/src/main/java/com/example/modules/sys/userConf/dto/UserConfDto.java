@@ -1,21 +1,16 @@
 package com.example.modules.sys.userConf.dto;
 
-import com.example.common.annotation.DictTranslationClass;
-import com.example.common.annotation.DictTranslationField;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.common.v0.annotation.DictTranslationClass;
+import com.example.common.v0.annotation.DictTranslationField;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 /**
  * 用户个性化配置

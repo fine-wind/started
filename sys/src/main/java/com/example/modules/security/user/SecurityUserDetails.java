@@ -1,7 +1,7 @@
 package com.example.modules.security.user;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.example.common.constant.Constant;
+import com.example.common.v0.constant.Constant;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class SecurityUserDetails implements Serializable, UserDetails {
     /**
      * 用户id
      */
-    private Long id;
+    private String id;
     /**
      * 登录名
      */

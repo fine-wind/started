@@ -3,13 +3,13 @@ package com.example.aspect;
 import com.alibaba.fastjson.JSON;
 import com.example.cache.constant.CacheCommonKeys;
 import com.example.cache.redis.RedisUtils;
-import com.example.common.constant.Constant;
-import com.example.common.modules.params.redis.SysParamsRedis;
-import com.example.common.security.JwtUtils;
-import com.example.common.utils.CookieUtils;
-import com.example.common.utils.Result;
-import com.example.common.utils.StringUtil;
-import com.example.common.utils.Translation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.modules.params.redis.SysParamsRedis;
+import com.example.common.v0.security.JwtUtils;
+import com.example.common.v0.utils.CookieUtils;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.utils.StringUtil;
+import com.example.common.v0.utils.Translation;
 import io.jsonwebtoken.Claims;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         long p1 = l2 - l1;
         /* 刷新token*/
         long p11 = l3 - l2;
-        log.info("翻译 耗时{}ms reToken:{}ms {}返回-> {}", p1, p11, request.getURI(), JSON.toJSONString(body));
+        log.info("翻译 耗时{}ms reToken:{}ms {} 返回-> {}", p1, p11, request.getURI(), JSON.toJSONString(body));
         return body;
     }
 

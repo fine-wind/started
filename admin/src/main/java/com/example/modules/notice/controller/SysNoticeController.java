@@ -1,14 +1,14 @@
 package com.example.modules.notice.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
-import com.example.common.validator.AssertUtils;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.AssertUtils;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import com.example.modules.notice.bo.SysNoticeBo;
 import com.example.modules.notice.dto.SysNoticeDTO;
 import com.example.modules.notice.service.SysNoticeService;
@@ -82,10 +82,10 @@ public class SysNoticeController {
 
     @PutMapping("mynotice/read/{noticeId}")
     @ApiOperation("标记我的通知为已读")
-    public Result read(@PathVariable("noticeId") Long noticeId) {
+    public Result<?> read(@PathVariable("noticeId") Long noticeId) {
         sysNoticeUserService.updateReadStatus(SecurityUser.getUserId(), noticeId);
 
-        return new Result();
+        return new Result<>();
     }
 
     @GetMapping("mynotice/unread")
@@ -115,33 +115,33 @@ public class SysNoticeController {
 
         sysNoticeService.save(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
 
-    public Result update(@RequestBody SysNoticeDTO dto) {
+    public Result<?> update(@RequestBody SysNoticeDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
         sysNoticeService.update(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
 
-    public Result delete(@RequestBody Long[] ids) {
+    public Result<?> delete(@RequestBody Long[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
         sysNoticeService.deleteByIds(ids);
 
-        return new Result();
+        return new Result<>();
     }
 
 }

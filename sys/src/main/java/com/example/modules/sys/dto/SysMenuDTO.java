@@ -1,9 +1,9 @@
 package com.example.modules.sys.dto;
 
-import com.example.common.annotation.DictTranslationClass;
+import com.example.common.v0.annotation.DictTranslationClass;
+import com.example.common.v0.utils.TreeNode;
+import com.example.common.v0.validator.group.DefaultGroup;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.example.common.utils.TreeNode;
-import com.example.common.validator.group.DefaultGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

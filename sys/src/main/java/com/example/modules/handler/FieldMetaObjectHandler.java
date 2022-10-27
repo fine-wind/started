@@ -1,7 +1,7 @@
 package com.example.modules.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.example.common.constant.Constant;
+import com.example.common.v0.constant.Constant;
 import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
 import org.apache.ibatis.reflection.MetaObject;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static com.example.common.constant.Constant.TABLE.*;
+import static com.example.common.v0.constant.Constant.TABLE.*;
 
 /**
  * 公共字段，自动填充值
@@ -32,16 +32,16 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
         Date date = new Date();
 
         //创建者
-        strictInsertFill(metaObject, CREATOR, Long.class, userInfo.getId());
+        strictInsertFill(metaObject, CREATOR, String.class, userInfo.getId());
         //创建时间
         strictInsertFill(metaObject, CREATE_DATE, Date.class, date);
 
         // TODO 创建者所属部门
 
         //更新者
-        strictInsertFill(metaObject, UPDATER, Long.class, userInfo.getId());
+        strictInsertFill(metaObject, UPDATER, String.class, userInfo.getId());
         //更新者
-        strictInsertFill(metaObject, UPDATER, Long.class, userInfo.getId());
+        strictInsertFill(metaObject, UPDATER, String.class, userInfo.getId());
         //更新时间
         strictInsertFill(metaObject, UPDATE_DATE, Date.class, date);
 

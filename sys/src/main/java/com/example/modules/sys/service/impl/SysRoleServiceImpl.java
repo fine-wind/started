@@ -2,11 +2,11 @@ package com.example.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.common.constant.Constant;
-import com.example.common.data.modules.role.SysRoleUserService;
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.impl.BaseServiceImpl;
-import com.example.common.utils.ConvertUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.modules.role.SysRoleUserService;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.utils.ConvertUtils;
 import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.bo.SysRoleBo;
@@ -21,7 +21,7 @@ import com.example.modules.sys.service.*;
 
 import java.util.List;
 
-import static com.example.common.constant.Constant.TABLE.CREATE_DATE_TABLE;
+import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE_TABLE;
 
 /**
  * 角色

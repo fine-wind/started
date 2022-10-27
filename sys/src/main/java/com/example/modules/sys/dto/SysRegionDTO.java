@@ -1,7 +1,7 @@
 package com.example.modules.sys.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.example.common.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.DefaultGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

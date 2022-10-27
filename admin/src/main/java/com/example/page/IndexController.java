@@ -1,7 +1,7 @@
 package com.example.page;
 
-import com.example.common.utils.DateUtil;
-import com.example.common.utils.Result;
+import com.example.common.v0.utils.DateUtil;
+import com.example.common.v0.utils.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.common.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.THIS_HOST;
-import static com.example.common.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.THIS_NAME;
+import static com.example.common.v0.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.THIS_HOST;
+import static com.example.common.v0.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.THIS_NAME;
 
 @RestController
 public class IndexController {

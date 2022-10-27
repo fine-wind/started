@@ -1,6 +1,6 @@
 package com.example.modules.message.service;
 
-import com.example.common.data.service.CrudService;
+import com.example.common.v0.data.service.CrudService;
 import com.example.modules.message.bo.SysSmsLogBo;
 import com.example.modules.message.dto.SysSmsLogDTO;
 import com.example.modules.message.entity.SysSmsLogEntity;

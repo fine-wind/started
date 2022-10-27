@@ -3,8 +3,8 @@ package com.example.modules.message.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
 import com.example.modules.message.bo.SysMailLogBo;
 import com.example.modules.message.dao.SysMailLogDao;
 import com.example.modules.message.dto.SysMailLogDTO;
@@ -13,7 +13,7 @@ import com.example.modules.message.service.SysMailLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import static com.example.common.constant.Constant.TABLE.CREATE_DATE;
+import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
 
 
 @Service

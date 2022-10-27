@@ -3,14 +3,14 @@ package com.example.modules.param.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.impl.BaseServiceImpl;
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
-import com.example.common.modules.params.redis.SysParamsRedis;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.modules.params.redis.SysParamsRedis;
 import com.example.common.sys.param.entity.SysParamsEntity;
-import com.example.common.utils.ConvertUtils;
+import com.example.common.v0.utils.ConvertUtils;
 import com.example.modules.param.bo.SysParamsBo;
 import com.example.modules.param.dao.SysParamsDao;
 import com.example.modules.param.dto.SysParamsDTO;
@@ -23,8 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static com.example.common.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.CONF_MAP;
-import static com.example.common.constant.Constant.TABLE.CREATE_DATE;
+import static com.example.common.v0.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.CONF_MAP;
+import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
 
 /**
  * 参数管理

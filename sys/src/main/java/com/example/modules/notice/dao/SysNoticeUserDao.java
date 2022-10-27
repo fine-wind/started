@@ -1,6 +1,6 @@
 package com.example.modules.notice.dao;
 
-import com.example.common.data.dao.BaseDao;
+import com.example.common.v0.data.dao.BaseDao;
 import com.example.modules.notice.entity.SysNoticeUserEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

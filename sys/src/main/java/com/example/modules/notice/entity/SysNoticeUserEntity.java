@@ -1,7 +1,7 @@
 package com.example.modules.notice.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.data.entity.BaseEntity;
+import com.example.common.v0.data.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,7 +23,7 @@ public class SysNoticeUserEntity extends BaseEntity implements Serializable {
     /**
      * 接收者ID
      */
-    private Long receiverId;
+    private String receiverId;
     /**
      * 阅读状态  0：未读  1：已读
      */

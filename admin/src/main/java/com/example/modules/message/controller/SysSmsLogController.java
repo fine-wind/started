@@ -1,9 +1,9 @@
 package com.example.modules.message.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
 import com.example.modules.message.bo.SysSmsLogBo;
 import com.example.modules.message.dto.SysSmsLogDTO;
 import com.example.modules.message.service.SysSmsLogService;
@@ -46,9 +46,9 @@ public class SysSmsLogController {
     @ApiOperation("删除")
     @LogOperation("删除")
 
-    public Result delete(@RequestBody Long[] ids) {
+    public Result<?> delete(@RequestBody Long[] ids) {
         sysSmsLogService.deleteBatchIds(Arrays.asList(ids));
 
-        return new Result();
+        return new Result<>();
     }
 }

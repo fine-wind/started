@@ -1,7 +1,7 @@
 package com.example.modules.oss.cloud;
 
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
 import org.apache.commons.io.FileUtils;
 
 import java.io.ByteArrayInputStream;

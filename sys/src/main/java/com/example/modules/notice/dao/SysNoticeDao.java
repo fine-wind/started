@@ -1,6 +1,6 @@
 package com.example.modules.notice.dao;
 
-import com.example.common.data.dao.BaseDao;
+import com.example.common.v0.data.dao.BaseDao;
 import com.example.modules.notice.entity.SysNoticeEntity;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,5 +23,5 @@ public interface SysNoticeDao extends BaseDao<SysNoticeEntity> {
      *
      * @param receiverId 接收者ID
      */
-    List<SysNoticeEntity> getMyNoticeList(Long receiverId);
+    List<SysNoticeEntity> getMyNoticeList(String receiverId);
 }

@@ -1,9 +1,9 @@
 package com.example.modules.job.utils;
 
 import com.example.admin.job.entity.ScheduleJobEntity;
-import com.example.common.constant.Constant;
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
 import org.quartz.*;
 
 /**

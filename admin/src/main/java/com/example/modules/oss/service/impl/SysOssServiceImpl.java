@@ -2,8 +2,8 @@ package com.example.modules.oss.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
 import com.example.common.sys.oss.entity.SysOssEntity;
 import com.example.modules.oss.bo.SysOssBo;
 import com.example.modules.oss.dao.SysOssDao;
@@ -16,7 +16,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.Objects;
 
-import static com.example.common.constant.Constant.TABLE.CREATE_DATE;
+import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
 
 @Log4j2
 @Service

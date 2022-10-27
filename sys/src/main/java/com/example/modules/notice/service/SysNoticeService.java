@@ -1,7 +1,7 @@
 package com.example.modules.notice.service;
 
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.CrudService;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.CrudService;
 import com.example.modules.notice.bo.SysNoticeBo;
 import com.example.modules.notice.dto.SysNoticeDTO;
 import com.example.modules.notice.entity.SysNoticeEntity;

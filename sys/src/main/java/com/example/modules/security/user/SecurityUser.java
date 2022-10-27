@@ -2,7 +2,7 @@ package com.example.modules.security.user;
 
 import com.example.cache.redis.RedisUtils;
 import com.example.cache.constant.CacheCommonKeys;
-import com.example.common.utils.SpringContextUtils;
+import com.example.common.v0.utils.SpringContextUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -56,7 +56,7 @@ public class SecurityUser {
     /**
      * 获取用户ID
      */
-    public static Long getUserId() {
+    public static String getUserId() {
         return getUser().getId();
     }
 

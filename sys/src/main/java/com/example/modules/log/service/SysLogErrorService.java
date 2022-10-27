@@ -1,8 +1,8 @@
 package com.example.modules.log.service;
 
 
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.BaseService;
 import com.example.modules.log.bo.SysLogErrorBo;
 import com.example.modules.log.dto.SysLogErrorDTO;
 import com.example.modules.log.entity.SysLogErrorEntity;

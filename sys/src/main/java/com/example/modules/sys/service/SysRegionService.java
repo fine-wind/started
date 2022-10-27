@@ -1,6 +1,6 @@
 package com.example.modules.sys.service;
 
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.service.BaseService;
 import com.example.modules.sys.bo.SysRegionBo;
 import com.example.modules.sys.dto.SysRegionDTO;
 import com.example.modules.sys.dto.region.RegionProvince;

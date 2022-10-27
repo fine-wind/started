@@ -1,7 +1,7 @@
 package com.example.modules.param.service;
 
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.BaseService;
 import com.example.common.sys.param.entity.SysParamsEntity;
 import com.example.modules.param.bo.SysParamsBo;
 import com.example.modules.param.dto.SysParamsDTO;

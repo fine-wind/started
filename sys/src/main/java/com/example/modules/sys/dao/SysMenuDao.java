@@ -1,6 +1,6 @@
 package com.example.modules.sys.dao;
 
-import com.example.common.data.dao.BaseDao;
+import com.example.common.v0.data.dao.BaseDao;
 import com.example.modules.sys.entity.SysResourcesEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,8 +21,7 @@ public interface SysMenuDao extends BaseDao<SysResourcesEntity> {
      * @param type     菜单类型
      * @param language 语言
      */
-    List<SysResourcesEntity> getUserMenuList(@Param("userId") Long userId, @Param("type") Integer type, @Param("language") String language);
-
+    List<SysResourcesEntity> getUserMenuList(@Param("userId") String userId, @Param("type") Integer type, @Param("language") String language);
 
 
 }

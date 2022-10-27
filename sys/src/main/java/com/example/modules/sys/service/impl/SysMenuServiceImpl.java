@@ -1,14 +1,14 @@
 package com.example.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.common.constant.Constant;
-import com.example.common.data.service.impl.BaseServiceImpl;
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
-import com.example.common.utils.ConvertUtils;
-import com.example.common.utils.HttpContextUtils;
-import com.example.common.utils.StringUtil;
-import com.example.common.utils.TreeUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.utils.ConvertUtils;
+import com.example.common.v0.utils.HttpContextUtils;
+import com.example.common.v0.utils.StringUtil;
+import com.example.common.v0.utils.TreeUtils;
 import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.bo.SysMenuBo;
 import com.example.modules.sys.dao.SysMenuDao;
@@ -82,7 +82,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
 
         List<SysMenuDTO> dtoList = ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);
 
-        return TreeUtils.build(dtoList, Constant.MENU_ROOT);
+        return TreeUtils.build(dtoList);
     }
 
 

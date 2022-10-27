@@ -1,6 +1,6 @@
 package com.example.modules.notice.bo;
 
-import com.example.common.data.bo.BaseBo;
+import com.example.common.v0.data.bo.BaseBo;
 import com.example.modules.notice.enums.NoticeReadStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -47,7 +47,7 @@ public class SysNoticeBo extends BaseBo implements Serializable {
     @ApiModelProperty(value = "创建时间")
     private Date createDate;
     @ApiModelProperty(value = "接收者id")
-    private Long receiverId;
+    private String receiverId;
     @ApiModelProperty(value = "接收者")
     private String receiverName;
     @ApiModelProperty(value = "阅读时间")

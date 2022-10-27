@@ -1,7 +1,5 @@
 package com.example.modules.sys.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.data.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

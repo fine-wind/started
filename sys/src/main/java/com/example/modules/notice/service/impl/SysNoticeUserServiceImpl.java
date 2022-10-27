@@ -2,7 +2,7 @@ package com.example.modules.notice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.common.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
 import com.example.modules.notice.bo.SysNoticeBo;
 import com.example.modules.notice.dao.SysNoticeUserDao;
 import com.example.modules.notice.entity.SysNoticeUserEntity;
@@ -25,7 +25,7 @@ public class SysNoticeUserServiceImpl extends BaseServiceImpl<SysNoticeBo, SysNo
     }
 
     @Override
-    public void updateReadStatus(Long receiverId, Long noticeId) {
+    public void updateReadStatus(String receiverId, Long noticeId) {
         SysNoticeUserEntity entity = new SysNoticeUserEntity();
         entity.setReceiverId(receiverId);
         entity.setNoticeId(noticeId);
@@ -40,7 +40,7 @@ public class SysNoticeUserServiceImpl extends BaseServiceImpl<SysNoticeBo, SysNo
     }
 
     @Override
-    public Long getUnReadNoticeCount(Long receiverId) {
+    public Long getUnReadNoticeCount(String receiverId) {
         return baseDao.selectCount(this.getQueryWrapper(new SysNoticeBo().setReceiverId(receiverId).setReadStatus(NoticeReadStatusEnum.UNREAD.value())));
     }
 

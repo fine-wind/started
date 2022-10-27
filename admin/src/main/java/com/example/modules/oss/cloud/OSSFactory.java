@@ -1,7 +1,7 @@
 package com.example.modules.oss.cloud;
 
-import com.example.common.constant.Constant;
-import com.example.common.utils.SpringContextUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.utils.SpringContextUtils;
 import com.example.modules.param.service.SysParamsService;
 
 /**

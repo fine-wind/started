@@ -1,7 +1,7 @@
 package com.example.modules.master.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.common.data.service.impl.CrudServiceImpl;
+import com.example.common.v0.data.service.impl.CrudServiceImpl;
 import com.example.modules.master.bo.SuperUserBo;
 import com.example.modules.master.dao.MasterUserDao;
 import com.example.modules.master.dto.SuperUserDto;
@@ -15,7 +15,7 @@ import java.util.Objects;
 public class MasterUserServiceImpl extends CrudServiceImpl<SuperUserBo, MasterUserDao, SysSuperUserEntity, SuperUserDto> implements SuperUserService {
 
     @Override
-    public boolean isSuper(Long userId) {
+    public boolean isSuper(String userId) {
         SuperUserBo user = new SuperUserBo();
         user.setUserId(userId);
         List<SysSuperUserEntity> sysMasterUserEntities = baseDao.selectList(this.getQueryWrapper(user));

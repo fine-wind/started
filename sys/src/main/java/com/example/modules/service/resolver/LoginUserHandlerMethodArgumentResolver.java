@@ -1,10 +1,10 @@
 package com.example.modules.service.resolver;
 
-import com.example.common.constant.Constant;
-import com.example.common.data.annotation.LoginUser;
-import com.example.modules.sys.user.dto.UserDto;
-import com.example.modules.sys.user.entity.SysUserEntity;
-import com.example.modules.sys.user.service.UserService;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.annotation.LoginUser;
+import com.example.modules.sys.user.v1.dto.UserDto;
+import com.example.modules.sys.user.v1.entity.SysUserEntity;
+import com.example.modules.sys.user.v1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         }
 
         //获取用户信息
-        UserDto user = userService.getUserByUserId(Long.parseLong(String.valueOf(object)));
+        UserDto user = userService.getUserByUserId(String.valueOf(object));
 
         return null;
     }

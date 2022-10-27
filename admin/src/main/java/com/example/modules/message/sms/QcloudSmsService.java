@@ -1,9 +1,9 @@
 package com.example.modules.message.sms;
 
-import com.example.common.constant.Constant;
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
-import com.example.common.utils.SpringContextUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.utils.SpringContextUtils;
 import com.example.modules.message.service.SysSmsLogService;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;

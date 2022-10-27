@@ -1,6 +1,6 @@
 package com.example.modules.sys.userConf.dao;
 
-import com.example.common.data.dao.BaseDao;
+import com.example.common.v0.data.dao.BaseDao;
 import com.example.modules.sys.userConf.entity.SysUserConfEntity;
 import org.apache.ibatis.annotations.Mapper;
 

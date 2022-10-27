@@ -1,13 +1,13 @@
 package com.example.modules.message.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import com.example.modules.message.bo.SysMailTemplateBo;
 import com.example.modules.message.dto.SysMailTemplateDTO;
 import com.example.modules.message.email.EmailConfig;

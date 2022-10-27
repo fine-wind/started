@@ -1,6 +1,6 @@
 package com.example.modules.sys.service;
 
-import com.example.common.data.service.CrudService;
+import com.example.common.v0.data.service.CrudService;
 import com.example.modules.sys.bo.SysRoleMenuBo;
 import com.example.modules.sys.dto.SysRoleMenuDto;
 import com.example.modules.sys.entity.SysRoleMenuEntity;

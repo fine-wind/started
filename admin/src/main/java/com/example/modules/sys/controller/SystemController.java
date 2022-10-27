@@ -1,9 +1,9 @@
 package com.example.modules.sys.controller;
 
-import com.example.common.websocket.WebSocketServer;
+import com.example.common.v0.websocket.WebSocketServer;
 import com.example.modules.sys.dto.SystemDTO;
 import com.sun.management.OperatingSystemMXBean;
-import com.example.common.utils.Result;
+import com.example.common.v0.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;

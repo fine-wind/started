@@ -2,8 +2,8 @@ package com.example.modules.message.sms;
 
 import com.alibaba.fastjson.JSON;
 import com.example.modules.message.entity.SysSmsEntity;
-import com.example.common.constant.Constant;
-import com.example.common.utils.SpringContextUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.utils.SpringContextUtils;
 import com.example.modules.message.service.SysSmsService;
 
 /**

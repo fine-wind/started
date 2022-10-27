@@ -1,7 +1,7 @@
 package com.example.modules.sys.bo;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.example.common.data.bo.BaseBo;
+import com.example.common.v0.data.bo.BaseBo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -1,13 +1,13 @@
 package com.example.modules.message.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AliyunGroup;
-import com.example.common.validator.group.QcloudGroup;
-import com.example.common.validator.group.QiniuGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AliyunGroup;
+import com.example.common.v0.validator.group.QcloudGroup;
+import com.example.common.v0.validator.group.QiniuGroup;
 import com.example.modules.message.bo.SysSmsBo;
 import com.example.modules.message.dto.SysSmsDTO;
 import com.example.modules.message.service.SysSmsService;

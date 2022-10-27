@@ -1,6 +1,6 @@
 package com.example.modules.log.dao;
 
-import com.example.common.data.dao.BaseDao;
+import com.example.common.v0.data.dao.BaseDao;
 import com.example.modules.log.entity.SysLogErrorEntity;
 import org.apache.ibatis.annotations.Mapper;
 

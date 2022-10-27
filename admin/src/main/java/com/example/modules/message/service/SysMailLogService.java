@@ -1,7 +1,7 @@
 package com.example.modules.message.service;
 
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.BaseService;
 import com.example.modules.message.bo.SysMailLogBo;
 import com.example.modules.message.dto.SysMailLogDTO;
 import com.example.modules.message.entity.SysMailLogEntity;

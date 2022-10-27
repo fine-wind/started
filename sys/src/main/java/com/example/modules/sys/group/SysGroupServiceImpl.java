@@ -1,7 +1,7 @@
 package com.example.modules.sys.group;
 
-import com.example.common.data.entity.SysGroupEntity;
-import com.example.common.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.data.entity.SysGroupEntity;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

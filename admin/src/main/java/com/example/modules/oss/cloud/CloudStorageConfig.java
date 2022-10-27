@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
-import com.example.common.validator.group.*;
+import com.example.common.v0.validator.group.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

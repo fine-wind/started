@@ -3,8 +3,8 @@ package com.example.modules.oss.cloud;
 import io.minio.MinioClient;
 import io.minio.errors.InvalidEndpointException;
 import io.minio.errors.InvalidPortException;
-import com.example.common.exception.UniversalCode;
-import com.example.common.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.exception.ServerException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

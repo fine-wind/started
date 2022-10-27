@@ -1,6 +1,6 @@
 package com.example.modules.sys.group;
 
-import com.example.common.data.bo.BaseBo;
+import com.example.common.v0.data.bo.BaseBo;
 
 public class SysGroupBo extends BaseBo {
     private static final long serialVersionUID = 1L;

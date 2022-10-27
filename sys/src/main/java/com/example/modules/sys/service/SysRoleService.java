@@ -1,7 +1,7 @@
 package com.example.modules.sys.service;
 
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.BaseService;
 import com.example.modules.sys.bo.SysRoleBo;
 import com.example.modules.sys.dto.SysRoleDTO;
 import com.example.modules.sys.entity.SysRoleEntity;

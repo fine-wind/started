@@ -1,7 +1,7 @@
 package com.example.modules.job.init;
 
 import com.example.admin.job.entity.ScheduleJobEntity;
-import com.example.common.asyn.CachedThreadPool;
+import com.example.common.v0.asyn.CachedThreadPool;
 import com.example.modules.job.dao.ScheduleJobDao;
 import com.example.modules.job.utils.ScheduleUtils;
 import org.quartz.CronTrigger;

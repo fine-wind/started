@@ -3,11 +3,10 @@ package com.example.modules.sys.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.constant.Constant;
-import com.example.common.data.entity.BaseEntity;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.util.Date;
 

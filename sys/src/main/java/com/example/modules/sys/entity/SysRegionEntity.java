@@ -3,7 +3,7 @@ package com.example.modules.sys.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.example.common.data.entity.BaseEntity;
+import com.example.common.v0.data.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.Date;

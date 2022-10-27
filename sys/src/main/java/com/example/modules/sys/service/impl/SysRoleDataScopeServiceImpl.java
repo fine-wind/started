@@ -1,7 +1,7 @@
 package com.example.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.common.data.service.impl.CrudServiceImpl;
+import com.example.common.v0.data.service.impl.CrudServiceImpl;
 import com.example.modules.sys.bo.SysRoleDataScopeBo;
 import com.example.modules.sys.dao.SysRoleDataScopeDao;
 import com.example.modules.sys.dto.SysRoleDataScopeDto;

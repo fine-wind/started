@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.common.xss.XssFilter;
+import com.example.common.v0.xss.XssFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

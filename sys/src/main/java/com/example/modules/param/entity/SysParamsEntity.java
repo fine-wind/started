@@ -3,7 +3,7 @@ package com.example.common.sys.param.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.data.entity.BaseEntity;
+import com.example.common.v0.data.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -31,7 +31,7 @@ public class SysParamsEntity extends BaseEntity {
     /**
      * 类型
      *
-     * @see com.example.common.constant.Constant.PARAM_CONF.CONF_TYPE
+     * @see com.example.common.v0.constant.Constant.PARAM_CONF.CONF_TYPE
      */
     private String paramType;
     /**

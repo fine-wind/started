@@ -1,21 +1,21 @@
 package com.example.modules.sys.controller;
 
-import com.example.common.utils.ConvertUtils;
+import com.example.common.v0.utils.ConvertUtils;
 import com.example.modules.sys.bo.SysRoleBo;
 import com.example.modules.sys.dto.SysRoleDTO;
 import com.example.modules.sys.entity.SysRoleEntity;
 import com.example.modules.sys.service.SysRoleDataScopeService;
 import com.example.modules.sys.service.SysRoleMenuService;
 import com.example.modules.sys.service.SysRoleService;
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
-import com.example.common.validator.AssertUtils;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.AssertUtils;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -85,38 +85,38 @@ public class SysRoleController {
     @ApiOperation("保存")
     @LogOperation("保存")
 
-    public Result save(@RequestBody SysRoleDTO dto) {
+    public Result<?> save(@RequestBody SysRoleDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
         sysRoleService.save(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
 
-    public Result update(@RequestBody SysRoleDTO dto) {
+    public Result<?> update(@RequestBody SysRoleDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
         sysRoleService.update(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
 
-    public Result delete(@RequestBody List<Long> ids) {
+    public Result<?> delete(@RequestBody List<Long> ids) {
         //效验数据
         AssertUtils.isListEmpty(ids, "id");
 
         sysRoleService.delete(ids);
 
-        return new Result();
+        return new Result<>();
     }
 }

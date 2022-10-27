@@ -1,6 +1,6 @@
 package com.example.modules.notice.service;
 
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.service.BaseService;
 import com.example.modules.notice.bo.SysNoticeBo;
 import com.example.modules.notice.entity.SysNoticeUserEntity;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +21,7 @@ public interface SysNoticeUserService extends BaseService<SysNoticeBo, SysNotice
      * @param receiverId 接收者ID
      * @param noticeId   通知ID
      */
-    void updateReadStatus(@Param("receiverId") Long receiverId, @Param("noticeId") Long noticeId);
+    void updateReadStatus(@Param("receiverId") String receiverId, @Param("noticeId") Long noticeId);
 
 
     /**
@@ -29,5 +29,5 @@ public interface SysNoticeUserService extends BaseService<SysNoticeBo, SysNotice
      *
      * @param receiverId 接收者ID
      */
-    Long getUnReadNoticeCount(Long receiverId);
+    Long getUnReadNoticeCount(String receiverId);
 }

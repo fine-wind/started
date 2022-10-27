@@ -1,9 +1,9 @@
 package com.example.common.aspect;
 
-import com.example.common.annotation.DataFilter;
-import com.example.common.constant.Constant;
-import com.example.common.data.bo.BaseBo;
-import com.example.common.exception.UniversalCode;
+import com.example.common.v0.annotation.DataFilter;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.bo.BaseBo;
+import com.example.common.v0.exception.UniversalCode;
 import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +13,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import com.example.common.exception.ServerException;
+import com.example.common.v0.exception.ServerException;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.Objects;
 @Component
 public class DataFilterAspect {
 
-    @Pointcut("@annotation(com.example.common.annotation.DataFilter)")
+    @Pointcut("@annotation(com.example.common.v0.annotation.DataFilter)")
     public void dataFilterCut() {
 
     }

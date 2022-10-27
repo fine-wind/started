@@ -1,8 +1,8 @@
 package com.example.common;
 
-import com.example.common.exception.UniversalCode;
-import com.example.common.utils.CaptchaUtils;
-import com.example.common.validator.AssertUtils;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.utils.CaptchaUtils;
+import com.example.common.v0.validator.AssertUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

@@ -1,9 +1,9 @@
 package com.example.modules.sys.service;
 
-import com.example.common.data.bo.SysDeptBo;
-import com.example.common.data.service.BaseService;
-import com.example.modules.sys.dto.SysDeptDTO;
-import com.example.common.data.entity.SysGroupEntity;
+import com.example.common.v0.data.bo.SysDeptBo;
+import com.example.common.v0.data.entity.SysGroupEntity;
+import com.example.common.v0.data.service.BaseService;
+import com.example.modules.sys.dept.dto.SysDeptDTO;
 
 import java.util.List;
 

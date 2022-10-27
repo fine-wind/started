@@ -1,10 +1,9 @@
 package com.example.modules.sys.userConf.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.common.data.dto.sys.SysBaseConfDTO;
-import com.example.common.data.entity.SysBaseConfEntity;
-import com.example.common.data.service.impl.CrudServiceImpl;
-import com.example.common.data.service.sys.SysBaseConfService;
+import com.example.common.v0.data.dto.sys.SysBaseConfDTO;
+import com.example.common.v0.data.service.impl.CrudServiceImpl;
+import com.example.common.v0.data.service.sys.SysBaseConfService;
 import com.example.modules.sys.userConf.bo.UserConfBo;
 import com.example.modules.sys.userConf.dto.UserConfDto;
 import com.example.modules.sys.userConf.entity.SysUserConfEntity;

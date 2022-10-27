@@ -1,7 +1,7 @@
 package com.example.modules.message.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.common.data.service.impl.CrudServiceImpl;
+import com.example.common.v0.data.service.impl.CrudServiceImpl;
 import com.example.modules.message.bo.SysSmsLogBo;
 import com.example.modules.message.dao.SysSmsLogDao;
 import com.example.modules.message.dto.SysSmsLogDTO;

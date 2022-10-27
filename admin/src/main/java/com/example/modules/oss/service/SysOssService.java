@@ -1,12 +1,11 @@
 package com.example.modules.oss.service;
 
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.BaseService;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.BaseService;
 import com.example.common.sys.oss.entity.SysOssEntity;
 import com.example.modules.oss.bo.SysOssBo;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 /**
  * 文件上传

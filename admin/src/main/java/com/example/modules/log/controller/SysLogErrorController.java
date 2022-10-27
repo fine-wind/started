@@ -1,8 +1,8 @@
 package com.example.modules.log.controller;
 
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
 import com.example.modules.log.bo.SysLogErrorBo;
 import com.example.modules.log.dto.SysLogErrorDTO;
 import com.example.modules.log.service.SysLogErrorService;

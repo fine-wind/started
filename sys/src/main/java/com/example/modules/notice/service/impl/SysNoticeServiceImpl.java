@@ -2,11 +2,11 @@ package com.example.modules.notice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.impl.CrudServiceImpl;
-import com.example.modules.sys.user.service.UserService;
-import com.example.common.utils.ConvertUtils;
-import com.example.common.websocket.data.MessageData;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.impl.CrudServiceImpl;
+import com.example.modules.sys.user.v1.service.UserService;
+import com.example.common.v0.utils.ConvertUtils;
+import com.example.common.v0.websocket.data.MessageData;
 import com.example.modules.notice.bo.SysNoticeBo;
 import com.example.modules.notice.dao.SysNoticeDao;
 import com.example.modules.notice.dto.SysNoticeDTO;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.common.constant.Constant.TABLE.*;
+import static com.example.common.v0.constant.Constant.TABLE.*;
 
 /**
  * 通知管理
@@ -125,7 +125,7 @@ public class SysNoticeServiceImpl extends CrudServiceImpl<SysNoticeBo, SysNotice
             // todo webSocketServer.sendMessageAll(message);
 
         } else {  //选中用户
-            List<Long> userIdList = sysUserService.getUserIdListByDeptId(notice.getReceiverTypeList());
+            List<String> userIdList = sysUserService.getUserIdListByDeptId(notice.getReceiverTypeList());
             if (userIdList.size() == 0) {
                 return;
             }
@@ -152,7 +152,7 @@ public class SysNoticeServiceImpl extends CrudServiceImpl<SysNoticeBo, SysNotice
     /**
      * 发送给选中用户
      */
-    public void sendUser(SysNoticeDTO notice, List<Long> userIdList) {
+    public void sendUser(SysNoticeDTO notice, List<String> userIdList) {
         List<SysNoticeUserEntity> list = new ArrayList<>();
         userIdList.forEach(userId -> {
             SysNoticeUserEntity noticeUser = new SysNoticeUserEntity();

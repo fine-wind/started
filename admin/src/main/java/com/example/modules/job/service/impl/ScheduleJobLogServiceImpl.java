@@ -5,15 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.admin.job.bo.ScheduleJobLogBo;
 import com.example.admin.job.entity.ScheduleJobLogEntity;
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.impl.BaseServiceImpl;
-import com.example.common.utils.ConvertUtils;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.utils.ConvertUtils;
 import com.example.modules.job.dao.ScheduleJobLogDao;
 import com.example.modules.job.dto.ScheduleJobLogDTO;
 import com.example.modules.job.service.ScheduleJobLogService;
 import org.springframework.stereotype.Service;
 
-import static com.example.common.constant.Constant.TABLE.CREATE_DATE;
+import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
 
 @Service
 public class ScheduleJobLogServiceImpl extends BaseServiceImpl<ScheduleJobLogBo, ScheduleJobLogDao, ScheduleJobLogEntity> implements ScheduleJobLogService {

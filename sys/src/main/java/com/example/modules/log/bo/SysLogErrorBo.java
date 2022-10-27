@@ -1,7 +1,6 @@
 package com.example.modules.log.bo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.data.bo.BaseBo;
+import com.example.common.v0.data.bo.BaseBo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

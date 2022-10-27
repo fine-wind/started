@@ -2,10 +2,10 @@ package com.example.modules.message.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.common.data.service.impl.CrudServiceImpl;
-import com.example.common.exception.ServerException;
-import com.example.common.exception.UniversalCode;
-import com.example.common.utils.ConvertUtils;
+import com.example.common.v0.data.service.impl.CrudServiceImpl;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.utils.ConvertUtils;
 import com.example.modules.message.bo.SysSmsBo;
 import com.example.modules.message.dao.SysSmsDao;
 import com.example.modules.message.dto.SysSmsDTO;

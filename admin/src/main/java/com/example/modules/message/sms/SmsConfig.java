@@ -1,8 +1,8 @@
 package com.example.modules.message.sms;
 
-import com.example.common.validator.group.AliyunGroup;
-import com.example.common.validator.group.QcloudGroup;
-import com.example.common.validator.group.QiniuGroup;
+import com.example.common.v0.validator.group.AliyunGroup;
+import com.example.common.v0.validator.group.QcloudGroup;
+import com.example.common.v0.validator.group.QiniuGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

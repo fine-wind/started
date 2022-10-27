@@ -1,6 +1,6 @@
 package com.example.modules.message.bo;
 
-import com.example.common.data.bo.BaseBo;
+import com.example.common.v0.data.bo.BaseBo;
 import com.example.modules.message.sms.SmsConfig;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

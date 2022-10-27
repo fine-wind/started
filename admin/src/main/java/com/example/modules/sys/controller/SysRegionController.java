@@ -1,14 +1,14 @@
 package com.example.modules.sys.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.exception.ServerException;
-import com.example.common.utils.Result;
-import com.example.common.validator.AssertUtils;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.AssertUtils;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import com.example.modules.sys.bo.SysRegionBo;
 import com.example.modules.sys.dto.SysRegionDTO;
 import com.example.modules.sys.dto.region.RegionProvince;
@@ -65,33 +65,33 @@ public class SysRegionController {
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-    public Result save(@RequestBody SysRegionDTO dto) {
+    public Result<?> save(@RequestBody SysRegionDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
         sysRegionService.save(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
 
-    public Result update(@RequestBody SysRegionDTO dto) {
+    public Result<?> update(@RequestBody SysRegionDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
         sysRegionService.update(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @DeleteMapping("{id}")
     @ApiOperation("删除")
     @LogOperation("删除")
 
-    public Result delete(@PathVariable("id") Long id) {
+    public Result<?> delete(@PathVariable("id") Long id) {
         //效验数据
         AssertUtils.isNull(id, "id");
 
@@ -102,7 +102,7 @@ public class SysRegionController {
 
         sysRegionService.delete(id);
 
-        return new Result();
+        return new Result<>();
     }
 
     @GetMapping("region")

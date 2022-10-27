@@ -1,9 +1,9 @@
 package com.example.common.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.example.common.annotation.LogOperation;
-import com.example.common.utils.HttpContextUtils;
-import com.example.common.utils.IpUtils;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.utils.HttpContextUtils;
+import com.example.common.v0.utils.IpUtils;
 import com.example.modules.log.entity.SysLogOperationEntity;
 import com.example.modules.log.enums.OperationStatusEnum;
 import com.example.modules.log.service.SysLogOperationService;
@@ -30,7 +30,7 @@ public class LogOperationAspect {
     @Autowired
     private SysLogOperationService sysLogOperationService;
 
-    @Pointcut("@annotation(com.example.common.annotation.LogOperation)")
+    @Pointcut("@annotation(com.example.common.v0.annotation.LogOperation)")
     public void logPointCut() {
 
     }

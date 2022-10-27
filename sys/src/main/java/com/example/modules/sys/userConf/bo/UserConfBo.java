@@ -1,14 +1,9 @@
 package com.example.modules.sys.userConf.bo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.example.common.data.bo.BaseBo;
+import com.example.common.v0.data.bo.BaseBo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * 用户个性化配置

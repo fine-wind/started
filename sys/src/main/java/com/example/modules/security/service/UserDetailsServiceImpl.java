@@ -2,16 +2,16 @@ package com.example.modules.security.service;
 
 import com.example.cache.constant.CacheCommonKeys;
 import com.example.cache.redis.RedisUtils;
-import com.example.common.constant.Constant;
-import com.example.modules.security.role.SysRoleUserRedis;
-import com.example.common.data.modules.role.SysRoleUserService;
-import com.example.common.modules.params.redis.SysParamsRedis;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.modules.role.SysRoleUserService;
+import com.example.common.v0.modules.params.redis.SysParamsRedis;
 import com.example.modules.master.service.SuperUserService;
+import com.example.modules.security.role.SysRoleUserRedis;
 import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.service.SysMenuService;
 import com.example.modules.sys.service.SysRoleMenuService;
-import com.example.modules.sys.user.dto.UserDto;
-import com.example.modules.sys.user.service.UserService;
+import com.example.modules.sys.user.v1.dto.UserDto;
+import com.example.modules.sys.user.v1.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //     return userDetails;
         // }
 
-        UserDto user = userService.getByname(username);
+        UserDto user = userService.getByName(username);
 
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("用户名不存在异常");

@@ -2,9 +2,9 @@ package com.example.modules.oss.cloud;
 
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.DefaultGenerateStorageClient;
-import com.example.common.exception.UniversalCode;
-import com.example.common.exception.ServerException;
-import com.example.common.utils.SpringContextUtils;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.utils.SpringContextUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

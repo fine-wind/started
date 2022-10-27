@@ -3,12 +3,12 @@ package com.example.modules.job.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.admin.job.bo.ScheduleJobBo;
 import com.example.admin.job.entity.ScheduleJobEntity;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.data.service.impl.BaseServiceImpl;
-import com.example.common.utils.ConvertUtils;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.data.service.impl.BaseServiceImpl;
+import com.example.common.v0.utils.ConvertUtils;
+import com.example.modules.job.bo.ScheduleJobBo;
 import com.example.modules.job.dao.ScheduleJobDao;
 import com.example.modules.job.dto.ScheduleJobDTO;
 import com.example.modules.job.service.ScheduleJobService;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
-import static com.example.common.constant.Constant.TABLE.CREATE_DATE;
+import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
 
 @Service
 public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJobBo, ScheduleJobDao, ScheduleJobEntity> implements ScheduleJobService {

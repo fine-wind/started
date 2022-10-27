@@ -1,6 +1,6 @@
 package com.example.modules.master.bo;
 
-import com.example.common.data.bo.BaseBo;
+import com.example.common.v0.data.bo.BaseBo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +14,7 @@ public class SuperUserBo extends BaseBo {
     /**
      * 用户id
      */
-    private Long userId;
+    private String userId;
     /**
      * 状态
      */

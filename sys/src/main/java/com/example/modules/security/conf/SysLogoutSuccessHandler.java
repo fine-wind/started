@@ -2,8 +2,8 @@ package com.example.modules.security.conf;
 
 import com.example.cache.constant.CacheCommonKeys;
 import com.example.cache.redis.RedisUtils;
-import com.example.common.constant.Constant;
-import com.example.common.utils.Result;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.utils.Result;
 import com.example.modules.security.user.SecurityUser;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;

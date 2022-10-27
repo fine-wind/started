@@ -5,8 +5,8 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
-import com.example.common.exception.UniversalCode;
-import com.example.common.exception.ServerException;
+import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.exception.ServerException;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;

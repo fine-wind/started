@@ -1,14 +1,14 @@
 package com.example.modules.sys.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
-import com.example.common.validator.AssertUtils;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.AddGroup;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.AssertUtils;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.AddGroup;
+import com.example.common.v0.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
 import com.example.modules.param.bo.SysParamsBo;
 import com.example.modules.param.dto.SysParamsDTO;
 import com.example.modules.param.service.SysParamsService;
@@ -59,19 +59,19 @@ public class SysParamsController {
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-    public Result save(@RequestBody SysParamsDTO dto) {
+    public Result<?> save(@RequestBody SysParamsDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
         sysParamsService.save(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-    public Result update(@RequestBody SysParamsDTO dto) {
+    public Result<?> update(@RequestBody SysParamsDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 

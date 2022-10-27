@@ -1,24 +1,20 @@
-package com.example.admin.logcontroller;
+package com.example.modules.log.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
 import com.example.modules.log.bo.SysLogOperationBo;
 import com.example.modules.log.dto.SysLogOperationDTO;
-import com.example.modules.log.excel.SysLogOperationExcel;
 import com.example.modules.log.service.SysLogOperationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -27,13 +23,13 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("sys/log/operation")
+@RequestMapping("/sys/log/operation")
 @Api(tags = "操作日志")
 public class SysLogOperationController {
     @Autowired
     private SysLogOperationService sysLogOperationService;
 
-    @PostMapping("page")
+    @PostMapping("/page")
     @ApiOperation("分页")
     @ApiImplicitParams({
             @ApiImplicitParam(name = Constant.PAGE.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
@@ -42,8 +38,7 @@ public class SysLogOperationController {
             @ApiImplicitParam(name = Constant.PAGE.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "status", value = "状态  0：失败    1：成功", paramType = "query", dataType = "int")
     })
-
-    public Result<PageData<SysLogOperationDTO>> page(@ApiIgnore @RequestBody SysLogOperationBo params) {
+    public Result<PageData<SysLogOperationDTO>> page(@RequestBody SysLogOperationBo params) {
         PageData<SysLogOperationDTO> page = sysLogOperationService.page(params);
 
         return new Result<PageData<SysLogOperationDTO>>().ok(page);

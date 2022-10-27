@@ -1,16 +1,16 @@
 package com.example.modules.sys.controller;
 
-import com.example.common.annotation.LogOperation;
-import com.example.common.constant.Constant;
-import com.example.common.data.page.PageData;
-import com.example.common.utils.Result;
-import com.example.common.validator.AssertUtils;
-import com.example.common.validator.ValidatorUtils;
-import com.example.common.validator.group.DefaultGroup;
-import com.example.common.validator.group.UpdateGroup;
-import com.example.common.modules.sys.dict.bo.SysDictDataBo;
-import com.example.common.modules.sys.dict.dao.SysDictDataDTO;
-import com.example.common.modules.sys.dict.service.SysDictDataService;
+import com.example.common.v0.annotation.LogOperation;
+import com.example.common.v0.constant.Constant;
+import com.example.common.v0.data.page.PageData;
+import com.example.common.v0.utils.Result;
+import com.example.common.v0.validator.AssertUtils;
+import com.example.common.v0.validator.ValidatorUtils;
+import com.example.common.v0.validator.group.DefaultGroup;
+import com.example.common.v0.validator.group.UpdateGroup;
+import com.example.common.v0.modules.sys.dict.bo.SysDictDataBo;
+import com.example.common.v0.modules.sys.dict.dao.SysDictDataDTO;
+import com.example.common.v0.modules.sys.dict.service.SysDictDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -62,39 +62,39 @@ public class SysDictDataController {
     @ApiOperation("保存")
     @LogOperation("保存")
 
-    public Result save(@RequestBody SysDictDataDTO dto){
+    public Result<?> save(@RequestBody SysDictDataDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, DefaultGroup.class);
 
         sysDictDataService.save(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
 
-    public Result update(@RequestBody SysDictDataDTO dto){
+    public Result<?> update(@RequestBody SysDictDataDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
         sysDictDataService.update(dto);
 
-        return new Result();
+        return new Result<>();
     }
 
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
 
-    public Result delete(@RequestBody Long[] ids){
+    public Result<?> delete(@RequestBody Long[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
         sysDictDataService.delete(ids);
 
-        return new Result();
+        return new Result<>();
     }
 
 }
