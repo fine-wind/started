@@ -3,6 +3,7 @@ package com.example.commons.dynamic.datasource.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.example.commons.dynamic.datasource.properties.DataSourceProperties;
 import com.example.commons.dynamic.datasource.properties.DynamicDataSourceProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class DynamicDataSourceConfig {
     private final DynamicDataSourceProperties properties;
 
+    @Autowired
     public DynamicDataSourceConfig(DynamicDataSourceProperties properties) {
         this.properties = properties;
     }

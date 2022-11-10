@@ -4,8 +4,8 @@ import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.data.service.BaseService;
 import com.example.common.v0.modules.sys.dict.bo.SysDictTypeBo;
 import com.example.common.v0.modules.sys.dict.dto.SysDictTypeDTO;
+import com.example.common.v0.modules.sys.dict.entity.SysDictTypeEntity;
 import com.example.common.v0.modules.sys.dict.vo.DictType;
-import com.example.modules.sys.dict.entity.SysDictTypeEntity;
 
 import java.util.List;
 

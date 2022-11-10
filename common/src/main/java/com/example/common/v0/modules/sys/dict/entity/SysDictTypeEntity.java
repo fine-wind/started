@@ -1,4 +1,4 @@
-package com.example.modules.sys.dict.entity;
+package com.example.common.v0.modules.sys.dict.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.common.v0.data.entity.BaseEntity;

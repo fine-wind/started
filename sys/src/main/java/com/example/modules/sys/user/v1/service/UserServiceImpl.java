@@ -25,16 +25,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserDto, UserDao, SysUserEntity> implements UserService {
-    private final SysLogLoginService logLoginService;
     private final PasswordConfig passwordConfig;
     private final RedisUtils redisUtils;
 
     private final SysRoleUserService sysRoleUserService;
 
     @Autowired
-    public UserServiceImpl(SysRoleUserService sysRoleUserService, SysLogLoginService logLoginService, PasswordConfig passwordConfig, RedisUtils redisUtils) {
+    public UserServiceImpl(SysRoleUserService sysRoleUserService, PasswordConfig passwordConfig, RedisUtils redisUtils) {
         this.sysRoleUserService = sysRoleUserService;
-        this.logLoginService = logLoginService;
         this.passwordConfig = passwordConfig;
         this.redisUtils = redisUtils;
     }

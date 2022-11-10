@@ -37,6 +37,7 @@ import java.util.List;
  * @param <Dao> 持久层
  * @param <E>   实体类
  */
+@Deprecated
 public abstract class BaseServiceImpl<Bo extends BaseBo, Dao extends BaseDao<E>, E extends BaseEntity>
         implements BaseService<Bo, E> {
     @Autowired
@@ -148,7 +149,7 @@ public abstract class BaseServiceImpl<Bo extends BaseBo, Dao extends BaseDao<E>,
         wrapper.eq(params.getId() != null, E::getId, params.getId());
         wrapper.eq(params.getCreator() != null, E::getCreator, params.getCreator());
 
-        Boolean superMan = null;
+        // Boolean superMan = null;
 
         /* 普通情况*/
         // todo xing 列权限管理
