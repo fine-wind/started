@@ -1,7 +1,6 @@
 # 测试环境
-# Tomcat
 server:
-  port: 87
+  port: 89
   tomcat:
     uri-encoding: UTF-8
     threads:
@@ -27,9 +26,12 @@ spring:
     druid:
       #MySQL
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: root
+#      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#      username: root
+#      password: toor
+      url: jdbc:mysql://hefang.group:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: started
+      password: 93d295b4f1f9397ca8915a1ae28edd2c
       initial-size: 10
       max-active: 100
       min-idle: 10
@@ -56,6 +58,20 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+#dynamic:
+#  datasource:
+#    slave1:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#      username: root
+#      password: toor
+#    slave2:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghaiity
+#      username: root
+#      password: toor
+#
+
 # 日志配置
 logging:
   level:

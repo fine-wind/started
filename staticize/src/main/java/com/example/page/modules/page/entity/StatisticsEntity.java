@@ -1,7 +1,7 @@
 package com.example.page.modules.page.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.data.entity.BaseEntity;
+import com.example.common.v0.data.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

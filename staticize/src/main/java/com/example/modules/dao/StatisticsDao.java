@@ -1,6 +1,6 @@
 package com.example.modules.dao;
 
-import com.example.common.data.dao.BaseDao;
+import com.example.common.v0.data.dao.BaseDao;
 import com.example.page.modules.page.entity.StatisticsEntity;
 import org.apache.ibatis.annotations.Mapper;
 

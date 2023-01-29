@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.example</groupId>
-        <artifactId>started</artifactId>
+        <groupId>com.example.started</groupId>
+        <artifactId>root</artifactId>
         <version>${revision}</version>
     </parent>
     <artifactId>admin</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
 
     <name>admin</name>
@@ -22,8 +22,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>started-sys</artifactId>
+            <groupId>com.example.started</groupId>
+            <artifactId>sys</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -65,8 +65,8 @@
             <artifactId>freemarker</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>started-common</artifactId>
+            <groupId>com.example.started</groupId>
+            <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

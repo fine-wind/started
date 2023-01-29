@@ -1,9 +1,9 @@
 package com.example.bo;
 
+import com.example.common.v0.validator.group.AddGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import com.example.common.validator.group.AddGroup;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.0</version>
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>started</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example.started</groupId>
+    <artifactId>root</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
@@ -17,20 +17,24 @@
 
     <modules>
         <module>common</module>
+        <module>controller</module>
+        <module>dao</module>
+        <module>service</module>
         <module>sys</module>
         <module>dynamic-datasource</module>
         <module>generator</module>
         <module>staticize</module>
         <module>admin</module>
+        <module>vo</module>
     </modules>
 
     <properties>
         <revision>0.0.1</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <java.version>1.8</java.version>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <java.version>8</java.version>
         <junit.version>4.13.1</junit.version>
         <jedis.version>2.9.0</jedis.version>
         <druid.version>1.1.13</druid.version>
@@ -47,6 +51,7 @@
         <joda.time.version>2.9.9</joda.time.version>
         <gson.version>2.8.6</gson.version>
         <knife4j.version>2.0.1</knife4j.version>
+        <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -148,28 +153,4 @@
             </plugin>
         </plugins>
     </build>
-    <!-- 阿里云maven仓库 -->
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/central</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/central</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
