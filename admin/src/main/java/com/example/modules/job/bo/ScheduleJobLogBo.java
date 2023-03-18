@@ -1,4 +1,4 @@
-package com.example.admin.job.bo;
+package com.example.modules.job.bo;
 
 import com.example.common.v0.data.bo.BaseBo;
 import lombok.Data;

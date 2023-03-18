@@ -7,11 +7,10 @@ import com.example.common.v0.validator.group.UpdateGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -43,7 +42,7 @@ public class ScheduleJobDTO implements Serializable {
     private String cronExpression;
 
     @ApiModelProperty(value = "任务状态  0：暂停  1：正常")
-    @Range(min=0, max=1, message = "{schedule.status.range}", groups = DefaultGroup.class)
+    // todo @Range(min=0, max=1, message = "{schedule.status.range}", groups = DefaultGroup.class)
     private Integer status;
 
     @ApiModelProperty(value = "备注")

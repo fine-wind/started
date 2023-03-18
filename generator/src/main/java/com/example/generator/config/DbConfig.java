@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Primary;
 /**
  * 数据库配置
  */
-@Configuration
+//@Configuration
 public class DbConfig {
     @Value("${spring.databaseType: mysql}")
     private String database;
-    @Autowired
+    @Autowired(required = false)
     private MySQLGeneratorDao mySQLGeneratorDao;
     @Autowired
     private OracleGeneratorDao oracleGeneratorDao;

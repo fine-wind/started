@@ -7,26 +7,25 @@ import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.exception.UniversalCode;
 import com.example.common.v0.utils.*;
 import com.example.common.v0.validator.ValidatorUtils;
-import com.example.modules.dto.LoginDTO;
 import com.example.modules.log.enums.LoginOperationEnum;
 import com.example.modules.log.enums.LoginStatusEnum;
 import com.example.modules.param.dto.SysParamsDTO;
 import com.example.modules.param.service.SysParamsService;
-import com.example.modules.security.PasswordConfig;
+import com.example.modules.security.dto.LoginDTO;
 import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.enums.UserStatusEnum;
 import com.example.modules.sys.user.v1.dto.UserDto;
-import com.example.modules.sys.user.v1.service.UserService;
+import com.example.modules.sys.user.v1.service.UserServiceV1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Objects;
 
@@ -37,7 +36,7 @@ import java.util.Objects;
 @Api(tags = "登录管理")
 public class LoginController {
     @Autowired
-    private UserService sysUserService;
+    private UserServiceV1 sysUserService;
 
     @Autowired
     private SysParamsService paramsService;
@@ -99,14 +98,13 @@ public class LoginController {
         }
 
         //密码错误
-        if (!SpringContextUtils.getBean(PasswordConfig.class).matches(login.getPassword(), user.getPassword())) {
-            log.setStatus(LoginStatusEnum.FAIL.value());
-            log.setCreator(user.getId());
-            log.setCreatorName(user.getUsername());
-            sysLogLoginService.save(log);
-
-            throw new ServerException(UniversalCode.ACCOUNT_PASSWORD_ERROR, "密码不正确");
-        }
+        // if (!SpringContextUtils.getBean(PasswordConfig.class).matches(login.getPassword(), user.getPassword())) {
+        //     log.setStatus(LoginStatusEnum.FAIL.value());
+        //     log.setCreator(user.getId());
+        //     log.setCreatorName(user.getUsername());
+        //     sysLogLoginService.save(log);
+        //     throw new ServerException(UniversalCode.ACCOUNT_PASSWORD_ERROR, "密码不正确");
+        // }
 
         //账号停用
         if (UserStatusEnum.DISABLE.value().equals(user.getStatus())) {

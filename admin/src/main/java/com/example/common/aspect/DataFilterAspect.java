@@ -5,9 +5,9 @@ import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.bo.BaseBo;
 import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.exception.UniversalCode;
+import com.example.common.v0.utils.StringUtil;
 import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -67,7 +67,7 @@ public class DataFilterAspect {
 
         //获取表的别名
         String tableAlias = dataFilter.tableAlias();
-        if (StringUtils.isNotBlank(tableAlias)) {
+        if (StringUtil.isNotBlank(tableAlias)) {
             tableAlias += ".";
         }
 
@@ -79,7 +79,7 @@ public class DataFilterAspect {
         if (Objects.nonNull(deptIdList) && deptIdList.size() > 0) {
             sqlFilter.append(tableAlias).append(dataFilter.deptId());
 
-            sqlFilter.append(" in(").append(StringUtils.join(deptIdList, ",")).append(")");
+            sqlFilter.append(" in(").append(StringUtil.join(deptIdList, ",")).append(")");
         }
 
         //查询本人数据

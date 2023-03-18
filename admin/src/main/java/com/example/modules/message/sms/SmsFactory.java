@@ -24,11 +24,11 @@ public class SmsFactory {
         SmsConfig config = JSON.parseObject(smsEntity.getSmsConfig(), SmsConfig.class);
 
         if(smsEntity.getPlatform() == Constant.SmsService.ALIYUN.getValue()){
-            return new AliyunSmsService(config);
+//            return new AliyunSmsService(config);
         }else if(smsEntity.getPlatform() == Constant.SmsService.QCLOUD.getValue()){
-            return new QcloudSmsService(config);
+//            return new QcloudSmsService(config);
         }else if(smsEntity.getPlatform() == Constant.SmsService.QINIU.getValue()){
-            return new QiniuSmsService(config);
+//            return new QiniuSmsService(config);
         }
 
         return null;

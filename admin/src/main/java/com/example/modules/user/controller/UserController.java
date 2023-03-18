@@ -15,7 +15,7 @@ import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.login.v0.service.LoginService;
 import com.example.modules.sys.user.v1.dto.UserDto;
 import com.example.modules.sys.user.v1.entity.SysUserEntity;
-import com.example.modules.sys.user.v1.service.UserService;
+import com.example.modules.sys.user.v1.service.UserServiceV1;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 /**
@@ -35,11 +34,11 @@ import java.util.Objects;
 @Api(tags = "用户相关接口")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceV1 userService;
     private final LoginService loginService;
 
     @Autowired
-    public UserController(UserService userService, LoginService loginService) {
+    public UserController(UserServiceV1 userService, LoginService loginService) {
         this.userService = userService;
         this.loginService = loginService;
     }
@@ -47,7 +46,7 @@ public class UserController {
     @PostMapping(Constant.User.JOIN)
     @ApiOperation("注册")
     // @PreAuthorize("permitAll()")
-    public Result<?> logInRegister(@RequestBody LogInRegisterDTO logInRegisterDTO, HttpServletResponse response) {
+    public Result<?> logInRegister(@RequestBody LogInRegisterDTO logInRegisterDTO) {
         ValidatorUtils.validateEntity(logInRegisterDTO, AddGroup.class);
 //        if (!CaptchaUtils.validate(logInRegisterDT.getUuid(), logInRegisterDTO.getCaptcha())) {
         // todo throw new ServerException(Constant.UniversalCode.UNAUTHORIZED, "验证码错误");

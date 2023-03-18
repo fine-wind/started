@@ -7,6 +7,7 @@ import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.modules.sys.dict.dao.SysDictDataDao;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -19,6 +20,7 @@ import java.util.*;
 @Service
 public class Translation {
     @Autowired
+    @Lazy
     private SysDictDataDao dictDataDao;
 
     /**

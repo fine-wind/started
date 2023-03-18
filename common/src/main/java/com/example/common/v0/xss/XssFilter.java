@@ -2,8 +2,8 @@ package com.example.common.v0.xss;
 
 import lombok.extern.log4j.Log4j2;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**

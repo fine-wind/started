@@ -1,4 +1,4 @@
-package com.example.admin.logcontroller;
+package com.example.modules.log.controller;
 
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.modules.log.bo.SysLogLoginBo;
@@ -27,7 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("sys/log/login")
 @Api(tags = "登录日志")
 public class SysLogLoginController {
-    @Autowired
+    @Autowired(required = false)
     private SysLogLoginService sysLogLoginService;
 
     @PostMapping("page")

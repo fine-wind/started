@@ -1,6 +1,5 @@
 package ${package}.modules.${moduleName}.excel;
 
-import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
 
 #if(${hasBigDecimal})

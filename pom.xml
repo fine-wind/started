@@ -3,11 +3,11 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.0</version>
+        <version>3.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.example.started</groupId>
-    <artifactId>root</artifactId>
+    <artifactId>core</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
@@ -17,13 +17,8 @@
 
     <modules>
         <module>common</module>
-        <module>controller</module>
-        <module>dao</module>
-        <module>service</module>
-        <module>sys</module>
         <module>dynamic-datasource</module>
         <module>generator</module>
-        <module>staticize</module>
         <module>admin</module>
         <module>vo</module>
     </modules>
@@ -32,14 +27,13 @@
         <revision>0.0.1</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.source>8</maven.compiler.source>
-        <java.version>8</java.version>
+        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>19</maven.compiler.source>
+        <java.version>19</java.version>
         <junit.version>4.13.1</junit.version>
         <jedis.version>2.9.0</jedis.version>
-        <druid.version>1.1.13</druid.version>
-        <mybatisplus.version>3.5.1</mybatisplus.version>
-        <mysql.version>8.0.28</mysql.version>
+        <mybatisplus.version>3.5.3.1</mybatisplus.version>
+        <mysql.version>8.0.31</mysql.version>
         <sqlserver.version>4.0</sqlserver.version>
         <oracle.version>11.2.0.3</oracle.version>
         <commons.lang.version>3.7</commons.lang.version>
@@ -77,9 +71,10 @@
             <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -125,7 +120,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
@@ -140,14 +134,15 @@
     </dependencies>
 
     <build>
+        <finalName>${project.name}-${project.version}-${maven.build.timestamp}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>19</source>
+                    <target>19</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

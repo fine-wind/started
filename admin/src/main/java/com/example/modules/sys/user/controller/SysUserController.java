@@ -17,7 +17,7 @@ import com.example.modules.security.user.SecurityUser;
 import com.example.modules.security.user.SecurityUserDetails;
 import com.example.modules.sys.dto.PasswordDTO;
 import com.example.modules.sys.user.v1.dto.UserDto;
-import com.example.modules.sys.user.v1.service.UserService;
+import com.example.modules.sys.user.v1.service.UserServiceV1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -35,11 +35,11 @@ import java.util.List;
 @RequestMapping("/sys/user")
 @Api(tags = "用户管理")
 public class SysUserController {
-    private final UserService userService;
+    private final UserServiceV1 userService;
     private final SysRoleUserService sysRoleUserService;
 
     @Autowired
-    public SysUserController(UserService userService, SysRoleUserService sysRoleUserService) {
+    public SysUserController(UserServiceV1 userService, SysRoleUserService sysRoleUserService) {
         this.userService = userService;
         this.sysRoleUserService = sysRoleUserService;
     }

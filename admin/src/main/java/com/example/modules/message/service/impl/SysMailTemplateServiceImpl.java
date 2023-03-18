@@ -1,6 +1,7 @@
 package com.example.modules.message.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.common.v0.data.service.impl.CrudServiceImpl;
 import com.example.modules.message.bo.SysMailTemplateBo;
 import com.example.modules.message.dao.SysMailTemplateDao;
@@ -8,7 +9,6 @@ import com.example.modules.message.dto.SysMailTemplateDTO;
 import com.example.modules.message.email.EmailUtils;
 import com.example.modules.message.entity.SysMailTemplateEntity;
 import com.example.modules.message.service.SysMailTemplateService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

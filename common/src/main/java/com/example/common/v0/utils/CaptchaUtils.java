@@ -3,7 +3,7 @@ package com.example.common.v0.utils;
 import com.wf.captcha.*;
 import lombok.extern.log4j.Log4j2;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**

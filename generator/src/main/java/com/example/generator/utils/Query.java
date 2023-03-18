@@ -3,6 +3,7 @@ package com.example.generator.utils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Query extends LinkedHashMap<String, Object> {
+    @Serial
     private static final long serialVersionUID = 1L;
     //当前页码
     private int page;

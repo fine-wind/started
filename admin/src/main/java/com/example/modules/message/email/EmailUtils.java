@@ -1,9 +1,9 @@
 package com.example.modules.message.email;
 
-import com.example.modules.message.entity.SysMailTemplateEntity;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.exception.UniversalCode;
+import com.example.modules.message.entity.SysMailTemplateEntity;
 import com.example.modules.message.service.SysMailLogService;
 import com.example.modules.message.service.SysMailTemplateService;
 import com.example.modules.param.service.SysParamsService;
@@ -14,10 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import javax.mail.internet.MimeMessage;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
@@ -74,35 +72,35 @@ public class EmailUtils {
 
         EmailConfig config = sysParamsService.getValueObject(KEY, EmailConfig.class);
         JavaMailSenderImpl mailSender = createMailSender(config);
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-
-        //设置utf-8编码
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        messageHelper.setFrom(config.getUsername());
-
-        //收件人
-        messageHelper.setTo(to);
-        //抄送
-        if (cc != null && cc.length > 0) {
-            messageHelper.setCc(cc);
-        }
-        //主题
-        messageHelper.setSubject(template.getSubject());
-
-        //邮件正文
-        String content = getFreemarkerContent(template.getContent(), params);
-        messageHelper.setText(content, true);
-
+//        MimeMessage mimeMessage = mailSender.createMimeMessage();
+//
+//        //设置utf-8编码
+//        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//        messageHelper.setFrom(config.getUsername());
+//
+//        //收件人
+//        messageHelper.setTo(to);
+//        //抄送
+//        if (cc != null && cc.length > 0) {
+//            messageHelper.setCc(cc);
+//        }
+//        //主题
+//        messageHelper.setSubject(template.getSubject());
+//
+//        //邮件正文
+//        String content = getFreemarkerContent(template.getContent(), params);
+//        messageHelper.setText(content, true);
+//
         int status = Constant.Status.SUCCESS;
-        //发送邮件
-        try {
-            mailSender.send(mimeMessage);
-        } catch (Exception e) {
-            status = Constant.Status.FAIL;
-            logger.error("send error", e);
-        }
-
-        sysMailLogService.save(templateId, config.getUsername(), to, cc, template.getSubject(), content, status);
+//        //发送邮件
+//        try {
+//            mailSender.send(mimeMessage);
+//        } catch (Exception e) {
+//            status = Constant.Status.FAIL;
+//            logger.error("send error", e);
+//        }
+//
+//        sysMailLogService.save(templateId, config.getUsername(), to, cc, template.getSubject(), content, status);
 
         return status == Constant.Status.SUCCESS;
     }

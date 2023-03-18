@@ -1,7 +1,6 @@
 package com.example.commons.dynamic.datasource.aspect;
 
 import com.example.commons.dynamic.datasource.annotation.DataSource;
-import com.example.commons.dynamic.datasource.config.DynamicContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -48,14 +47,14 @@ public class DataSourceAspect {
                 value = targetDataSource.value();
             }
 
-            DynamicContextHolder.push(value);
+//            DynamicContextHolder.push(value);
             logger.debug("set datasource is {}", value);
         }
 
         try {
             return point.proceed();
         } finally {
-            DynamicContextHolder.poll();
+//            DynamicContextHolder.poll();
             logger.debug("clean datasource");
         }
     }

@@ -3,12 +3,10 @@ package com.example.modules.oss.cloud;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
-import org.hibernate.validator.constraints.URL;
 import com.example.common.v0.validator.group.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -20,12 +18,12 @@ public class CloudStorageConfig implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "类型 1：七牛  2：阿里云  3：腾讯云   4：FastDFS   5：本地上传   6：MinIO")
-    @Range(min = 1, max = 6, message = "{oss.type.range}")
+    // todo @Range(min = 1, max = 6, message = "{oss.type.range}")
     private Integer type;
 
     @ApiModelProperty(value = "绑定的域名")
     @NotBlank(message = "{qiniu.domain.require}", groups = QiniuGroup.class)
-    @URL(message = "{qiniu.domain.url}", groups = QiniuGroup.class)
+    // todo @URL(message = "{qiniu.domain.url}", groups = QiniuGroup.class)
     private String domain;
 
     @ApiModelProperty(value = "本地上传存储目录")

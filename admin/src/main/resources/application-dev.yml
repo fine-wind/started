@@ -7,7 +7,7 @@ server:
       max: 10
   servlet:
     # 应用的访问路径
-    context-path: /api
+    context-path: /
     session:
       cookie:
         http-only: true
@@ -23,41 +23,15 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
   datasource:
-    druid:
-      #MySQL
-      driver-class-name: com.mysql.cj.jdbc.Driver
-#      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-#      username: root
-#      password: toor
-      url: jdbc:mysql://hefang.group:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: started
-      password: 93d295b4f1f9397ca8915a1ae28edd2c
-      initial-size: 10
-      max-active: 100
-      min-idle: 10
-      max-wait: 6000
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      #Oracle需要打开注释
-      #validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        #login-username: admin
-        #login-password: admin
-      filter:
-        stat:
-          log-slow-sql: true
-          slow-sql-millis: 1000
-          merge-sql: false
-        wall:
-          config:
-            multi-statement-allow: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 5
+      max-lifetime: 120000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
 #dynamic:
 #  datasource:
 #    slave1:
@@ -78,7 +52,7 @@ logging:
     org:
       mybatis: debug
     com:
-      example: debug
+      example: trace
   file:
     name: log/log.log
 mybatis-plus:

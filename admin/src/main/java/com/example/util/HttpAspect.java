@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 
@@ -16,7 +16,7 @@ import java.util.Objects;
 @Component
 public class HttpAspect {
 
-    @Pointcut("execution(public * com.example.api.user.*.*(..)) || execution(public * com.example.api.user.v2.*.*(..))")
+    @Pointcut("execution(public * com.example.*.user.*.*(..)) || execution(public * com.example.*.user.v2.*.*(..))")
     public void pointCut() {
 
     }

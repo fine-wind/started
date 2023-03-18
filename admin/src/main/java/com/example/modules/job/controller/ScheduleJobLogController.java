@@ -1,9 +1,9 @@
 package com.example.modules.job.controller;
 
-import com.example.admin.job.bo.ScheduleJobLogBo;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.utils.Result;
+import com.example.modules.job.bo.ScheduleJobLogBo;
 import com.example.modules.job.dto.ScheduleJobLogDTO;
 import com.example.modules.job.service.ScheduleJobLogService;
 import io.swagger.annotations.Api;

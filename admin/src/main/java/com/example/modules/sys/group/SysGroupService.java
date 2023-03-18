@@ -1,0 +1,11 @@
+package com.example.modules.sys.group;
+
+import com.example.common.v0.data.service.BaseService;
+
+/**
+ * 分组资源
+ */
+public interface SysGroupService extends BaseService<SysGroupBo, SysGroupEntity> {
+
+
+}

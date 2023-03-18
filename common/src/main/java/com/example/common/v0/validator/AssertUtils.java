@@ -1,8 +1,8 @@
 package com.example.common.v0.validator;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.common.v0.exception.UniversalCode;
 import com.example.common.v0.exception.ServerException;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
