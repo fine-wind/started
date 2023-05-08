@@ -11,7 +11,9 @@ import com.example.common.v0.utils.Result;
 import com.example.common.v0.utils.StringUtil;
 import com.example.common.v0.utils.Translation;
 import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +25,6 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.List;
@@ -33,16 +34,20 @@ import java.util.Objects;
 @Log4j2
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
-    @Autowired
-    RedisUtils redisUtils;
+    final RedisUtils redisUtils;
+    final SysParamsRedis paramsRedis;
+    final Translation translation;
 
     @Autowired
-    SysParamsRedis paramsRedis;
-    @Autowired
-    Translation translation;
+    public ResponseAdvice(RedisUtils redisUtils, SysParamsRedis paramsRedis, Translation translation) {
+        this.redisUtils = redisUtils;
+        this.paramsRedis = paramsRedis;
+        this.translation = translation;
+    }
+
 
     @Override
-    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public boolean supports(@NotNull MethodParameter returnType, @NotNull Class<? extends HttpMessageConverter<?>> converterType) {
         log.debug("{} {}", returnType, converterType);
         return true;
     }
@@ -51,17 +56,16 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     @Nullable
     public Object beforeBodyWrite(@Nullable Object body,
-                                  @Nullable MethodParameter returnType,
-                                  @Nullable MediaType selectedContentType,
-                                  @Nullable Class<? extends HttpMessageConverter<?>> selectedConverterType,
-                                  @Nullable ServerHttpRequest request,
-                                  @Nullable ServerHttpResponse response) {
+                                  @NotNull MethodParameter returnType,
+                                  @NotNull MediaType selectedContentType,
+                                  @NotNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
+                                  @NotNull ServerHttpRequest request,
+                                  @NotNull ServerHttpResponse response) {
         long l1 = System.currentTimeMillis();
         translation.tr(body);
         long l2 = System.currentTimeMillis();
 
-        if (body instanceof Result) {
-            Result<?> result = (Result) body;
+        if (body instanceof Result<?> result) {
             /* 刷新token*/
             String token = reToken(request);
             /* 设置返回的cookie*/
@@ -107,7 +111,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                     username = decoder.getSubject();
                 }
 
-                String userTokenKey = CacheCommonKeys.getSecurityUserToken(username, t);
+                String userTokenKey = CacheCommonKeys.getSecurityUserToken(username);
 
                 Long expire = redisUtils.getExpire(userTokenKey);
                 log.info("token expire: {} time: {}", expire, tokenTime);
@@ -115,7 +119,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                     redisUtils.expire(userTokenKey, 20);
                     redisUtils.expire(CacheCommonKeys.getSecurityRoleKey(username), tokenTime);
                     token = JwtUtils.encoder(username, tokenTime);
-                    redisUtils.setCache(CacheCommonKeys.getSecurityUserToken(username, token), "", tokenTime);
+                    // 更新 过期时间 redisUtils.setCache(CacheCommonKeys.getSecurityUserToken(username, token), "", tokenTime);
                 }
 
                 return token;

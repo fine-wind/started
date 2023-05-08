@@ -6,10 +6,10 @@ import com.example.common.v0.utils.Result;
 import com.example.common.v0.validator.AssertUtils;
 import com.example.common.v0.validator.ValidatorUtils;
 import com.example.common.v0.validator.group.DefaultGroup;
-import com.example.modules.security.service.ShiroService;
-import com.example.modules.security.user.SecurityUser;
-import com.example.modules.security.user.SecurityUserDetails;
-import com.example.modules.security.vo.SysMenuVo;
+import com.example.started.verify.security.service.ShiroService;
+import com.example.started.verify.security.user.SecurityUser;
+import com.example.started.verify.security.user.SecurityUserDetails;
+import com.example.started.verify.security.vo.SysMenuVo;
 import com.example.modules.sys.bo.SysMenuBo;
 import com.example.modules.sys.dto.SysMenuDTO;
 import com.example.modules.sys.service.SysMenuService;
@@ -40,29 +40,28 @@ public class SysMenuController {
     public Result<?> nav() {
         SecurityUserDetails user = SecurityUser.getUser();
         if (Objects.isNull(user)) {
-            return new Result<>().error(Constant.UniversalCode.UNAUTHORIZED, "登录失效");
+            return Result.error(Constant.UniversalCode.UNAUTHORIZED, "登录失效");
         }
         List<SysMenuDTO> list = sysMenuService.getUserMenuTree(user, Constant.RESOURCES.MENU.getValue());
-
-        return new Result<List<SysMenuDTO>>().ok(list);
+        return Result.ok(list);
     }
 
-    @GetMapping("permissions")
+    @GetMapping("/permissions")
     @ApiOperation("权限标识")
     public Result<Map<String, SysMenuVo>> permissions() {
         SecurityUserDetails user = SecurityUser.getUser();
         Map<String, SysMenuVo> set = shiroService.getUserPermissions(user);
 
-        return new Result<Map<String, SysMenuVo>>().ok(set);
+        return Result.ok(set);
     }
 
-    @PostMapping("tree")
+    @PostMapping("/tree")
     @ApiOperation("列表")
     @ApiImplicitParam(name = "type", value = "菜单类型", paramType = "query", dataType = "int")
     public Result<List<SysMenuDTO>> tree(@RequestBody SysMenuBo bo) {
         List<SysMenuDTO> list = sysMenuService.getAllMenuTree(bo.getType());
 
-        return new Result<List<SysMenuDTO>>().ok(list);
+        return Result.ok(list);
     }
 
     @PostMapping("list")
@@ -71,22 +70,20 @@ public class SysMenuController {
     public Result<List<SysMenuDTO>> list(@RequestBody SysMenuBo bo) {
         List<SysMenuDTO> list = sysMenuService.getMenuList(SecurityUser.getUser(), bo);
 
-        return new Result<List<SysMenuDTO>>().ok(list);
+        return Result.ok(list);
     }
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-
     public Result<SysMenuDTO> get(@PathVariable("id") Long id) {
         SysMenuDTO data = sysMenuService.get(id);
 
-        return new Result<SysMenuDTO>().ok(data);
+        return Result.ok(data);
     }
 
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-
     public Result<?> save(@RequestBody SysMenuDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, DefaultGroup.class);
@@ -99,7 +96,6 @@ public class SysMenuController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-
     public Result<?> update(@RequestBody SysMenuDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, DefaultGroup.class);
@@ -112,7 +108,6 @@ public class SysMenuController {
     @DeleteMapping("{id}")
     @ApiOperation("删除")
     @LogOperation("删除")
-
     public Result<?> delete(@PathVariable("id") Long id) {
         //效验数据
         AssertUtils.isNull(id, "id");
@@ -130,11 +125,10 @@ public class SysMenuController {
 
     @GetMapping("select")
     @ApiOperation("角色菜单权限")
-
     public Result<List<SysMenuDTO>> select() {
         SecurityUserDetails user = SecurityUser.getUser();
         List<SysMenuDTO> list = sysMenuService.getUserMenuTree(user, null);
 
-        return new Result<List<SysMenuDTO>>().ok(list);
+        return Result.ok(list);
     }
 }

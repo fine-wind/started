@@ -1,5 +1,6 @@
 package com.example.common.v0.security;
 
+import com.alibaba.fastjson.JSON;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.utils.StringUtil;
 import io.jsonwebtoken.*;
@@ -25,13 +26,14 @@ public class JwtUtils {
     public static String encoder(String username, long time) {
 
         /* 这里乘1000 是因为jwt最小单位是毫秒*/
+        SignatureAlgorithm hs256 = SignatureAlgorithm.HS256;
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + time * 1000))
                 .setNotBefore(new Date())
                 // .setAudience()
                 .setIssuedAt(new Date())
                 .setSubject(username)
-                .signWith(SignatureAlgorithm.HS256, getSigningKey())
+                .signWith(hs256, JWT_SECRET_KEY.getValue())
                 .compact();
     }
 
@@ -39,26 +41,12 @@ public class JwtUtils {
         if (StringUtil.isEmpty(token)) {
             return null;
         }
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(JWT_SECRET_KEY.getValue()).parseClaimsJws(token);
         try {
-            return Jwts.parser().setSigningKey(getSigningKey()).parseClaimsJws(token).getBody();
+            return claimsJws.getBody();
         } catch (MalformedJwtException | ExpiredJwtException e) {
             log.warn(e.getMessage());
         }
         return null;
     }
-
-    /**
-     * 获取加密密钥
-     */
-    private static String getSigningKey() {
-
-        Constant.PARAM_CONF.KVR kvr = JWT_SECRET_KEY;
-        String value = kvr.getValue();
-        if (Objects.isNull(value)) {
-            log.error("缓存未命中 {}", kvr.getCode());
-            return kvr.getDefaultVal();
-        }
-        return value;
-    }
-
 }

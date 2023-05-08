@@ -20,15 +20,19 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 @Component
 public class JobCommandLineRunner implements CommandLineRunner {
+    private final Scheduler scheduler;
+    private final ScheduleJobDao scheduleJobDao;
+
     @Autowired
-    private Scheduler scheduler;
-    @Autowired
-    private ScheduleJobDao scheduleJobDao;
+    public JobCommandLineRunner(Scheduler scheduler, ScheduleJobDao scheduleJobDao) {
+        this.scheduler = scheduler;
+        this.scheduleJobDao = scheduleJobDao;
+    }
 
     @Override
     public void run(String... args) {
         CachedThreadPool.execute(() -> {
-            log.debug("开始加载定时任务");
+            log.trace("开始加载定时任务");
             List<ScheduleJobEntity> scheduleJobList = scheduleJobDao.selectList(null);
             for (ScheduleJobEntity scheduleJob : scheduleJobList) {
                 CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getId());

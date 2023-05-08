@@ -1,6 +1,6 @@
 package com.example.generator.service;
 
-import com.example.generator.modules.dao.GeneratorDao;
+import com.example.generator.modules.dao.MySQLGeneratorDao;
 import com.example.generator.utils.GenUtils;
 import com.example.generator.utils.PageUtils;
 import com.example.generator.utils.Query;
@@ -21,7 +21,7 @@ import java.util.zip.ZipOutputStream;
 @Service
 public class SysGeneratorService {
     @Autowired
-    private GeneratorDao generatorDao;
+    private MySQLGeneratorDao generatorDao;
 
     public PageUtils queryList(Query query) {
         Page<?> page = PageHelper.startPage(query.getPage(), query.getLimit());

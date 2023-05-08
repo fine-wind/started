@@ -7,7 +7,7 @@ import com.example.common.v0.data.modules.role.SysRoleUserService;
 import com.example.common.v0.utils.ConvertUtils;
 import com.example.common.v0.utils.StringUtil;
 import com.example.common.v1.base.service.impl.BaseServiceV1Impl;
-import com.example.modules.security.user.SecurityUserDetails;
+import com.example.started.verify.security.user.SecurityUserDetails;
 import com.example.modules.sys.user.v1.dao.UserDao;
 import com.example.modules.sys.user.v1.dto.UserDto;
 import com.example.modules.sys.user.v1.entity.SysUserEntity;
@@ -59,7 +59,7 @@ public class UserServiceV1Impl extends BaseServiceV1Impl<UserDto, UserDao, SysUs
 
     @Override
     public boolean updatePassword(String userId, String oldPassword, String newPassword) {
-        SysUserEntity user = baseDao.selectById(userId);
+//        SysUserEntity user = baseDao.selectById(userId);
 //        boolean matches = passwordConfig.matches(oldPassword, user.getPassword());
 //        if (!matches) {
 //            throw new ServerException("旧密码不正确");

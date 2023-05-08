@@ -2,8 +2,8 @@ package com.example.modules.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.example.common.v0.constant.Constant;
-import com.example.modules.security.user.SecurityUser;
-import com.example.modules.security.user.SecurityUserDetails;
+import com.example.started.verify.security.user.SecurityUser;
+import com.example.started.verify.security.user.SecurityUserDetails;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 

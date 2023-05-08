@@ -18,10 +18,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     private RedisTemplate<String, Object> redisTemplate;
 
-    @Autowired
+    @Autowired()
     public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
@@ -68,9 +67,36 @@ public class RedisUtils {
         this.redisTemplate.opsForValue().set(key, value, expire > NOT_EXPIRE ? expire : DEFAULT_EXPIRE, timeUnit);
     }
 
+    @Deprecated
     public SetOperations<String, Object> opsForSet() {
         return redisTemplate.opsForSet();
     }
+
+    // region SET
+
+    /**
+     * 向制定的key里添加value
+     *
+     * @param key   .
+     * @param value .
+     */
+    public void opsSetAdd(String key, Object... value) {
+        if (Objects.isNull(value) || value.length == 0) {
+            return;
+        }
+        redisTemplate.opsForSet().add(key, value);
+    }
+
+    /**
+     * 从key里获取到value
+     *
+     * @param key .
+     * @return value
+     */
+    public Set<Object> members(String key) {
+        return redisTemplate.opsForSet().members(key);
+    }
+    // endregion
 
     /**
      * 删除多个key

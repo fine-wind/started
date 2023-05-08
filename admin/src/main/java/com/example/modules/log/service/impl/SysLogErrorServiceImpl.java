@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import com.example.common.v0.asyn.CachedThreadPool;
+
 import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
 
 /**
@@ -51,12 +53,11 @@ public class SysLogErrorServiceImpl extends BaseServiceImpl<SysLogErrorBo, SysLo
      * todo xing 待修改成异步保存的
      * 提交到redis里 再用线程异步存库
      *
-     * @param entity
+     * @param entity log
      */
     @Override
-    // @Transactional(rollbackFor = Exception.class)
     public void save(SysLogErrorEntity entity) {
-        // CachedThreadPool.submitTask(() -> insert(entity));
+        CachedThreadPool.submit(() -> insert(entity));
     }
 
 }

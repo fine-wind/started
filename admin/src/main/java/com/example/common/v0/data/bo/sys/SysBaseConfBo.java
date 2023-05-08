@@ -3,12 +3,14 @@ package com.example.common.v0.data.bo.sys;
 import com.example.common.v0.data.bo.BaseBo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * 用户
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class SysBaseConfBo extends BaseBo {
     private static final long serialVersionUID = 1L;
 

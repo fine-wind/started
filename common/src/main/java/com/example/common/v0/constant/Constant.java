@@ -16,6 +16,7 @@ public interface Constant {
      */
     Long ROOT = 0L;
 
+    @Getter
     enum RESOURCES {
         MENU(0, "页面"),
         BUTTON(1, "按钮"),
@@ -27,14 +28,6 @@ public interface Constant {
         RESOURCES(Integer value, String msg) {
             this.value = value;
             this.msg = msg;
-        }
-
-        public Integer getValue() {
-            return value;
-        }
-
-        public String getMsg() {
-            return msg;
         }
     }
 
@@ -53,6 +46,14 @@ public interface Constant {
              * 填写的密码
              */
             String PASSWORD = "password";
+            /**
+             * 验证码的 uuid
+             */
+            String UUID = "uuid";
+            /**
+             * 表单填写的验证码
+             */
+            String CODE = "code";
         }
     }
 
@@ -87,7 +88,7 @@ public interface Constant {
             /**
              * token header
              */
-            String TOKEN = "token";
+            String TOKEN = "Authorization";
         }
     }
 
@@ -281,38 +282,35 @@ public interface Constant {
          */
         interface APP_SETTINGS_CONF {
             KVR THIS_NAME = new KVR("NAME", "网站名称", "网站名称");
+            KVR THIS_SHORT_NAME = new KVR("SHORT_NAME", "站名", "站名");
             KVR THIS_HOST = new KVR("thisHost", "localhost", "网站域名");
-
+            KVR COPYRIGHT = new KVR("COPYRIGHT", "版权", "版权");
             KVR SYNOPSIS = new KVR("SYNOPSIS", "网站简介", "网站简介");
             KVR TEMPLATE_PATH = new KVR("TEMPLATE_PATH", "./resources/", "模板位置");
-            KVR COMPRESS = new KVR("COMPRESS", "true", "网站压缩，压缩需键入 true | false");
-            KVR PAGE_CACHE_PATH = new KVR("PAGE_CACHE_PATH", "", "todo 页面缓存路径");
+            KVR COMPRESS = new KVR("COMPRESS", "true", "网站压缩是否开启  true | false");
+            KVR REGISTER = new KVR("REGISTER", "true", "是否可以注册用户  true | false");
+            KVR CAPTCHA = new KVR("CAPTCHA", "true", "验证码是否启用  true | false");
             KVR SCRIPT = new KVR("SCRIPT", "console.log('test script')", "输入script代码即可运行");
-            KVR STATIC_VERSION = new KVR("STATIC_VERSION", "0.0.1", "js,css的版本号，用于清理浏览器端缓存");
-            KVR BEIAN_IPC = new KVR("BEIAN_IPC", "", "网站备案号");
-            KVR BEIAN_MIIT = new KVR("BEIAN_MIIT", "https://beian.miit.gov.cn/", "公信部连接");
-
             KVR JWT_SECRET_KEY = new KVR("JWT_SECRET_KEY", "JWT_SECRET_KEY", "用户登录token加密密钥");
             KVR JWT_EXPIRATION = new KVR("JWT_EXPIRATION", String.valueOf(3600), "jwt过期时间(秒), 默认" + 3600 / 60 + "分钟");
 
-            Map<String, KVR> CONF_MAP = new HashMap<>(12);
+            Map<String, KVR> CONF_MAP = new HashMap<>(13);
 
             static void init() {
                 CONF_MAP.put(THIS_NAME.getCode(), THIS_NAME);
+                CONF_MAP.put(THIS_SHORT_NAME.getCode(), THIS_SHORT_NAME);
                 CONF_MAP.put(THIS_HOST.getCode(), THIS_HOST);
+                CONF_MAP.put(COPYRIGHT.getCode(), COPYRIGHT);
                 CONF_MAP.put(SYNOPSIS.getCode(), SYNOPSIS);
                 CONF_MAP.put(TEMPLATE_PATH.getCode(), TEMPLATE_PATH);
                 CONF_MAP.put(COMPRESS.getCode(), COMPRESS);
-                CONF_MAP.put(PAGE_CACHE_PATH.getCode(), PAGE_CACHE_PATH);
+                CONF_MAP.put(REGISTER.getCode(), REGISTER);
+                CONF_MAP.put(CAPTCHA.getCode(), CAPTCHA);
                 CONF_MAP.put(SCRIPT.getCode(), SCRIPT);
-                CONF_MAP.put(STATIC_VERSION.getCode(), STATIC_VERSION);
-                CONF_MAP.put(BEIAN_IPC.getCode(), BEIAN_IPC);
-                CONF_MAP.put(BEIAN_MIIT.getCode(), BEIAN_MIIT);
                 CONF_MAP.put(JWT_SECRET_KEY.getCode(), JWT_SECRET_KEY);
                 CONF_MAP.put(JWT_EXPIRATION.getCode(), JWT_EXPIRATION);
             }
         }
-
     }
 
     /**

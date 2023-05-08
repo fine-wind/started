@@ -1,9 +1,9 @@
 package com.example.common.v0.utils;
 
 /**
- * TODO xing 频率工具类
- * TODO xing 接口频率计算公式
- * TODO xing 接口频率限制
+ * todo xing 频率工具类
+ * todo xing 接口频率计算公式
+ * todo xing 接口频率限制
  *
  * @author 行星
  */

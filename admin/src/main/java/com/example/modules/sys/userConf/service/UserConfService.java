@@ -20,4 +20,6 @@ public interface UserConfService extends CrudService<UserConfBo, SysUserConfEnti
      * @return 用户的所有配置
      */
     Map<String, SysBaseConfDTO> getConf(long userId);
+
+    boolean isSuper(String id);
 }

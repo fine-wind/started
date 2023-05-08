@@ -17,7 +17,7 @@ import com.example.modules.notice.enums.NoticeStatusEnum;
 import com.example.modules.notice.enums.ReceiverTypeEnum;
 import com.example.modules.notice.service.SysNoticeService;
 import com.example.modules.notice.service.SysNoticeUserService;
-import com.example.modules.security.user.SecurityUser;
+import com.example.started.verify.security.user.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

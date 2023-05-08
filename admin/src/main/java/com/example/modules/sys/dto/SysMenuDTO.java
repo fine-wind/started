@@ -11,6 +11,8 @@ import lombok.EqualsAndHashCode;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,16 +25,20 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "菜单管理")
 @DictTranslationClass()
-public class SysMenuDTO extends TreeNode implements Serializable {
+public class SysMenuDTO extends TreeNode<SysMenuDTO> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-
+    @ApiModelProperty(value = "id")
+    private Long id;
+    @ApiModelProperty(value = "pid")
+    private Long pid;
 
     @ApiModelProperty(value = "菜单名称")
     @NotBlank(message = "{sysmenu.name.require}", groups = DefaultGroup.class)
     private String name;
 
     @ApiModelProperty(value = "菜单URL")
-    private String url;
+    private String path;
 
     @ApiModelProperty(value = "类型")
     // todo @Range(min = 0, max = 2, message = "菜单类型不正确", groups = DefaultGroup.class)
@@ -50,6 +56,10 @@ public class SysMenuDTO extends TreeNode implements Serializable {
     @ApiModelProperty(value = "排序")
     @Min(value = 0, message = "{sort.number}", groups = DefaultGroup.class)
     private Integer sort;
+
+    private Integer l;
+
+    private Integer r;
 
     @ApiModelProperty(value = "创建时间")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

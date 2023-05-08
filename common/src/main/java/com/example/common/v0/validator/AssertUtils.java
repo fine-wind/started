@@ -71,11 +71,11 @@ public class AssertUtils {
         }
     }
 
-    public static void isMapEmpty(Map map, String... params) {
+    public static void isMapEmpty(Map<?, ?> map, String... params) {
         isMapEmpty(map, UniversalCode.NOT_NULL, params);
     }
 
-    public static void isMapEmpty(Map map, Integer code, String... params) {
+    public static void isMapEmpty(Map<?, ?> map, Integer code, String... params) {
         if (code == null) {
             throw new ServerException(UniversalCode.NOT_NULL, "code");
         }

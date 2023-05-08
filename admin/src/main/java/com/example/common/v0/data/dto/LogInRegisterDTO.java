@@ -25,11 +25,6 @@ public class LogInRegisterDTO {
     @NotBlank(message = "用户名不能为空", groups = {AddGroup.class})
     private String username;
 
-    @ApiModelProperty(value = "邮箱", required = true)
-    @NotBlank(message = "邮箱不能为空", groups = {AddGroup.class})
-    @Email(message = "邮箱格式不正确", groups = {AddGroup.class})
-    private String email;
-
     @NotBlank(message = "密码不能为空", groups = {AddGroup.class})
     @Size(min = 8, message = "密码最短8位", groups = {AddGroup.class})
     private String password;

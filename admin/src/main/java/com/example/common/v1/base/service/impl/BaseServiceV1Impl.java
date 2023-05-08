@@ -40,7 +40,6 @@ public class BaseServiceV1Impl<DTO extends BaseDto, DAO extends BaseDao<T>, T ex
     @Autowired
     protected DAO baseDao;
 
-    @SuppressWarnings("resource")
     protected Class<T> currentEntityClass() {
         return (Class<T>) ReflectionKit.getSuperClassGenericType(BaseServiceV1Impl.class, getClass(), 2);
     }

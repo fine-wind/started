@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.common.v0.data.dto.sys.SysBaseConfDTO;
 import com.example.common.v0.data.service.impl.CrudServiceImpl;
 import com.example.common.v0.data.service.sys.SysBaseConfService;
+import com.example.modules.log.enums.UserConfigBaseEnum;
 import com.example.modules.sys.userConf.bo.UserConfBo;
 import com.example.modules.sys.userConf.dto.UserConfDto;
 import com.example.modules.sys.userConf.entity.SysUserConfEntity;
@@ -35,7 +36,7 @@ public class UserConfServiceImpl extends CrudServiceImpl<UserConfBo, UserConfDao
         LambdaQueryWrapper<SysUserConfEntity> queryWrapper = super.getQueryWrapper(params);
 
         queryWrapper.eq(Objects.nonNull(params.getUserId()), SysUserConfEntity::getUserId, params.getUserId());
-        queryWrapper.eq(Objects.nonNull(params.getItem()), SysUserConfEntity::getItem, params.getItem());
+        queryWrapper.eq(Objects.nonNull(params.getItem()), SysUserConfEntity::getK, params.getItem());
 
         return queryWrapper;
     }
@@ -59,5 +60,12 @@ public class UserConfServiceImpl extends CrudServiceImpl<UserConfBo, UserConfDao
         });
 
         return map;
+    }
+
+    @Override
+    public boolean isSuper(String id) {
+        LambdaQueryWrapper<SysUserConfEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserConfEntity::getK, UserConfigBaseEnum.SUPERMAN.name());
+        return baseDao.selectCount(queryWrapper) > 0;
     }
 }

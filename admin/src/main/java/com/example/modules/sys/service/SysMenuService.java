@@ -1,10 +1,11 @@
 package com.example.modules.sys.service;
 
 import com.example.common.v0.data.service.BaseService;
-import com.example.modules.security.user.SecurityUserDetails;
+import com.example.started.verify.security.user.SecurityUserDetails;
 import com.example.modules.sys.bo.SysMenuBo;
 import com.example.modules.sys.dto.SysMenuDTO;
 import com.example.modules.sys.entity.SysResourcesEntity;
+import org.springframework.boot.CommandLineRunner;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
 /**
  * 菜单管理
  */
-public interface SysMenuService extends BaseService<SysMenuBo, SysResourcesEntity> {
+public interface SysMenuService extends BaseService<SysMenuBo, SysResourcesEntity>, CommandLineRunner {
 
     SysMenuDTO get(Long id);
 

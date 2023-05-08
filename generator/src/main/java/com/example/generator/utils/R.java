@@ -1,5 +1,6 @@
 package com.example.generator.utils;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import java.util.Map;
  * 返回数据
  */
 public class R extends HashMap<String, Object> {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public R() {

@@ -15,7 +15,7 @@ public enum LoginOperationEnum {
      */
     LOGOUT(1);
 
-    private int value;
+    private final int value;
 
     LoginOperationEnum(int value) {
         this.value = value;

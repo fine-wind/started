@@ -26,10 +26,6 @@ import java.util.Map;
 @Service
 public class VerifyCodeServiceImpl extends CrudServiceImpl<VerifyCodeBo, VerifyCodeDao, VerifyCodeEntity, VerifyCodeDTO> implements VerifyCodeService {
 
-
-    @Value("${appSettings.admin.hosturl: http://127.0.0.1:8080/admin}")
-    private String hosturl;
-
     @Override
     public LambdaQueryWrapper<VerifyCodeEntity> getQueryWrapper(VerifyCodeBo params) {
 

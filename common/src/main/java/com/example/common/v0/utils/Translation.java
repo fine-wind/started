@@ -4,7 +4,6 @@ import com.example.common.v0.annotation.DictTranslationClass;
 import com.example.common.v0.annotation.DictTranslationField;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.page.PageData;
-import com.example.common.v0.modules.sys.dict.dao.SysDictDataDao;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -19,9 +18,9 @@ import java.util.*;
 @Log4j2
 @Service
 public class Translation {
-    @Autowired
-    @Lazy
-    private SysDictDataDao dictDataDao;
+//    @Autowired
+//    @Lazy
+//    private SysDictDataDao dictDataDao;
 
     /**
      * 翻译
@@ -171,14 +170,14 @@ public class Translation {
             return cacheMap.getOrDefault(k, StringUtil.NULL_STRING);
         }
 
-        String val;
+        String val = null;
         if (StringUtil.isEmpty(dictCode)) {
             /* 替换空格用于防注入*/
             column = column.replaceAll(" ", StringUtil.NULL_STRING);
             table = table.replaceAll(" ", StringUtil.NULL_STRING);
             key = key.replaceAll(" ", StringUtil.NULL_STRING);
 
-            val = dictDataDao.selectValueByTableAndColumn(column, table, key, String.valueOf(value));
+            // todo val = dictDataDao.selectValueByTableAndColumn(column, table, key, String.valueOf(value));
         } else {
             // todo 是字典时的翻译
             // dictCode = dictCode.replaceAll(" ",StringUtil.NULL_STRING);

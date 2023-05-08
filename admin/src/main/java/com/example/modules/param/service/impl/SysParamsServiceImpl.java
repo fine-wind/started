@@ -110,18 +110,11 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParams
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void save(SysParamsDTO dto) {
         SysParamsEntity entity = ConvertUtils.sourceToTarget(dto, SysParamsEntity.class);
 
         Objects.requireNonNull(entity.getParamType());
-
-        try {
-            insert(entity);
-        } catch (DuplicateKeyException ignored) {
-
-        }
-
+        this.insert(entity);
         sysParamsCache.set(entity.getParamCode(), entity.getParamValue());
     }
 
@@ -185,7 +178,7 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParams
         }
 
         try {
-            return clazz.newInstance();
+            return clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new ServerException(UniversalCode.PARAMS_GET_ERROR);
         }
@@ -203,7 +196,7 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParams
      */
     @Override
     public void clear() {
-        log.info("清除并重新加载缓存");
+        log.trace("清除并重新加载参数缓存");
         sysParamsCache.clear();
         this.loadAllParam();
     }

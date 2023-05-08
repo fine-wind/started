@@ -5,11 +5,8 @@ import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.service.impl.BaseServiceImpl;
 import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.exception.UniversalCode;
-import com.example.common.v0.utils.ConvertUtils;
-import com.example.common.v0.utils.HttpContextUtils;
-import com.example.common.v0.utils.StringUtil;
-import com.example.common.v0.utils.TreeUtils;
-import com.example.modules.security.user.SecurityUserDetails;
+import com.example.common.v0.utils.*;
+import com.example.started.verify.security.user.SecurityUserDetails;
 import com.example.modules.sys.bo.SysMenuBo;
 import com.example.modules.sys.dao.SysMenuDao;
 import com.example.modules.sys.dto.SysMenuDTO;
@@ -24,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -140,7 +138,6 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
                 .collect(Collectors.toSet());
     }
 
-
     /**
      * 获取所有的菜单
      *
@@ -159,5 +156,26 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
                 .eq(Objects.nonNull(params.getType()), SysResourcesEntity::getType, params.getType())
                 .eq(Objects.nonNull(params.getSubpage()), SysResourcesEntity::getSubpage, params.getSubpage())
                 .orderByAsc(SysResourcesEntity::getSort);
+    }
+
+    private void setlr(SysMenuDTO dto) {
+        SysResourcesEntity entity = new SysResourcesEntity();
+        entity.setId(dto.getId());
+        entity.setL(dto.getL());
+        entity.setR(dto.getR());
+        baseDao.updateById(entity);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        LambdaQueryWrapper<SysResourcesEntity> objectLambdaQueryWrapper = new LambdaQueryWrapper<SysResourcesEntity>().orderByAsc(SysResourcesEntity::getSort);
+        List<SysResourcesEntity> menuList = baseDao.selectList(objectLambdaQueryWrapper);
+        List<SysMenuDTO> list = ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);
+        List<SysMenuDTO> build = TreeUtils.build(list);
+        TreeUtils.setLr(build, new AtomicInteger(0), this::setlr);
+
+        List<SysMenuDTO> list = bean.listAll();
+        TreeUtils.build(list, SysMenuDTO::getId, SysMenuDTO::getPid);
+        setlr(list, new AtomicInteger(0));
     }
 }

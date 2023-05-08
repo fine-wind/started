@@ -1,42 +1,87 @@
 package com.example.common.v0.utils;
 
-import com.wf.captcha.*;
+import com.example.cache.constant.CacheCommonKeys;
+import com.example.cache.redis.RedisUtils;
 import lombok.extern.log4j.Log4j2;
 
-import jakarta.servlet.http.HttpServletResponse;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.*;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import static com.example.common.v0.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.CAPTCHA;
 
 /**
  * 验证码
  */
 @Log4j2
 public class CaptchaUtils {
+    static Random random = new Random();
 
-    public static void create(HttpServletResponse response, String uuid) throws IOException {
-        response.setContentType("image/gif");
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
+    public static String create(Integer width, Integer height, String uuid) throws IOException {
+        // 步骤一 绘制一张内存中图片
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        //生成验证码
-        ArithmeticCaptcha captcha = new ArithmeticCaptcha(203, 45);
-        captcha.setLen(2);
-        captcha.getArithmeticString();
-        // 设置字体样式
-        // {
-        //     try {
-        //         captcha.setFont(Captcha.num(10));
-        //     } catch (FontFormatException e) {
-        //         log.error("验证码生成失败:{}", e.getMessage());
-        //     }
-        // }
-        try {
-            captcha.out(response.getOutputStream());
-            // TODO xing 验证码保存到缓存
-//            SpringContextUtils.getBean(CacheService.class).setCache(CacheCommonKeys.getCaptchaKey(uuid), captcha.text(), 300L);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        // 步骤二 图片绘制背景颜色 ---通过绘图对象
+        Graphics graphics = bufferedImage.getGraphics();// 得到画图对象 --- 画笔
+        // 绘制任何图形之前 都必须指定一个颜色
+        graphics.setColor(getRandColor(200, 250));
+        graphics.fillRect(0, 0, width, height);
+
+        // 步骤三 绘制边框
+        graphics.setColor(Color.WHITE);
+        graphics.drawRect(0, 0, width - 1, height - 1);
+
+        // 步骤四 四个随机数字
+        Graphics2D graphics2d = (Graphics2D) graphics;
+        // 设置输出字体
+        graphics2d.setFont(new Font("宋体", Font.BOLD, 18));
+
+        String word = work();
+        // 定义x坐标
+        int x = 5;
+        for (int i = 0; i < word.length(); i++) {
+            // 随机颜色
+            graphics2d.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
+            // 旋转 -30 --- 30度
+            int jiaoDu = random.nextInt(60) - 30;
+            // 换算弧度
+            double theta = jiaoDu * Math.PI / 180;
+            // 获得字母数字
+            char c = word.charAt(i);
+            // 将c 输出到图片
+            graphics2d.rotate(theta, x, 20);
+            graphics2d.drawString(String.valueOf(c), x, 20);
+            graphics2d.rotate(-theta, x, 20);
+            x += 20;
         }
+
+        // 步骤五 绘制干扰线
+        graphics.setColor(getRandColor(160, 200));
+        int x1, x2, y1, y2;
+        for (int i = 0; i < 30; i++) {
+            x1 = random.nextInt(width);
+            x2 = random.nextInt(12);
+            y1 = random.nextInt(height);
+            y2 = random.nextInt(12);
+            graphics.drawLine(x1, y1, x1 + x2, x2 + y2);
+        }
+
+        graphics.dispose();// 释放资源
+        SpringContextUtils.getBean(RedisUtils.class).setCache(CacheCommonKeys.getCaptchaKey(uuid), word, 300L);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", stream);
+        return new String(Base64.getEncoder().encode(stream.toByteArray()));
+    }
+
+    private static String work() {
+        return String.valueOf(random.nextInt(9999));
     }
 
     /**
@@ -47,12 +92,35 @@ public class CaptchaUtils {
      * @return 是否一致
      */
     public static boolean validate(String uuid, String code) {
+        if (Boolean.parseBoolean(CAPTCHA.getValue())) {
+            String captcha = SpringContextUtils.getBean(RedisUtils.class).getCache(CacheCommonKeys.getCaptchaKey(uuid));
+            return code.equalsIgnoreCase(captcha);
+        }
         //获取验证码
-//        String captcha = SpringContextUtils.getBean(CacheService.class).getCache(CacheCommonKeys.getCaptchaKey(uuid));
-
-        // todo xing 验证码效验成功
-        return false;// code.equalsIgnoreCase(captcha);
+        return true;
     }
 
+
+    /**
+     * 取其某一范围的color
+     *
+     * @param fc int 范围参数1
+     * @param bc int 范围参数2
+     * @return Color
+     */
+    private static Color getRandColor(int fc, int bc) {
+        // 取其随机颜色
+        Random random = new Random();
+        if (fc > 255) {
+            fc = 255;
+        }
+        if (bc > 255) {
+            bc = 255;
+        }
+        int r = fc + random.nextInt(bc - fc);
+        int g = fc + random.nextInt(bc - fc);
+        int b = fc + random.nextInt(bc - fc);
+        return new Color(r, g, b);
+    }
 
 }

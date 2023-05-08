@@ -7,7 +7,7 @@ spring:
   #指定数据库，可选值有【mysql、oracle、sqlserver、postgresql】
   databaseType: mysql
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.zaxxer.hikari.HikariDataSource
     #MySQL配置
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
@@ -31,8 +31,9 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-  resources:
-    static-locations: classpath:/static/,classpath:/views/
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/views/
 
 
 mybatis:

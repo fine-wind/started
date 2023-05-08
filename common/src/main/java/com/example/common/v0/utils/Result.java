@@ -44,16 +44,48 @@ public class Result<T> implements Serializable {
     private T data;
 
     /**
-     * token
+     * todo 这里要改成其他形式返回 token 避免被刷
      */
     private String token;
 
-    public Result<T> ok(T data) {
-        return this.setData(data);
-    }
-
     public boolean isSuccess() {
         return success = code == 200;
+    }
+
+
+    public Result<T> setCode(int code, String msg) {
+        this.code = code;
+        this.setMsg(msg);
+        return this;
+    }
+
+    public Result() {
+    }
+
+    public Result(T data) {
+        this.data = data;
+    }
+
+    public static <T> Result<T> ok() {
+        return new Result<>();
+    }
+
+    public static <T> Result<T> ok(T t) {
+        return new Result<>(t);
+    }
+
+    public static Result<?> error(String msg) {
+        Result<Object> objectResult = new Result<>();
+        objectResult.code = UniversalCode.INTERNAL_SERVER_ERROR;
+        objectResult.msg = msg;
+        return objectResult;
+    }
+
+    public static Result<?> error(int code, String msg) {
+        Result<Object> r = new Result<>();
+        r.code = code;
+        r.msg = msg;
+        return r;
     }
 
     public Result<T> error() {
@@ -62,14 +94,6 @@ public class Result<T> implements Serializable {
         return this;
     }
 
-    public Result<T> error(Constant.UniversalCode universalCode, String... params) {
-        this.code = universalCode.getCode();
-        this.msg = universalCode.getReasonPhrase();
-        if (params != null && params.length > 0) {
-            this.msg = Arrays.toString(params);
-        }
-        return this;
-    }
 
     public Result<T> error(int code) {
         this.code = code;
@@ -77,22 +101,11 @@ public class Result<T> implements Serializable {
         return this;
     }
 
-    public Result<T> error(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-        return this;
+    public static Result<?> error(Constant.UniversalCode universalCode, String... params) {
+        Result<?> error = Result.error(universalCode.getCode(), universalCode.getReasonPhrase());
+        if (params != null && params.length > 0) {
+            error.msg = Arrays.toString(params);
+        }
+        return error;
     }
-
-    public Result<T> error(String msg) {
-        this.code = UniversalCode.INTERNAL_SERVER_ERROR;
-        this.msg = msg;
-        return this;
-    }
-
-    public Result<T> setCode(int code, String msg) {
-        this.code = code;
-        this.setMsg(msg);
-        return this;
-    }
-
 }

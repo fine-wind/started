@@ -1,6 +1,7 @@
 package com.example.modules.sys.controller;
 
 import com.example.common.v0.utils.ConvertUtils;
+import com.example.common.v0.validator.AssertUtils;
 import com.example.modules.sys.bo.SysRoleBo;
 import com.example.modules.sys.dto.SysRoleDTO;
 import com.example.modules.sys.entity.SysRoleEntity;
@@ -11,7 +12,6 @@ import com.example.common.v0.annotation.LogOperation;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.utils.Result;
-import com.example.common.v0.validator.AssertUtils;
 import com.example.common.v0.validator.ValidatorUtils;
 import com.example.common.v0.validator.group.AddGroup;
 import com.example.common.v0.validator.group.DefaultGroup;

@@ -13,13 +13,12 @@ import com.example.modules.notice.bo.SysNoticeBo;
 import com.example.modules.notice.dto.SysNoticeDTO;
 import com.example.modules.notice.service.SysNoticeService;
 import com.example.modules.notice.service.SysNoticeUserService;
-import com.example.modules.security.user.SecurityUser;
+import com.example.started.verify.security.user.SecurityUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -31,10 +30,13 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("sys/notice")
 @Api(tags = "通知管理")
 public class SysNoticeController {
-    @Autowired
-    private SysNoticeService sysNoticeService;
-    @Autowired
-    private SysNoticeUserService sysNoticeUserService;
+    private final SysNoticeService sysNoticeService;
+    private final SysNoticeUserService sysNoticeUserService;
+
+    public SysNoticeController(SysNoticeService sysNoticeService, SysNoticeUserService sysNoticeUserService) {
+        this.sysNoticeService = sysNoticeService;
+        this.sysNoticeUserService = sysNoticeUserService;
+    }
 
     @PostMapping("page")
     @ApiOperation("分页")
@@ -48,7 +50,7 @@ public class SysNoticeController {
     public Result<PageData<SysNoticeDTO>> page(@RequestBody SysNoticeBo params) {
         PageData<SysNoticeDTO> page = sysNoticeService.selectPage(params);
 
-        return new Result<PageData<SysNoticeDTO>>().ok(page);
+        return Result.ok(page);
     }
 
     @PostMapping("user/page")
@@ -63,7 +65,7 @@ public class SysNoticeController {
     public Result<PageData<SysNoticeDTO>> userPage(@RequestBody SysNoticeBo params) {
         PageData<SysNoticeDTO> page = sysNoticeService.getNoticeUserPage(params);
 
-        return new Result<PageData<SysNoticeDTO>>().ok(page);
+        return Result.ok(page);
     }
 
     @PostMapping("mynotice/page")
@@ -77,7 +79,7 @@ public class SysNoticeController {
     public Result<PageData<SysNoticeDTO>> myNoticePage(@ApiIgnore @RequestBody SysNoticeBo params) {
         PageData<SysNoticeDTO> page = sysNoticeService.getMyNoticePage(params);
 
-        return new Result<PageData<SysNoticeDTO>>().ok(page);
+        return Result.ok(page);
     }
 
     @PutMapping("mynotice/read/{noticeId}")
@@ -93,7 +95,7 @@ public class SysNoticeController {
     public Result<Long> unRead() {
         Long count = sysNoticeUserService.getUnReadNoticeCount(SecurityUser.getUserId());
 
-        return new Result<Long>().ok(count);
+        return Result.ok(count);
     }
 
     @GetMapping("{id}")
@@ -102,13 +104,12 @@ public class SysNoticeController {
     public Result<SysNoticeDTO> get(@PathVariable("id") Long id) {
         SysNoticeDTO data = sysNoticeService.getById(id);
 
-        return new Result<SysNoticeDTO>().ok(data);
+        return Result.ok(data);
     }
 
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-
     public Result<?> save(@RequestBody SysNoticeDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
@@ -121,7 +122,6 @@ public class SysNoticeController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-
     public Result<?> update(@RequestBody SysNoticeDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
@@ -134,7 +134,6 @@ public class SysNoticeController {
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
-
     public Result<?> delete(@RequestBody Long[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");

@@ -12,15 +12,23 @@ import java.util.List;
  * @since 1.0.0
  */
 @Data
-public class TreeNode implements Serializable {
+public class TreeNode<T> implements Serializable {
     long serialVersionUID = 1L;
 
     private Long id;
     private Long pid;
+    /**
+     * 节点左值
+     */
+    private Integer l;
+    /**
+     * 节点右值
+     */
+    private Integer r;
 
     /**
      * 子节点列表
      */
-    private List<TreeNode> children = new ArrayList<>();
+    private List<T> children = new ArrayList<>();
 
 }

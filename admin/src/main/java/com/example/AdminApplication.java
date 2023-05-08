@@ -1,17 +1,17 @@
 package com.example;
 
-import org.mybatis.spring.annotation.MapperScan;
+import com.example.common.v0.utils.BeanUtils;
+import com.example.common.v0.utils.to.BeanDiff;
+import com.example.modules.sys.user.v1.dto.UserDto;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+import java.util.ArrayList;
 
 /**
  * started
@@ -21,19 +21,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
  * @author xing xingii@outlook.com
  */
 @SpringBootApplication()
-@EnableCaching //启用缓存
-@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableScheduling // 开启对计划任务的支持
 @EnableAsync // 启用异步
-@EnableWebSecurity
 @EnableMethodSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // 开启方法级别的验证
-@MapperScan
 public class AdminApplication extends SpringBootServletInitializer {
+
 
     public static void main(String[] args) {
         SpringApplication.run(AdminApplication.class, args);
     }
+
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

@@ -23,12 +23,13 @@ public class CacheCommonKeys {
 
     /**
      * 登录用户Key
+     * TODO 使用 Set 形式记录每个人有多少客户端
      *
      * @param username username
      * @return k
      */
-    public static String getSecurityUserToken(String username, String hash) {
-        return "sys:security:token:" + username + ":" + hash;
+    public static String getSecurityUserToken(String username) {
+        return "sys:security:token:" + username;
     }
 
     /**

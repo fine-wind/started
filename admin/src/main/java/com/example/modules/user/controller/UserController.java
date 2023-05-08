@@ -3,16 +3,13 @@ package com.example.modules.user.controller;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.annotation.Login;
 import com.example.common.v0.data.annotation.LoginUser;
-import com.example.common.v0.data.dto.LogInRegisterDTO;
 import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.security.JwtUtils;
 import com.example.common.v0.utils.Result;
 import com.example.common.v0.validator.ValidatorUtils;
-import com.example.common.v0.validator.group.AddGroup;
 import com.example.common.v0.validator.group.UpdateGroup;
-import com.example.modules.security.user.SecurityUser;
-import com.example.modules.security.user.SecurityUserDetails;
-import com.example.modules.sys.login.v0.service.LoginService;
+import com.example.started.verify.security.user.SecurityUser;
+import com.example.started.verify.security.user.SecurityUserDetails;
 import com.example.modules.sys.user.v1.dto.UserDto;
 import com.example.modules.sys.user.v1.entity.SysUserEntity;
 import com.example.modules.sys.user.v1.service.UserServiceV1;
@@ -35,27 +32,13 @@ import java.util.Objects;
 public class UserController {
 
     private final UserServiceV1 userService;
-    private final LoginService loginService;
+
 
     @Autowired
-    public UserController(UserServiceV1 userService, LoginService loginService) {
+    public UserController(UserServiceV1 userService) {
         this.userService = userService;
-        this.loginService = loginService;
     }
 
-    @PostMapping(Constant.User.JOIN)
-    @ApiOperation("注册")
-    // @PreAuthorize("permitAll()")
-    public Result<?> logInRegister(@RequestBody LogInRegisterDTO logInRegisterDTO) {
-        ValidatorUtils.validateEntity(logInRegisterDTO, AddGroup.class);
-//        if (!CaptchaUtils.validate(logInRegisterDT.getUuid(), logInRegisterDTO.getCaptcha())) {
-        // todo throw new ServerException(Constant.UniversalCode.UNAUTHORIZED, "验证码错误");
-//        }
-
-        loginService.join(logInRegisterDTO);
-
-        return new Result<>().ok("注册成功");
-    }
 
     @PostMapping("/user/userInfo")
     @ApiOperation("根据token 获取用户信息")
@@ -69,7 +52,7 @@ public class UserController {
             String username = decoder.getSubject();
             userInfoDTO = userService.getUserInfoVo(username);
         } else {
-            userInfoDTO = SecurityUser.getUser(true);
+            userInfoDTO = SecurityUser.getUser();
         }
         if (userInfoDTO == null) {
             throw new ServerException(Constant.UniversalCode.UNAUTHORIZED, "无此用户");

@@ -5,20 +5,29 @@ import com.example.cache.redis.serializer.JsonRedisSerializer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Resource;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
+import org.springframework.data.redis.connection.RedisClusterConnection;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisSentinelConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import jakarta.annotation.Resource;
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +39,26 @@ import java.util.Map;
 @Slf4j
 @Configuration
 @EnableCaching //启用缓存
-public class RedisConfig {
-    @Resource
-    private RedisConnectionFactory factory;
+public class RedisConfig implements CachingConfigurer {
+    @Autowired
+    private final RedisConnectionFactory factory;
+
+    @Bean
+    public KeyGenerator keyGenerator() {
+        return new KeyGenerator() {
+            @Override
+            public Object generate(Object target, Method method, Object... params) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(target.getClass().getName());
+                sb.append(method.getName());
+                for (Object obj : params) {
+                    sb.append(obj.toString());
+                }
+                return sb.toString();
+            }
+        };
+    }
+
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
@@ -50,15 +76,14 @@ public class RedisConfig {
      * 选择redis作为默认缓存工具  申明缓存管理器，会创建一个切面（aspect）并触发Spring缓存注解的切点（pointcut）
      * 根据类或者方法所使用的注解以及缓存的状态，这个切面会从缓存中获取数据，将数据添加到缓存之中或者从缓存中移除某个值
      *
-     * @param factory .
      * @return .
      */
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory factory) {
-
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = getRedisCacheConfigurationMap();
-        return RedisCacheManager.builder(factory)
+        return RedisCacheManager.builder()
                 .initialCacheNames(redisCacheConfigurationMap.keySet())
+                .cacheWriter(RedisCacheWriter.nonLockingRedisCacheWriter(factory))
                 .withInitialCacheConfigurations(redisCacheConfigurationMap)// 指定 key策略
                 .cacheDefaults(RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5)))// 默认5分钟
                 .transactionAware()
@@ -87,6 +112,4 @@ public class RedisConfig {
 
         return redisCacheConfiguration;
     }
-
-
 }

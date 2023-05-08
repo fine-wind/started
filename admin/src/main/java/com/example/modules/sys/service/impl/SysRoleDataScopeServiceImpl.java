@@ -69,7 +69,7 @@ public class SysRoleDataScopeServiceImpl extends CrudServiceImpl<SysRoleDataScop
     @Override
     public List<Long> getDataScopeList(Long userId) {
         // List<Long> list = baseDao.getDataScopeList(userId);
-        return null;
+        return new ArrayList<>(0);
     }
 
     @Override

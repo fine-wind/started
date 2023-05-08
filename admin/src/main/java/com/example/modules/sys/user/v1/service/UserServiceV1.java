@@ -1,7 +1,7 @@
 package com.example.modules.sys.user.v1.service;
 
 import com.example.common.v1.base.service.BaseServiceV1;
-import com.example.modules.security.user.SecurityUserDetails;
+import com.example.started.verify.security.user.SecurityUserDetails;
 import com.example.modules.sys.user.v1.dto.UserDto;
 import com.example.modules.sys.user.v1.entity.SysUserEntity;
 

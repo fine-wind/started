@@ -1,6 +1,6 @@
 # 测试环境
 server:
-  port: 89
+  port: 18081
   tomcat:
     uri-encoding: UTF-8
     threads:
@@ -12,12 +12,15 @@ server:
       cookie:
         http-only: true
 spring:
-  redis: # redis配置
-    host: redis
-    port: 6379
-    password:  # 密码（默认为空）
-    database: 0
-    timeout: 5s
+  data:
+    redis:
+      client-name:
+      # client-type: jedis
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+      timeout: 5s
   servlet:
     multipart:
       max-file-size: 100MB
@@ -29,9 +32,9 @@ spring:
       minimum-idle: 5
       max-lifetime: 120000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://119.45.231.205:13306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: jjlanwlnawklnelglgknxlehsnlegll
 #dynamic:
 #  datasource:
 #    slave1:
@@ -46,15 +49,6 @@ spring:
 #      password: toor
 #
 
-# 日志配置
-logging:
-  level:
-    org:
-      mybatis: debug
-    com:
-      example: trace
-  file:
-    name: log/log.log
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
