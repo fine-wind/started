@@ -173,9 +173,5 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
         List<SysMenuDTO> list = ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);
         List<SysMenuDTO> build = TreeUtils.build(list);
         TreeUtils.setLr(build, new AtomicInteger(0), this::setlr);
-
-        List<SysMenuDTO> list = bean.listAll();
-        TreeUtils.build(list, SysMenuDTO::getId, SysMenuDTO::getPid);
-        setlr(list, new AtomicInteger(0));
     }
 }
