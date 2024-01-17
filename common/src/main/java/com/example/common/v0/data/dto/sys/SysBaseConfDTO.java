@@ -1,6 +1,5 @@
 package com.example.common.v0.data.dto.sys;
 
-import com.example.common.v0.utils.StringUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

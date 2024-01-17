@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.client.RestTemplate;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -82,62 +81,6 @@ public class CommonUtils {
         }
         if (value.length() > 0) {
             return value.substring(0, value.length() - 1);
-        }
-        return null;
-    }
-
-    /**
-     * 请求并返回基础结果
-     *
-     * @param url   请求接口地址
-     * @param clazz
-     */
-    public static Result getBaseResult(String url, Class<Object> clazz) {
-        String string = new RestTemplate().getForObject(url, String.class);
-        Result result = JSON.parseObject(string, Result.class);
-        return result;
-    }
-
-    /**
-     * 根据加密用户ID，获取用户对象
-     *
-     * @param url   请求接口地址
-     * @param clazz 类型
-     * @param <T>
-     */
-    public static <T> T getResult(String url, Class<T> clazz) {
-        String string = new RestTemplate().getForObject(url, String.class);
-        Result result = JSON.parseObject(string, Result.class);
-        if (result.isSuccess()) {
-            return JSON.parseObject(result.getData().toString(), clazz);
-        }
-        return null;
-    }
-
-    /**
-     * @param url   地址
-     * @param param 参数
-     * @param clazz 类型
-     * @return
-     */
-    public static <T> T postBaseResult(String url, String param, Class<T> clazz) {
-        String string = new RestTemplate().postForObject(url, param, String.class);
-        T result = JSON.parseObject(string, clazz);
-        return result;
-    }
-
-    /**
-     * @param url
-     * @param param
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    public static <T> T postResult(String url, String param, Class<T> clazz) {
-        String string = new RestTemplate().postForObject(url, param, String.class);
-        Result result = JSON.parseObject(string, Result.class);
-        if (result.isSuccess()) {
-            return JSON.parseObject(result.getData().toString(), clazz);
         }
         return null;
     }

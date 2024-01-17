@@ -1,0 +1,41 @@
+# 公共配置
+spring:
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  web:
+    resources:
+      static-locations: classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resource
+#  aop:
+#    proxy-target-class: true
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.example.modules.*.entity
+  global-config:
+    #数据库相关配置
+    db-config:
+      id-type: ASSIGN_ID
+    banner: false
+  #原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+# 日志配置
+logging:
+  level:
+    org:
+      mybatis: debug
+    com:
+      example: trace
+  file:
+    name: logs/log.log

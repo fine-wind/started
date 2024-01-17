@@ -1,8 +1,8 @@
 package com.example.common.v0.validator;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.common.v0.exception.UniversalCode;
 import com.example.common.v0.exception.ServerException;
+import com.example.common.v0.utils.StringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class AssertUtils {
             throw new ServerException(UniversalCode.NOT_NULL, "code");
         }
 
-        if (StringUtils.isBlank(str)) {
+        if (StringUtil.isEmpty(str)) {
             throw new ServerException(code, params);
         }
     }

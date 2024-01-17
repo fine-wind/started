@@ -1,9 +1,5 @@
 package com.example.common.v0.utils;
 
-import com.example.cache.constant.CacheCommonKeys;
-import com.example.cache.redis.RedisUtils;
-import lombok.extern.log4j.Log4j2;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -20,11 +16,17 @@ import static com.example.common.v0.constant.Constant.PARAM_CONF.APP_SETTINGS_CO
 /**
  * 验证码
  */
-@Log4j2
 public class CaptchaUtils {
     static Random random = new Random();
 
-    public static String create(Integer width, Integer height, String uuid) throws IOException {
+    /**
+     * @param width  验证码宽
+     * @param height 验证码高
+     * @param uuid   验证码唯一标识
+     * @return 验证码base64
+     * @throws IOException io异常
+     */
+    public static String create(Integer width, Integer height, String word) throws IOException {
         // 步骤一 绘制一张内存中图片
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -43,7 +45,6 @@ public class CaptchaUtils {
         // 设置输出字体
         graphics2d.setFont(new Font("宋体", Font.BOLD, 18));
 
-        String word = work();
         // 定义x坐标
         int x = 5;
         for (int i = 0; i < word.length(); i++) {
@@ -74,18 +75,20 @@ public class CaptchaUtils {
         }
 
         graphics.dispose();// 释放资源
-        SpringContextUtils.getBean(RedisUtils.class).setCache(CacheCommonKeys.getCaptchaKey(uuid), word, 300L);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, "png", stream);
-        return new String(Base64.getEncoder().encode(stream.toByteArray()));
+        return "data:image/png;base64," + new String(Base64.getEncoder().encode(stream.toByteArray()));
     }
 
-    private static String work() {
+    /**
+     * @return 随机的验证码内容
+     */
+    public static String work() {
         return String.valueOf(random.nextInt(9999));
     }
 
     /**
-     * 校验验证码
+     * todo 校验验证码
      *
      * @param uuid uuid
      * @param code 验证码
@@ -93,8 +96,9 @@ public class CaptchaUtils {
      */
     public static boolean validate(String uuid, String code) {
         if (Boolean.parseBoolean(CAPTCHA.getValue())) {
-            String captcha = SpringContextUtils.getBean(RedisUtils.class).getCache(CacheCommonKeys.getCaptchaKey(uuid));
-            return code.equalsIgnoreCase(captcha);
+//            String captcha = SpringContextUtils.getBean(RedisUtils.class).getCache(CacheCommonKeys.getCaptchaKey(uuid));
+//            return code.equalsIgnoreCase(captcha);
+            return true;
         }
         //获取验证码
         return true;

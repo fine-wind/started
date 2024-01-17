@@ -12,6 +12,8 @@ import java.util.Date;
 
 /**
  * 基础实体类，所有实体都需要继承
+ *
+ * @see com.example.common.v1.base.BaseEntity
  */
 @Data
 @Deprecated

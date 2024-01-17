@@ -1,6 +1,6 @@
 package com.example.common.v0.utils;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+
 import com.example.common.v0.constant.Constant;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -33,7 +33,7 @@ public class HttpContextUtils {
         while (parameters.hasMoreElements()) {
             String parameter = parameters.nextElement();
             String value = request.getParameter(parameter);
-            if (StringUtils.isNotBlank(value)) {
+            if (StringUtil.isNotBlank(value)) {
                 params.put(parameter, value);
             }
         }

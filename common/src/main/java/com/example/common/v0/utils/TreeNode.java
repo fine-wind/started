@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Data
 public class TreeNode<T> implements Serializable {
-    long serialVersionUID = 1L;
 
     private Long id;
     private Long pid;

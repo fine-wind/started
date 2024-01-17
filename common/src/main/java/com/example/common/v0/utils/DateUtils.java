@@ -1,6 +1,6 @@
 package com.example.common.v0.utils;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -72,7 +72,7 @@ public class DateUtils {
      * @param pattern 日期的格式，如：DateUtils.DATE_TIME_PATTERN
      */
     public static Date stringToDate(String strDate, String pattern) {
-        if (StringUtils.isBlank(strDate)) {
+        if (StringUtil.isEmpty(strDate)) {
             return null;
         }
 

@@ -1,6 +1,7 @@
 package com.example.common.v0.utils;
 
 import jakarta.validation.constraints.NotNull;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -35,6 +36,15 @@ public class DateUtil {
         String dateString = formatter2.format(new Date());
         ParsePosition pos = new ParsePosition(8);
         return formatter2.parse(dateString, pos);
+    }
+
+    /**
+     * 获取现在时间
+     *
+     * @return 返回时间类型 yyyy-MM-dd HH:mm:ss
+     */
+    public static Date now() {
+        return new Date();
     }
 
     /**

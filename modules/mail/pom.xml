@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.example.started</groupId>
+        <artifactId>modules</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <artifactId>mail</artifactId>
+    <name>mail</name>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+    <description>静态化</description>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+<!--        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>${mail.version}</version>
+        </dependency>-->
+    </dependencies>
+    <build>
+        <finalName>${project.name}-${project.version}-${maven.build.timestamp}</finalName>
+    </build>
+</project>

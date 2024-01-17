@@ -6,8 +6,8 @@ import com.example.generator.utils.PageUtils;
 import com.example.generator.utils.Query;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -19,9 +19,9 @@ import java.util.zip.ZipOutputStream;
  * 代码生成器
  */
 @Service
+@AllArgsConstructor
 public class SysGeneratorService {
-    @Autowired
-    private MySQLGeneratorDao generatorDao;
+    private final MySQLGeneratorDao generatorDao;
 
     public PageUtils queryList(Query query) {
         Page<?> page = PageHelper.startPage(query.getPage(), query.getLimit());

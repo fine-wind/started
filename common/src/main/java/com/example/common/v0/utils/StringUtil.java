@@ -964,7 +964,6 @@ public class StringUtil {
      * @param sourceStr 被截取的字符串
      * @param expr      分隔符
      * @return String
-     * @date 2017年04月24日
      */
     public static String substringAfter(String sourceStr, String expr) {
         if (isEmpty(sourceStr) || expr == null) {
@@ -991,7 +990,6 @@ public class StringUtil {
      * @param sourceStr 被截取的字符串
      * @param expr      分隔符
      * @return String
-     * @date 2017年04月24日
      */
     public static String substringBefore(String sourceStr, String expr) {
         if (isEmpty(sourceStr)) {
@@ -1014,7 +1012,6 @@ public class StringUtil {
      *
      * @param chkStr 被检查的字符串
      * @return boolean
-     * @date 2019年6月28日
      */
     public static boolean isEmpty(String... chkStr) {
         if (chkStr == null || chkStr.length == 0) {
@@ -1034,7 +1031,6 @@ public class StringUtil {
      *
      * @param chkStr 被检查的字符串
      * @return boolean
-     * @date 2019年6月28日
      */
     public static boolean isAllEmpty(String... chkStr) {
         if (chkStr == null || chkStr.length == 0) {
@@ -1052,7 +1048,6 @@ public class StringUtil {
      *
      * @param chkStr 被检查的字符串
      * @return boolean
-     * @date 2019年6月28日
      */
     public static boolean noAllEmpty(String... chkStr) {
         return !isAllEmpty(chkStr);
@@ -1079,8 +1074,8 @@ public class StringUtil {
     /**
      * 是否为数字
      *
-     * @param str
-     * @return
+     * @param str .
+     * @return .
      */
     public static boolean isNumeric(String str) {
         for (int i = str.length(); --i >= 0; ) {
@@ -1126,10 +1121,32 @@ public class StringUtil {
             if (t == null) {
                 continue;
             }
-            sb.append(t.toString()).append(join);
+            sb.append(t).append(join);
         }
         return removeEnd(sb.toString(), join);
     }
+
+    /**
+     * 将一个数组用指定的字符隔开
+     *
+     * @param objects 数组
+     * @param join    指定的字符
+     * @return 隔开后的字符串
+     */
+    public static <T> String join(List<T> objects, String join) {
+        if (objects == null || objects.isEmpty()) {
+            return NULL_STRING;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (T t : objects) {
+            if (t == null) {
+                continue;
+            }
+            sb.append(t).append(join);
+        }
+        return removeEnd(sb.toString(), join);
+    }
+
 
     public static boolean isNotEmpty(String tableAlias) {
         return tableAlias != null && !isEmpty(tableAlias.trim());
@@ -1139,4 +1156,7 @@ public class StringUtil {
         return hump.replaceAll("[A-Z]", "_$0").toLowerCase();
     }
 
+    public static boolean isNotBlank(String tableAlias) {
+        return isNotEmpty(tableAlias);
+    }
 }

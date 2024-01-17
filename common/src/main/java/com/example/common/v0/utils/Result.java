@@ -2,7 +2,6 @@ package com.example.common.v0.utils;
 
 import com.example.common.v0.constant.Constant;
 import lombok.Data;
-import com.example.common.v0.exception.UniversalCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.experimental.Accessors;
@@ -43,11 +42,6 @@ public class Result<T> implements Serializable {
     @ApiModelProperty(value = "响应数据")
     private T data;
 
-    /**
-     * todo 这里要改成其他形式返回 token 避免被刷
-     */
-    private String token;
-
     public boolean isSuccess() {
         return success = code == 200;
     }
@@ -74,35 +68,38 @@ public class Result<T> implements Serializable {
         return new Result<>(t);
     }
 
-    public static Result<?> error(String msg) {
-        Result<Object> objectResult = new Result<>();
-        objectResult.code = UniversalCode.INTERNAL_SERVER_ERROR;
-        objectResult.msg = msg;
-        return objectResult;
+    public static <T> Result<T> ok(String msg) {
+        return new Result<T>().setMsg(msg);
     }
 
-    public static Result<?> error(int code, String msg) {
-        Result<Object> r = new Result<>();
+    public static Result<?> error(String msg) {
+        return Result.error(Constant.UniversalCode.SERVER_ERROR, msg);
+    }
+
+    @Deprecated
+    public static <T> Result<T> error(int code, String msg) {
+        Result<T> r = new Result<>();
         r.code = code;
         r.msg = msg;
         return r;
     }
 
     public Result<T> error() {
-        this.code = UniversalCode.INTERNAL_SERVER_ERROR;
+        this.code = Constant.UniversalCode.SERVER_ERROR.getCode();
         this.msg = "异常";
         return this;
     }
 
 
+    @Deprecated
     public Result<T> error(int code) {
         this.code = code;
         this.msg = "异常";
         return this;
     }
 
-    public static Result<?> error(Constant.UniversalCode universalCode, String... params) {
-        Result<?> error = Result.error(universalCode.getCode(), universalCode.getReasonPhrase());
+    public static <T> Result<T> error(Constant.UniversalCode universalCode, String... params) {
+        Result<T> error = Result.error(universalCode.getCode(), universalCode.getReasonPhrase());
         if (params != null && params.length > 0) {
             error.msg = Arrays.toString(params);
         }

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @ApiModel(value = "分页数据")
 public class PageData<T> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 28725383252672331L;
 
     @ApiModelProperty(value = "当前页码")

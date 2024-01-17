@@ -9,7 +9,7 @@
 --
 
 ```text
-java: 19
+java: 21
 maven: 
 springboot:
 ```

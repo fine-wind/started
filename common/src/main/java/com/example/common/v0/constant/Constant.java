@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -36,9 +37,9 @@ public interface Constant {
      */
     interface User {
         String JOIN = "/user/join";
-        String WEB_SOCKET = "/ws.io";
         String LOGIN = "/user/logIn";
         String LOGOUT = "/user/logout";
+        String WEB_SOCKET = "/ws.io";
 
         interface Login {
             String USERNAME = "username";
@@ -89,6 +90,7 @@ public interface Constant {
              * token header
              */
             String TOKEN = "Authorization";
+            String TOKEN_PREFIX = "Bearer ";
         }
     }
 
@@ -98,7 +100,9 @@ public interface Constant {
     enum UniversalCode {
         UNAUTHORIZED(401, "未经授权"),
         FORBIDDEN(403, "服务器理解请求客户端的请求，但是拒绝执行此请求"),
+        PRECONDITION_FAILED(412, "客户端请求信息的先决条件错误"),
         UNPROCESSABLE_ENTITY(422, "不可处理的实体"),
+        SERVER_ERROR(500, "服务器内部错误"),
         ;
         private final int code;
 
@@ -258,57 +262,62 @@ public interface Constant {
         }
 
         /**
-         * 登录验证码配置
-         */
-        interface LOGIN_CAPTCHA {
-
-            /**
-             * 登录验证码
-             */
-            String LOGIN_CAPTCHA = "LOGIN_CAPTCHA";
-            /**
-             * 配置备注
-             */
-            String REMARK = "登录验证码配置";
-            /**
-             * 在一分钟内的错误频率 10次
-             * 达到该次数后启用验证码
-             */
-            int LOGIN_CAPTCHA_ERROR_FREQUENCY = 10;
-        }
-
-        /**
          * 网站配置
          */
-        interface APP_SETTINGS_CONF {
-            KVR THIS_NAME = new KVR("NAME", "网站名称", "网站名称");
-            KVR THIS_SHORT_NAME = new KVR("SHORT_NAME", "站名", "站名");
-            KVR THIS_HOST = new KVR("thisHost", "localhost", "网站域名");
-            KVR COPYRIGHT = new KVR("COPYRIGHT", "版权", "版权");
-            KVR SYNOPSIS = new KVR("SYNOPSIS", "网站简介", "网站简介");
-            KVR TEMPLATE_PATH = new KVR("TEMPLATE_PATH", "./resources/", "模板位置");
-            KVR COMPRESS = new KVR("COMPRESS", "true", "网站压缩是否开启  true | false");
-            KVR REGISTER = new KVR("REGISTER", "true", "是否可以注册用户  true | false");
-            KVR CAPTCHA = new KVR("CAPTCHA", "true", "验证码是否启用  true | false");
-            KVR SCRIPT = new KVR("SCRIPT", "console.log('test script')", "输入script代码即可运行");
-            KVR JWT_SECRET_KEY = new KVR("JWT_SECRET_KEY", "JWT_SECRET_KEY", "用户登录token加密密钥");
-            KVR JWT_EXPIRATION = new KVR("JWT_EXPIRATION", String.valueOf(3600), "jwt过期时间(秒), 默认" + 3600 / 60 + "分钟");
+        enum APP_SETTINGS_CONF {
 
-            Map<String, KVR> CONF_MAP = new HashMap<>(13);
+            THIS_NAME(new KVR("THIS_NAME", "网站名称", "网站名称")),
 
-            static void init() {
-                CONF_MAP.put(THIS_NAME.getCode(), THIS_NAME);
-                CONF_MAP.put(THIS_SHORT_NAME.getCode(), THIS_SHORT_NAME);
-                CONF_MAP.put(THIS_HOST.getCode(), THIS_HOST);
-                CONF_MAP.put(COPYRIGHT.getCode(), COPYRIGHT);
-                CONF_MAP.put(SYNOPSIS.getCode(), SYNOPSIS);
-                CONF_MAP.put(TEMPLATE_PATH.getCode(), TEMPLATE_PATH);
-                CONF_MAP.put(COMPRESS.getCode(), COMPRESS);
-                CONF_MAP.put(REGISTER.getCode(), REGISTER);
-                CONF_MAP.put(CAPTCHA.getCode(), CAPTCHA);
-                CONF_MAP.put(SCRIPT.getCode(), SCRIPT);
-                CONF_MAP.put(JWT_SECRET_KEY.getCode(), JWT_SECRET_KEY);
-                CONF_MAP.put(JWT_EXPIRATION.getCode(), JWT_EXPIRATION);
+            THIS_SHORT_NAME(new KVR("THIS_SHORT_NAME", "站名", "网站名称简称")),
+
+            THIS_HOST(new KVR("THIS_HOST", "localhost", "网站域名")),
+
+            COPYRIGHT(new KVR("COPYRIGHT", "版权", "版权")),
+
+            SYNOPSIS(new KVR("SYNOPSIS", "网站简介", "网站简介")),
+
+            TEMPLATE_PATH(new KVR("TEMPLATE_PATH", "./resources/", "模板位置")),
+
+            COMPRESS(new KVR("COMPRESS", "true", "网站压缩是否开启  true | false")),
+
+            REGISTER(new KVR("REGISTER", "true", "是否可以注册用户  true | false")),
+
+            CAPTCHA(new KVR("CAPTCHA", "true", "验证码是否启用  true | false")),
+            CAPTCHA_FREQUENCY(new KVR("CAPTCHA_FREQUENCY", "10", "登录频率配置,达到频率时开启验证码")),
+
+            SCRIPT(new KVR("SCRIPT", ";console.error('测试SCRIPT插入');", "输入script代码即可运行")),
+
+            JWT_SECRET_KEY(new KVR("JWT_SECRET_KEY", "JWT_SECRET_KEY", "用户登录token加密密钥")),
+
+            JWT_EXPIRATION(new KVR("JWT_EXPIRATION", String.valueOf(3600), "jwt过期时间(秒), 默认" + 3600 / 60 + "分钟")),
+            ;
+
+            @Getter
+            private final KVR kvr;
+
+            APP_SETTINGS_CONF(KVR kvr) {
+                this.kvr = kvr;
+            }
+
+            public String getValue() {
+                return kvr.getValue();
+            }
+
+            public static final Map<String, KVR> CONF_MAP = new LinkedHashMap<>();
+
+            public static void init() {
+                CONF_MAP.put(THIS_NAME.name(), THIS_NAME.getKvr());
+                CONF_MAP.put(THIS_SHORT_NAME.name(), THIS_SHORT_NAME.getKvr());
+                CONF_MAP.put(THIS_HOST.name(), THIS_HOST.getKvr());
+                CONF_MAP.put(COPYRIGHT.name(), COPYRIGHT.getKvr());
+                CONF_MAP.put(SYNOPSIS.name(), SYNOPSIS.getKvr());
+                CONF_MAP.put(TEMPLATE_PATH.name(), TEMPLATE_PATH.getKvr());
+                CONF_MAP.put(COMPRESS.name(), COMPRESS.getKvr());
+                CONF_MAP.put(REGISTER.name(), REGISTER.getKvr());
+                CONF_MAP.put(CAPTCHA.name(), CAPTCHA.getKvr());
+                CONF_MAP.put(SCRIPT.name(), SCRIPT.getKvr());
+                CONF_MAP.put(JWT_SECRET_KEY.name(), JWT_SECRET_KEY.getKvr());
+                CONF_MAP.put(JWT_EXPIRATION.name(), JWT_EXPIRATION.getKvr());
             }
         }
     }
