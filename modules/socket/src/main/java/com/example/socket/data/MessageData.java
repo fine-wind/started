@@ -1,4 +1,4 @@
-package com.example.common.v0.websocket.data;
+package com.example.socket.data;
 
 import lombok.Data;
 
