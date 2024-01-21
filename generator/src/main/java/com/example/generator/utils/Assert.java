@@ -33,27 +33,4 @@ public final class Assert {
         isTrue(!expression, message, params);
     }
 
-    /**
-     * 断言这个 object 为 null
-     * 不为 null 则抛异常
-     *
-     * @param object  对象
-     * @param message 消息
-     */
-    public static void isNull(Object object, String message, Object... params) {
-        isTrue(object == null, message, params);
-    }
-
-    /**
-     * 断言这个 object 不为 null
-     * 为 null 则抛异常
-     *
-     * @param object  对象
-     * @param message 消息
-     */
-    public static void notNull(Object object, String message, Object... params) {
-        isTrue(object != null, message, params);
-    }
-
-
 }
