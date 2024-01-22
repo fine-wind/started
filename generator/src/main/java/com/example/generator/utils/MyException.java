@@ -1,9 +1,15 @@
 package com.example.generator.utils;
 
+import lombok.Getter;
+
+import java.io.Serial;
+
 /**
  * 自定义异常
  */
+@Getter
 public class MyException extends RuntimeException {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String msg;
@@ -30,22 +36,5 @@ public class MyException extends RuntimeException {
         this.msg = msg;
         this.code = code;
     }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
 
 }
