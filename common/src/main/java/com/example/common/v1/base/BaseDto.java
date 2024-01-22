@@ -3,6 +3,7 @@ package com.example.common.v1.base;
 import com.example.common.v0.tr.TrVo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * 公共Bo
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value = "公共Bo")
 public class BaseDto extends TrVo implements Serializable {

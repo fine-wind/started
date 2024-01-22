@@ -1,16 +1,12 @@
 package com.example.common.v0.tr;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.v0.utils.Result;
-import com.example.common.v0.base.TrService;
 import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.utils.StringUtil;
 import com.example.common.v1.annotation.Ti;
 import com.example.common.v1.annotation.TiField;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
