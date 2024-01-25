@@ -12,7 +12,7 @@ public class MyException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String msg;
+    private final String msg;
     private int code = 500;
 
     public MyException(String msg) {

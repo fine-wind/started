@@ -32,15 +32,14 @@ public class Translation {
             return;
         }
 
-        if (data instanceof PageData<?> pageData) {
-            List<?> list = pageData.getList();
-            list.forEach(o -> translationDict(o.getClass(), o));
-        } else if (data instanceof Map<?, ?> m) {
-            m.values().forEach(o -> translationDict(o.getClass(), o));
-        } else if (data instanceof Iterable<?> d) {
-            d.forEach(o -> translationDict(o.getClass(), o));
-        } else {
-            this.translationDict(data.getClass(), data);
+        switch (data) {
+            case PageData<?> pageData -> {
+                List<?> list = pageData.getList();
+                list.forEach(o -> translationDict(o.getClass(), o));
+            }
+            case Map<?, ?> m -> m.values().forEach(o -> translationDict(o.getClass(), o));
+            case Iterable<?> d -> d.forEach(o -> translationDict(o.getClass(), o));
+            default -> this.translationDict(data.getClass(), data);
         }
     }
 
