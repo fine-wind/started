@@ -1,0 +1,44 @@
+# 测试环境
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 10
+  servlet:
+    session:
+      cookie:
+        http-only: true
+spring:
+  redis: # redis配置
+    host: redis
+    port: 6379
+    password:  # 密码（默认为空）
+    database: 0
+    timeout: 5s
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 5
+      max-lifetime: 120000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+# 日志配置
+logging:
+  level:
+    org:
+      mybatis: debug
+    com:
+      example: trace
+  file:
+    name: log/log.log
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
