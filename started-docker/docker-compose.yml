@@ -8,7 +8,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
-      - 10180:80
+      - 80:80
+      - 443:443
   api:
     image: openjdk:21
     restart: unless-stopped
@@ -21,7 +22,7 @@ services:
 
     command: java -jar *.jar
     ports:
-      - 80:8080
+      - 0:8080
   redis:
     restart: unless-stopped
     image: redis
