@@ -8,8 +8,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
   api:
     image: openjdk:21
     restart: unless-stopped
@@ -22,7 +22,7 @@ services:
 
     command: java -jar *.jar
     ports:
-      - 0:8080
+      - "0:8080"
   redis:
     restart: unless-stopped
     image: redis
@@ -33,7 +33,7 @@ services:
       - ./redis/conf:/home/redis
     command: /home/redis/redis.conf
     ports:
-      - 6379:6379
+      - "6379:6379"
   mysql:
     image: mysql:8.0
     volumes:
@@ -50,7 +50,7 @@ services:
       - "MYSQL_DATABASE=started"
       - "TZ=Asia/Shanghai"
     ports:
-      - 3306:3306
+      - "3306:3306"
 #  adminer:
 #    image: adminer
 #    restart: unless-stopped
