@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.started.modules.table.dao.SysTableDao">
+
+    <insert id="insertData">
+        INSERT INTO `${tableName}`
+        <foreach collection="col" open="(" item="item" separator="," close=")">
+            `${item}`
+        </foreach>
+        VALUES
+        <foreach collection="data" item="item1" separator=",">
+            <foreach collection="item1" open="(" item="item2" separator="," close=")">
+                #{item2}
+            </foreach>
+        </foreach>
+    </insert>
+
+</mapper>
