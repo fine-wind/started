@@ -1,4 +1,4 @@
-package com.example.started.log.dto.enums;
+package com.example.started.modules.log.enums;
 
 /**
  * 登录操作枚举

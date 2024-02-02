@@ -1,7 +1,7 @@
-package com.example.started.log;
+package com.example.started.modules.log;
 
 import com.example.started.common.v0.annotation.LogOperation;
-import com.example.started.log.dto.enums.OperationStatusEnum;
+import com.example.started.modules.log.enums.OperationStatusEnum;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
