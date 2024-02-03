@@ -18,9 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication()
 @EnableScheduling // 开启对计划任务的支持
 @EnableAsync // 启用异步
-@ComponentScan(basePackages = "com.example.started.auth.client")
 @ComponentScan(basePackages = "com.example.common")
-@ComponentScan(basePackages = "com.example.cache")
 public class StartedApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

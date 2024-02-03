@@ -3,7 +3,7 @@ package com.example.started.modules.sys.controller;
 import com.example.started.modules.sys.bo.SysMenuBo;
 import com.example.started.modules.sys.dto.SysMenuDTO;
 import com.example.started.modules.sys.service.SysMenuService;
-import com.example.started.auth.client.vo.SysMenuVo;
+import com.example.started.auth.role.vo.SysMenuVo;
 import com.example.started.common.v0.annotation.LogOperation;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.utils.Result;

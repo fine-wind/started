@@ -15,7 +15,7 @@ import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.data.service.impl.CrudServiceImpl;
 import com.example.common.v0.utils.ConvertUtils;
 import com.example.started.modules.notice.service.SysNoticeService;
-import com.example.started.auth.client.user.SecurityUser;
+import com.example.started.auth.role.user.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

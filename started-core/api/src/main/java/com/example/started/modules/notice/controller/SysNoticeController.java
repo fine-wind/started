@@ -3,7 +3,7 @@ package com.example.started.modules.notice.controller;
 import com.example.started.modules.notice.bo.SysNoticeBo;
 import com.example.started.modules.notice.dto.SysNoticeDTO;
 import com.example.started.modules.notice.service.SysNoticeUserService;
-import com.example.started.auth.client.user.SecurityUser;
+import com.example.started.auth.role.user.SecurityUser;
 import com.example.started.common.v0.annotation.LogOperation;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.page.PageData;

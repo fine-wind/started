@@ -14,15 +14,8 @@
     <description>开始吧</description>
 
     <modules>
-        <module>auth</module>
-        <module>base-api</module>
-        <module>api</module>
-        <module>log</module>
-        <module>socket</module>
-        <module>mail</module>
         <module>file</module>
         <module>staticize</module>
-        <module>redis</module>
     </modules>
 
     <properties>
