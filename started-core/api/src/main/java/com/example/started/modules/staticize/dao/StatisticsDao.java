@@ -1,7 +1,7 @@
-package com.example.modules.staticize.dao;
+package com.example.started.modules.staticize.dao;
 
 import com.example.common.v0.data.dao.BaseDao;
-import com.example.modules.staticize.entity.StatisticsEntity;
+import com.example.started.modules.staticize.entity.StatisticsEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

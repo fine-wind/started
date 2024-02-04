@@ -1,4 +1,4 @@
-package com.example.modules.staticize.bo;
+package com.example.started.modules.staticize.bo;
 
 import com.example.common.v0.data.bo.BaseBo;
 import lombok.Data;

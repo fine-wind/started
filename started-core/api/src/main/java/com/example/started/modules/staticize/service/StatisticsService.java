@@ -1,8 +1,8 @@
-package com.example.modules.staticize.service;
+package com.example.started.modules.staticize.service;
 
 import com.example.common.v0.data.service.BaseService;
-import com.example.modules.staticize.bo.StatisticsBo;
-import com.example.modules.staticize.entity.StatisticsEntity;
+import com.example.started.modules.staticize.bo.StatisticsBo;
+import com.example.started.modules.staticize.entity.StatisticsEntity;
 
 /**
  * 登录日志

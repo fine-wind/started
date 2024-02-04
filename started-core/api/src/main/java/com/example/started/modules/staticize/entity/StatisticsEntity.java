@@ -1,4 +1,4 @@
-package com.example.modules.staticize.entity;
+package com.example.started.modules.staticize.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.common.v0.data.entity.BaseEntity;

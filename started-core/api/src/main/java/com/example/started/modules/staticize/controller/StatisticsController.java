@@ -1,4 +1,4 @@
-package com.example.modules.staticize.controller;
+package com.example.started.modules.staticize.controller;
 
 import com.example.common.v0.utils.Result;
 import io.swagger.annotations.Api;

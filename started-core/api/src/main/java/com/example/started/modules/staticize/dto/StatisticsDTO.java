@@ -1,4 +1,4 @@
-package com.example.modules.staticize.dto;
+package com.example.started.modules.staticize.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

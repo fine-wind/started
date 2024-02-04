@@ -14,7 +14,6 @@
         <module>common</module>
         <module>dynamic-datasource</module>
         <module>generator</module>
-        <module>modules</module>
     </modules>
 
     <properties>
