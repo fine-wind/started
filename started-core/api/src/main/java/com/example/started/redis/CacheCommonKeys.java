@@ -1,4 +1,4 @@
-package com.example.cache.constant;
+package com.example.started.redis;
 
 /**
  * @since 1.0.0

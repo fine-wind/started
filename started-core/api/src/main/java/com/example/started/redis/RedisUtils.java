@@ -1,4 +1,4 @@
-package com.example.cache.redis;
+package com.example.started.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

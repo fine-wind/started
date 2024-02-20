@@ -1,6 +1,5 @@
-package com.example.cache.redis;
+package com.example.started.redis;
 
-import com.example.cache.constant.CacheCommonKeys;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;

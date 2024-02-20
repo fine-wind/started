@@ -1,10 +1,12 @@
 package com.example.started.auth.cache;
 
+import com.example.started.redis.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -17,18 +19,22 @@ import java.util.Set;
 @Service()
 @AllArgsConstructor
 public class SysRoleUserRedis {
-    private final HashMap<String, Object> map = new HashMap<>();
+    RedisUtils redisUtils;
 
     /**
      * @param username 用户名
      * @param roles    角色集合
      */
     public void setRoles(String username, Set<String> roles) {
-        map.put(username, roles);
+        redisUtils.setCache("sys:role:user:" + username, roles);
     }
 
     public Set<Object> getRoles(String username) {
-        return (Set<Object>) map.getOrDefault(username, new HashSet<>(0, 0.1f));
+        Set<Object> set = redisUtils.get("sys:role:user:" + username);
+        if (Objects.isNull(set)) {
+            return new HashSet<>();
+        }
+        return set;
     }
 
     /**
