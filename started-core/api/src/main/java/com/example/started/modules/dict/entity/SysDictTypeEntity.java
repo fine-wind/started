@@ -5,6 +5,8 @@ import com.example.common.v0.data.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * 字典类型
  *
@@ -14,6 +16,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 @TableName("sys_dict_type")
 public class SysDictTypeEntity extends BaseEntity {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 字典类型
