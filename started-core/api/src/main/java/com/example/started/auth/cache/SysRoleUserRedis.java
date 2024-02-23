@@ -1,10 +1,13 @@
 package com.example.started.auth.cache;
 
+import com.example.started.auth.role.user.SecurityUser;
+import com.example.started.redis.CacheCommonKeys;
 import com.example.started.redis.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,17 +22,18 @@ import java.util.Set;
 @AllArgsConstructor
 public class SysRoleUserRedis {
     RedisUtils redisUtils;
+    final String cacheKey = "sys:role:user:";
 
     /**
      * @param username 用户名
      * @param roles    角色集合
      */
     public void setRoles(String username, Set<String> roles) {
-        redisUtils.setCache("sys:role:user:" + username, roles);
+        redisUtils.setCache(cacheKey + username, roles);
     }
 
     public Set<Object> getRoles(String username) {
-        Set<Object> set = redisUtils.get("sys:role:user:" + username);
+        Set<Object> set = redisUtils.get(cacheKey + username);
         if (Objects.isNull(set)) {
             return new HashSet<>();
         }
@@ -46,15 +50,15 @@ public class SysRoleUserRedis {
             return true;
         }
         boolean b = false;
-//        String username = SecurityUser.getUser().getUsername();
-//        Map<Object, Boolean> member = redisUtils.opsForSet().isMember(CacheCommonKeys.getSecurityRoleKey(username), roles);
-//        assert member != null;
-//        for (Boolean v : member.values()) {
-//            b = v;
-//            if (b) {
-//                break;
-//            }
-//        }
+        String username = SecurityUser.getUserName();
+        Map<Object, Boolean> member = redisUtils.opsForSet().isMember(CacheCommonKeys.getSecurityRoleKey(username), roles);
+        assert member != null;
+        for (Boolean v : member.values()) {
+            b = v;
+            if (b) {
+                break;
+            }
+        }
         return b;
     }
 
