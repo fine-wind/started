@@ -6,6 +6,7 @@ import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.exception.UniversalCode;
 import com.example.common.v0.utils.StringUtil;
 import com.example.started.auth.role.user.SecurityUserDetails;
+import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -21,6 +22,7 @@ import java.util.Objects;
  * 数据过滤，切面处理类
  */
 @Aspect
+@Log4j2
 @Component
 public class DataFilterAspect {
 
@@ -45,7 +47,7 @@ public class DataFilterAspect {
                 // String sqlFilter = getSqlFilter(user, point);
                 // map.put(Constant.SQL_FILTER, new DataScope(sqlFilter));
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
             }
 
             return;
@@ -73,14 +75,14 @@ public class DataFilterAspect {
 
         //部门ID列表
         List<Long> deptIdList = user.getDeptIdList();
-        if (Objects.nonNull(deptIdList) && deptIdList.size() > 0) {
+        if (Objects.nonNull(deptIdList) && !deptIdList.isEmpty()) {
             sqlFilter.append(tableAlias).append(dataFilter.deptId());
 
             sqlFilter.append(" in(").append(StringUtil.join(deptIdList, ",")).append(")");
         }
 
         //查询本人数据
-        if (Objects.nonNull(deptIdList) && deptIdList.size() > 0) {
+        if (Objects.nonNull(deptIdList) && !deptIdList.isEmpty()) {
             sqlFilter.append(" or ");
         }
         sqlFilter.append(tableAlias).append(dataFilter.userId()).append("=").append(user.getId());

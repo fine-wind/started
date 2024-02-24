@@ -2,6 +2,7 @@ package com.example.common.v0.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,8 @@ import java.util.regex.Pattern;
 /**
  * 工具类
  */
+
+@Log4j2
 public class CommonUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommonUtils.class);
@@ -79,7 +82,7 @@ public class CommonUtils {
         for (Map.Entry<String, Object> entry : listMap) {
             value.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
         }
-        if (value.length() > 0) {
+        if (!value.isEmpty()) {
             return value.substring(0, value.length() - 1);
         }
         return null;
@@ -97,8 +100,8 @@ public class CommonUtils {
      */
     public static Object combineObject(Object sourceBean, Object targetBean) {
 
-        Class sourceBeanClass = sourceBean.getClass();
-        Class targetBeanClass = targetBean.getClass();
+        Class<?> sourceBeanClass = sourceBean.getClass();
+        Class<?> targetBeanClass = targetBean.getClass();
 
         Field[] sourceFields = sourceBeanClass.getDeclaredFields();
         Field[] targetFields = sourceBeanClass.getDeclaredFields();
@@ -108,11 +111,11 @@ public class CommonUtils {
             sourceField.setAccessible(true);
             targetField.setAccessible(true);
             try {
-                if (!(sourceField.get(sourceBean) == null) && !"serialVersionUID".equals(sourceField.getName().toString())) {
+                if (!(sourceField.get(sourceBean) == null) && !"serialVersionUID".equals(sourceField.getName())) {
                     targetField.set(targetBean, sourceField.get(sourceBean));
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
+                log.error(e);
             }
         }
         return targetBean;
@@ -130,13 +133,11 @@ public class CommonUtils {
 
             BeanInfo destBean = Introspector.getBeanInfo(to.getClass(), Object.class);
             PropertyDescriptor[] destProperty = destBean.getPropertyDescriptors();
-            for (int i = 0; i < sourceProperty.length; i++) {
-
-                for (int j = 0; j < destProperty.length; j++) {
-
-                    if (sourceProperty[i].getName().equals(destProperty[j].getName())) {
+            for (PropertyDescriptor descriptor : sourceProperty) {
+                for (PropertyDescriptor propertyDescriptor : destProperty) {
+                    if (descriptor.getName().equals(propertyDescriptor.getName())) {
                         // 调用source的getter方法和dest的setter方法
-                        destProperty[j].getWriteMethod().invoke(to, sourceProperty[i].getReadMethod().invoke(source));
+                        propertyDescriptor.getWriteMethod().invoke(to, descriptor.getReadMethod().invoke(source));
                         break;
                     }
                 }
@@ -149,7 +150,7 @@ public class CommonUtils {
     /**
      * 浅度复制一个对象
      *
-     * @param o
+     * @param o .
      */
     public static <T> T copy(Object o, Class<T> clazz) {
         if (o == null) {
@@ -175,12 +176,12 @@ public class CommonUtils {
      *
      * @param taskList 任务集合
      */
-    public static void allTaskDone(List<Future> taskList) {
+    public static void allTaskDone(List<Future<?>> taskList) {
         boolean isAllDone;
         do {
             isAllDone = true;
-            for (int i = 0, size = taskList.size(); i < size; i++) {
-                if (!taskList.get(i).isDone()) {
+            for (Future<?> future : taskList) {
+                if (!future.isDone()) {
                     isAllDone = false;
                     break;
                 }
@@ -189,7 +190,7 @@ public class CommonUtils {
                 try {
                     Thread.sleep(100);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         } while (!isAllDone);
@@ -198,8 +199,8 @@ public class CommonUtils {
     /**
      * 去掉html标签
      *
-     * @param htmlStr
-     * @return
+     * @param htmlStr .
+     * @return .
      */
     public static String delHTMLTag(String htmlStr) {
         //定义script的正则表达式
@@ -234,8 +235,7 @@ public class CommonUtils {
         } else {
             Pattern p = Pattern.compile(regex);
             Matcher m = p.matcher(phone);
-            boolean isMatch = m.matches();
-            return isMatch;
+            return m.matches();
         }
     }
 
@@ -302,7 +302,7 @@ public class CommonUtils {
                 field.set(obj, map.get(field.getName()));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return obj;
     }
@@ -322,7 +322,7 @@ public class CommonUtils {
         try {
             return JSON.parseObject(JSON.toJSONString(map), clazz);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return null;
         }
     }

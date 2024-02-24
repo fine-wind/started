@@ -35,10 +35,6 @@ public class SecurityUser {
         return getUserName();
     }
 
-    public static SecurityUserDetails me() {
-        return null;
-    }
-
     /**
      * 获取用户ID
      */
