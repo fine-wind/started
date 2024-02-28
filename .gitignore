@@ -29,6 +29,15 @@ hs_err_pid*
 /logs/
 
 
+# docker 部署
+/started-docker/mysql/data/
+/started-docker/mysql/logs/
+/started-docker/app/*.jar
+/started-docker/redis/data/
+/started-docker/*.zip
+
+
+# 前端
 node_modules
 .vscode
 *.suo
