@@ -8,7 +8,6 @@ import org.springframework.core.annotation.Order;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;

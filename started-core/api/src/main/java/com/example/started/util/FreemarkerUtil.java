@@ -4,6 +4,7 @@ import com.example.common.v0.constant.Constant;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.ui.Model;
 
 import java.io.*;
@@ -16,6 +17,7 @@ import java.util.Locale;
  *
  * @author 行星
  */
+@Log4j2
 public class FreemarkerUtil {
 
     public static String getStr(String ftlPath, Model root) throws IOException, TemplateException {
@@ -25,7 +27,7 @@ public class FreemarkerUtil {
         try {
             conf.setDirectoryForTemplateLoading(new File(value));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         conf.setLocale(Locale.CHINA);
         conf.setDefaultEncoding("utf-8");

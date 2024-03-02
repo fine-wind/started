@@ -8,8 +8,6 @@ import com.example.started.modules.message.service.SysSmsService;
 
 /**
  * 短信Factory
- *
- *
  */
 public class SmsFactory {
     private static SysSmsService sysSmsService;
@@ -18,16 +16,16 @@ public class SmsFactory {
         SmsFactory.sysSmsService = SpringContextUtils.getBean(SysSmsService.class);
     }
 
-    public static AbstractSmsService build(String smsCode){
+    public static AbstractSmsService build(String smsCode) {
         //获取短信配置信息
         SysSmsEntity smsEntity = sysSmsService.getBySmsCode(smsCode);
         SmsConfig config = JSON.parseObject(smsEntity.getSmsConfig(), SmsConfig.class);
 
-        if(smsEntity.getPlatform() == Constant.SmsService.ALIYUN.getValue()){
+        if (smsEntity.getPlatform() == Constant.SmsService.ALIYUN.getValue()) {
 //            return new AliyunSmsService(config);
-        }else if(smsEntity.getPlatform() == Constant.SmsService.QCLOUD.getValue()){
+        } else if (smsEntity.getPlatform() == Constant.SmsService.QCLOUD.getValue()) {
 //            return new QcloudSmsService(config);
-        }else if(smsEntity.getPlatform() == Constant.SmsService.QINIU.getValue()){
+        } else if (smsEntity.getPlatform() == Constant.SmsService.QINIU.getValue()) {
 //            return new QiniuSmsService(config);
         }
 

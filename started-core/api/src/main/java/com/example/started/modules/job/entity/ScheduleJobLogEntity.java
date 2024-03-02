@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.example.common.v0.data.entity.BaseEntity;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**

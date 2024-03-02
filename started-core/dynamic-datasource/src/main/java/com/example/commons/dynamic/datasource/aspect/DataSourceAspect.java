@@ -11,6 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * 多数据源，切面处理类
@@ -47,10 +48,6 @@ public class DataSourceAspect {
 //            DynamicContextHolder.push(value);
         }
 
-        try {
-            return point.proceed();
-        } finally {
-//            DynamicContextHolder.poll();
-        }
+        return point.proceed();
     }
 }

@@ -3,7 +3,6 @@ package com.example.common.v0.data.dto;
 import com.example.common.v0.validator.group.AddGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;

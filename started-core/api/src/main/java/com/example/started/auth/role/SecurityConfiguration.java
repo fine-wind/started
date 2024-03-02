@@ -37,12 +37,9 @@ public class SecurityConfiguration {
         //登陆
         http.addFilterAt(jwtTokenCheckFilter, LogoutFilter.class);
         //路径配置
-        http.authorizeHttpRequests((authorizeHttpRequests) -> {
-                    authorizeHttpRequests
-                            .requestMatchers(whiteList.toArray(new String[0])).permitAll()
-                            .anyRequest().authenticated()
-                    ;
-                })
+        http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                .requestMatchers(whiteList.toArray(new String[0])).permitAll()
+                .anyRequest().authenticated())
                 //禁用 csrf
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((e) -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

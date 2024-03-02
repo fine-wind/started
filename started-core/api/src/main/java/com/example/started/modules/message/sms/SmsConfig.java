@@ -9,6 +9,7 @@ import lombok.Data;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -17,7 +18,6 @@ import java.io.Serializable;
 @Data
 @ApiModel(value = "短信配置信息")
 public class SmsConfig implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "阿里云AccessKeyId")
     @NotBlank(message = "{aliyun.accesskeyid.require}", groups = AliyunGroup.class)

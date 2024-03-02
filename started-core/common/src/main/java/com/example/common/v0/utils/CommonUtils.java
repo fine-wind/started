@@ -76,7 +76,7 @@ public class CommonUtils {
         Map<String, Object> map = CommonUtils.convertObjToMap(object);
         List<Map.Entry<String, Object>> listMap = new ArrayList<>(map.entrySet());
         // key升序排序
-        listMap.sort(Comparator.comparing(Map.Entry::getKey));
+        listMap.sort(Map.Entry.comparingByKey());
 
         StringBuilder value = new StringBuilder(100);
         for (Map.Entry<String, Object> entry : listMap) {
@@ -101,7 +101,6 @@ public class CommonUtils {
     public static Object combineObject(Object sourceBean, Object targetBean) {
 
         Class<?> sourceBeanClass = sourceBean.getClass();
-        Class<?> targetBeanClass = targetBean.getClass();
 
         Field[] sourceFields = sourceBeanClass.getDeclaredFields();
         Field[] targetFields = sourceBeanClass.getDeclaredFields();
@@ -285,7 +284,7 @@ public class CommonUtils {
      * @param clazz 实体对象类型
      * @return 实体对象
      */
-    public static Object mapToObject(Map<String, Object> map, Class clazz) {
+    public static Object mapToObject(Map<String, Object> map, Class<?> clazz) {
         if (map == null) {
             return null;
         }

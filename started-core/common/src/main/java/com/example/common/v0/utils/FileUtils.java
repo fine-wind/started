@@ -1,6 +1,7 @@
 package com.example.common.v0.utils;
 
 import com.example.common.v0.exception.ServerException;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -33,6 +34,7 @@ import java.util.regex.Pattern;
  *
  * @author yqw
  */
+@Log4j2
 public class FileUtils {
     /**
      * 读取文件到字节数组
@@ -65,9 +67,9 @@ public class FileUtils {
     /**
      * 读取文件到字节数组 the traditional io way
      *
-     * @param filename
-     * @return
-     * @throws IOException
+     * @param filename .
+     * @return .
+     * @throws IOException .
      */
     public static byte[] toByteArray(String filename) throws IOException {
 
@@ -76,9 +78,8 @@ public class FileUtils {
             throw new FileNotFoundException(filename);
         }
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream((int) f.length());
-        BufferedInputStream in = null;
-        try {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream((int) f.length())) {
+            BufferedInputStream in = null;
             in = new BufferedInputStream(new FileInputStream(f));
             int buf_size = 1024;
             byte[] buffer = new byte[buf_size];
@@ -88,24 +89,17 @@ public class FileUtils {
             }
             return bos.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
             throw e;
-        } finally {
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            bos.close();
         }
     }
 
     /**
      * 读取文件到字节数组 NIO way
      *
-     * @param f
-     * @return
-     * @throws IOException
+     * @param f .
+     * @return .
+     * @throws IOException .
      */
     public static byte[] toByteArray2(File f) throws IOException {
 
@@ -125,18 +119,19 @@ public class FileUtils {
             }
             return byteBuffer.array();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
             throw e;
         } finally {
             try {
+                assert channel != null;
                 channel.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e);
             }
             try {
                 fs.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e);
             }
         }
     }
@@ -144,9 +139,9 @@ public class FileUtils {
     /**
      * 读取文件到字节数组 Mapped File way MappedByteBuffer*
      *
-     * @param filename
-     * @return
-     * @throws IOException
+     * @param filename .
+     * @return .
+     * @throws IOException .
      */
     @SuppressWarnings("resource")
     public static byte[] toByteArray3(String filename) throws IOException {
@@ -163,13 +158,14 @@ public class FileUtils {
             }
             return result;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
             throw e;
         } finally {
             try {
+                assert fc != null;
                 fc.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e);
             }
         }
     }
@@ -191,7 +187,7 @@ public class FileUtils {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         }
     }
@@ -211,7 +207,7 @@ public class FileUtils {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         }
     }
@@ -219,7 +215,7 @@ public class FileUtils {
     /**
      * 遍历删除已存在文件夹
      *
-     * @param folderPath
+     * @param folderPath .
      * @return 是否成功
      */
     public static boolean deleteFolder(String folderPath) {
@@ -236,7 +232,7 @@ public class FileUtils {
                 trueflag = true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return trueflag;
     }
@@ -244,7 +240,7 @@ public class FileUtils {
     /**
      * 删除文件
      *
-     * @param file
+     * @param file .
      */
     public static void DeleteFile(String file) {
         DeleteFile(new File(file));
@@ -253,14 +249,14 @@ public class FileUtils {
     /**
      * 删除文件或文件夹
      *
-     * @param file
+     * @param file .
      */
     public static void DeleteFile(File file) {
         if (file.exists()) {
             if (file.isFile()) {
                 file.delete();
             } else if (file.isDirectory()) {
-                File files[] = file.listFiles();
+                File[] files = file.listFiles();
                 for (File file2 : files) {
                     DeleteFile(file2);
                 }
@@ -280,7 +276,7 @@ public class FileUtils {
             File file = new File(fileStr);
             return file.exists() && file.isFile();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         }
     }
@@ -288,15 +284,15 @@ public class FileUtils {
     /**
      * 文件夹是否存在
      *
-     * @param folderStr
-     * @return
+     * @param folderStr .
+     * @return .
      */
     public static boolean FolderExist(String folderStr) {
         try {
             File file = new File(folderStr);
             return file.exists() && file.isDirectory();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         }
     }
@@ -304,37 +300,34 @@ public class FileUtils {
     /**
      * 根据条件枚举文件
      *
-     * @param folder
-     * @param pattern
-     * @param isRecursive
-     * @return
+     * @param folder      .
+     * @param pattern     .
+     * @param isRecursive .
+     * @return .
      */
     public static List<String> EnumFile(String folder, final String pattern, final boolean isRecursive) {
-        final Stack<String> dirStack = new Stack<String>();
-        final List<String> fileList = new ArrayList<String>();
+        final Stack<String> dirStack = new Stack<>();
+        final List<String> fileList = new ArrayList<>();
 
         if (!FolderExist(folder))
             return fileList;
 
         dirStack.push(folder);
-        while (dirStack.size() > 0) {
+        while (!dirStack.isEmpty()) {
             String dirStr = dirStack.pop();
             File dir = new File(dirStr);
-            dir.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    File findFile = new File(dir, name);
-                    if (findFile.isDirectory() && isRecursive) {
-                        dirStack.push(findFile.getAbsolutePath());
-                        return false;
-                    }
-
-                    if (name.matches(pattern) && findFile.isFile()) {
-                        fileList.add(findFile.getAbsolutePath());
-                    }
-
+            dir.listFiles((dir1, name) -> {
+                File findFile = new File(dir1, name);
+                if (findFile.isDirectory() && isRecursive) {
+                    dirStack.push(findFile.getAbsolutePath());
                     return false;
                 }
+
+                if (name.matches(pattern) && findFile.isFile()) {
+                    fileList.add(findFile.getAbsolutePath());
+                }
+
+                return false;
             });
         }
 
@@ -348,9 +341,9 @@ public class FileUtils {
     /**
      * copy File
      *
-     * @param srcPath
-     * @param destPath
-     * @return
+     * @param srcPath .
+     * @param destPath .
+     * @return .
      */
     public static boolean copyFile(String srcPath, String destPath) {
         File srcFile = new File(srcPath);
@@ -372,21 +365,21 @@ public class FileUtils {
         } catch (FileNotFoundException e) {
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         } finally {
             if (os != null) {
                 try {
                     os.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }
@@ -405,21 +398,18 @@ public class FileUtils {
 
     public static List<String> loadTextInLineFromStream(InputStream stream, String encoding) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, encoding));
 
-            try {
-                List<String> lst = new ArrayList<String>();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, encoding))) {
+                List<String> lst = new ArrayList<>();
                 String line;
                 while ((line = reader.readLine()) != null) {
                     lst.add(line);
                 }
 
                 return lst;
-            } finally {
-                reader.close();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return null;
         }
     }
@@ -433,14 +423,14 @@ public class FileUtils {
             fileInputStream = new FileInputStream(path);
             return loadTextInLineFromStream(fileInputStream, encoding);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return null;
         } finally {
             if (fileInputStream != null) {
                 try {
                     fileInputStream.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }
@@ -461,14 +451,14 @@ public class FileUtils {
             in.read(buf);
             return buf;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return null;
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }
@@ -492,14 +482,14 @@ public class FileUtils {
             fileInputStream = new FileInputStream(path);
             return LoadTextFromStream(fileInputStream, encoding);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return null;
         } finally {
             if (fileInputStream != null) {
                 try {
                     fileInputStream.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }
@@ -519,7 +509,7 @@ public class FileUtils {
             writer.write(str);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         } finally {
             try {
@@ -527,7 +517,7 @@ public class FileUtils {
                     writer.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
             }
         }
     }
@@ -547,14 +537,14 @@ public class FileUtils {
 
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }
@@ -572,7 +562,7 @@ public class FileUtils {
      *
      * @param dir 目录路径
      * @param pat 过滤
-     * @return
+     * @return .
      */
     public static List<String> enumFolder(String dir, final String pat) {
         final List<String> fileList = new ArrayList<>();
@@ -602,7 +592,7 @@ public class FileUtils {
      *
      * @param dir 目录路径
      * @param pat 过滤
-     * @return
+     * @return .
      */
     public static List<String> enumFile(String dir, final String pat) {
         final List<String> fileList = new ArrayList<>();
@@ -663,14 +653,14 @@ public class FileUtils {
                 out.write(buf, 0, funcRet);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new ServerException("文件io异常");
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }
@@ -726,32 +716,37 @@ public class FileUtils {
         String prefix = mat.group(1);
         String sub = mat.group(2);
 
-        if (prefix.equals("~")) {
-            return CombinePath(homeDir(), sub);
-        } else if (prefix.equals(".")) {
-            return CombinePath(wordDir(), sub);
-        } else if (prefix.equals("..")) {
-            // 可能存在../../../的情况，这里做一下处理
-            Pattern pattern = Pattern.compile("(\\..)");
-            Matcher matcher = pattern.matcher(sub);
-            int count = 1;
-            while (matcher.find()) {
-                count++;
+        switch (prefix) {
+            case "~" -> {
+                return CombinePath(homeDir(), sub);
             }
-            String dir = wordDir();
-            for (int i = 0; i < count; i++) {
-                String parent = new File(dir).getParent();
-                if (parent != null) {
-                    dir = parent;
+            case "." -> {
+                return CombinePath(wordDir(), sub);
+            }
+            case ".." -> {
+                // 可能存在../../../的情况，这里做一下处理
+                Pattern pattern = Pattern.compile("(\\..)");
+                Matcher matcher = pattern.matcher(sub);
+                int count = 1;
+                while (matcher.find()) {
+                    count++;
                 }
+                String dir = wordDir();
+                for (int i = 0; i < count; i++) {
+                    String parent = new File(dir).getParent();
+                    if (parent != null) {
+                        dir = parent;
+                    }
+                }
+                sub = sub.substring(sub.lastIndexOf("/"));
+                if (dir.length() == 1 && dir.indexOf("/") == 0) { // linux环境下的根目录
+                    return sub;
+                }
+                return CombinePath(dir, sub);
             }
-            sub = sub.substring(sub.lastIndexOf("/"), sub.length());
-            if (dir.length() == 1 && dir.indexOf("/") == 0) { // linux环境下的根目录
-                return sub;
+            default -> {
+                return new File(input).getAbsolutePath();
             }
-            return CombinePath(dir, sub);
-        } else {
-            return new File(input).getAbsolutePath();
         }
     }
 
@@ -786,7 +781,7 @@ public class FileUtils {
             finalStr.append(one);
         }
 
-        if (finalStr.length() > 0)
+        if (!finalStr.isEmpty())
             finalStr.append(splitter);
 
         splitterPos = two.indexOf(splitter);
@@ -807,7 +802,7 @@ public class FileUtils {
         return mat.matches();
     }
 
-    private static Pattern absPathPat = Pattern.compile("^\\w:[/\\\\].+|^/.+");
-    private static Pattern winReserved = Pattern.compile("(^|[\\\\/])(aux|com1|com2|prn|con|nul)($|[\\\\/])");
-    private static Pattern pathExpandPat = Pattern.compile("^(~|\\.{1,2})(.+)");
+    private static final Pattern absPathPat = Pattern.compile("^\\w:[/\\\\].+|^/.+");
+    private static final Pattern winReserved = Pattern.compile("(^|[\\\\/])(aux|com1|com2|prn|con|nul)($|[\\\\/])");
+    private static final Pattern pathExpandPat = Pattern.compile("^(~|\\.{1,2})(.+)");
 }

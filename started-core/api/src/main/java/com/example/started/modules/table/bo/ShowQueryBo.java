@@ -1,9 +1,7 @@
 package com.example.started.modules.table.bo;
 
-import com.example.common.v0.data.bo.BaseBo;
 import com.example.common.v0.data.bo.PageBo;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.io.Serializable;

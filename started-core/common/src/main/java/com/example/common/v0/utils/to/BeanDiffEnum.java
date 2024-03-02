@@ -1,6 +1,5 @@
 package com.example.common.v0.utils.to;
 
-import lombok.Data;
 import lombok.Getter;
 
 

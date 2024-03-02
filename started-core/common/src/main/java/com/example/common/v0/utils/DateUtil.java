@@ -1,6 +1,7 @@
 package com.example.common.v0.utils;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+@Log4j2
 public class DateUtil {
 
     public final static String pattern = "yyyy-MM-dd";
@@ -163,24 +165,22 @@ public class DateUtil {
             return null;
         }
         try {
-            String dateString = formatter.format(dateDate);
-            return dateString;
+            return formatter.format(dateDate);
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            log.error(e);
             return null;
         }
     }
 
     public static String dateToStr(LocalDate dateDate) {
-        String dateString = dateFormatter.format(dateDate);
-        return dateString;
+        return dateFormatter.format(dateDate);
     }
 
     /**
      * 将短时间格式字符串转换为时间 yyyy-MM-dd
      *
-     * @param strDate
-     * @return
+     * @param strDate .
+     * @return .
      */
     public static Date strToDate(String strDate) {
         if (StringUtil.isEmpty(strDate)) {
@@ -188,8 +188,7 @@ public class DateUtil {
         }
         ParsePosition pos = new ParsePosition(0);
         try {
-            Date strtodate = formatter.parse(strDate, pos);
-            return strtodate;
+            return formatter.parse(strDate, pos);
         } catch (Exception e) {
             return null;
         }
@@ -198,16 +197,15 @@ public class DateUtil {
     /**
      * 将短时间格式字符串转换为时间 yyyy-MM
      *
-     * @param strdate
-     * @return
+     * @param strdate .
+     * @return .
      */
     public static Date strToShortDate(String strdate) {
         String pattern = "yyyy-MM";
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
         ParsePosition pos = new ParsePosition(0);
         try {
-            Date strtodate = formatter.parse(strdate, pos);
-            return strtodate;
+            return formatter.parse(strdate, pos);
         } catch (Exception e) {
             return null;
         }
@@ -227,8 +225,8 @@ public class DateUtil {
     /**
      * 将短时间格式字符串转换为时间 yyyy-MM-dd HH:mm:ss
      *
-     * @param strDate
-     * @return
+     * @param strDate .
+     * @return .
      */
     public static Timestamp strToDateSql(String strDate) {
         if (StringUtil.isEmpty(strDate)) {
@@ -242,11 +240,10 @@ public class DateUtil {
     /**
      * 得到现在时间
      *
-     * @return
+     * @return .
      */
     public static Date getNow() {
-        Date currentTime = new Date();
-        return currentTime;
+        return new Date();
     }
 
     /**
@@ -329,7 +326,7 @@ public class DateUtil {
     /**
      * 得到现在分钟
      *
-     * @return
+     * @return .
      */
     public static String getTime() {
         Date currentTime = new Date();
@@ -344,13 +341,12 @@ public class DateUtil {
      * 根据用户传入的时间表示格式，返回当前时间的格式 如果是yyyyMMdd，注意字母y不能大写。
      *
      * @param sformat yyyyMMddhhmmss
-     * @return
+     * @return .
      */
     public static String getUserDate(String sformat) {
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat(sformat);
-        String dateString = formatter.format(currentTime);
-        return dateString;
+        return formatter.format(currentTime);
     }
 
     /**
@@ -391,8 +387,8 @@ public class DateUtil {
     /**
      * 得到二个日期间的间隔天数
      *
-     * @param start
-     * @param end
+     * @param start .
+     * @param end   .
      * @return 计算失败返回 0
      */
     public static long getTwoDay(Date start, Date end) {
@@ -400,7 +396,7 @@ public class DateUtil {
         try {
             day = (start.getTime() - end.getTime()) / (24 * 60 * 60 * 1000);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return 0;
         }
         return day;
@@ -418,7 +414,7 @@ public class DateUtil {
         try {
             minutes = (end.getTime() - start.getTime()) / (60 * 1000);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return minutes;
     }
@@ -431,10 +427,11 @@ public class DateUtil {
         String mydate1 = "";
         try {
             Date date1 = format.parse(sj1);
-            long Time = (date1.getTime() / 1000) + Integer.parseInt(jj) * 60;
+            long Time = (date1.getTime() / 1000) + Integer.parseInt(jj) * 60L;
             date1.setTime(Time * 1000);
             mydate1 = format.format(date1);
         } catch (Exception e) {
+            log.error(e);
         }
         return mydate1;
     }
@@ -445,10 +442,9 @@ public class DateUtil {
     public static Date getPreTime(Date sj1, int jj) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            Date date1 = new Date((sj1.getTime()) + jj * 60 * 1000);
-            return date1;
+            return new Date((sj1.getTime()) + (long) jj * 60 * 1000);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return null;
     }
@@ -472,7 +468,7 @@ public class DateUtil {
             Date d = strToDate(nowdate);
             return DateUtil.dateToStr(getNextDay(d, delay));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             return null;
         }
     }
@@ -486,7 +482,7 @@ public class DateUtil {
      */
     public static Date getNextDay(Date nowdate, int delay) {
         try {
-            long myTime = (nowdate.getTime() / 1000) + delay * 24 * 60 * 60;
+            long myTime = (nowdate.getTime() / 1000) + (long) delay * 24 * 60 * 60;
             return new Date(myTime * 1000);
         } catch (Exception e) {
             return null;
@@ -514,7 +510,7 @@ public class DateUtil {
      */
     public static Date getFromNowToDate(int day) {
         Date date = new Date();
-        long dateTime = (date.getTime() / 1000) + day * 24 * 60 * 60;
+        long dateTime = (date.getTime() / 1000) + (long) day * 24 * 60 * 60;
         date.setTime(dateTime * 1000);
         return date;
     }
@@ -522,12 +518,12 @@ public class DateUtil {
     /**
      * 判断是否润年
      *
-     * @param ddate
-     * @return
+     * @param ddate .
+     * @return .
      */
     public static boolean isLeapYear(String ddate) {
 
-        /**
+        /*
          * 详细设计： 1.被400整除是闰年，否则： 2.不能被4整除则不是闰年 3.能被4整除同时不能被100整除则是闰年
          * 3.能被4整除同时能被100整除则不是闰年
          */
@@ -538,10 +534,7 @@ public class DateUtil {
         if ((year % 400) == 0)
             return true;
         else if ((year % 4) == 0) {
-            if ((year % 100) == 0)
-                return false;
-            else
-                return true;
+            return (year % 100) != 0;
         } else
             return false;
     }
@@ -549,8 +542,8 @@ public class DateUtil {
     /**
      * 返回美国时间格式 26 Apr 2006
      *
-     * @param str
-     * @return
+     * @param str .
+     * @return .
      */
     public static String getEDate(String str) {
         ParsePosition pos = new ParsePosition(0);
@@ -563,8 +556,8 @@ public class DateUtil {
     /**
      * 获取一个月的最后一天
      *
-     * @param dat
-     * @return
+     * @param dat .
+     * @return .
      */
     public static String getEndDateOfMonth(String dat) {// yyyy-MM-dd
         String str = dat.substring(0, 8);
@@ -587,9 +580,9 @@ public class DateUtil {
     /**
      * 判断二个时间是否在同一个周
      *
-     * @param date1
-     * @param date2
-     * @return
+     * @param date1 .
+     * @param date2 .
+     * @return .
      */
     public static boolean isSameWeekDates(Date date1, Date date2) {
         Calendar cal1 = Calendar.getInstance();
@@ -614,7 +607,7 @@ public class DateUtil {
     /**
      * 产生周序列,即得到当前时间所在的年度是第几周
      *
-     * @return
+     * @return .
      */
     public static String getSeqWeek() {
         Calendar c = Calendar.getInstance(Locale.CHINA);
@@ -628,9 +621,9 @@ public class DateUtil {
     /**
      * 获得一个日期所在的周的星期几的日期，如要找出2002年2月3日所在周的星期一是几号
      *
-     * @param sdate
-     * @param num
-     * @return
+     * @param sdate .
+     * @param num .
+     * @return .
      */
     public static String getWeek(String sdate, String num) {
         // 再转换为时间
@@ -668,8 +661,8 @@ public class DateUtil {
     /**
      * 根据一个日期，返回年份的字符串
      *
-     * @param sdate
-     * @return
+     * @param sdate .
+     * @return .
      */
     public static String getYear(String sdate) {
         // 再转换为时间
@@ -693,20 +686,20 @@ public class DateUtil {
         // int hour=c.get(Calendar.DAY_OF_WEEK);
         // hour中存的就是星期几了，其范围 1~7
         // 1=星期日 7=星期六，其他类推
-        String t = new SimpleDateFormat("yyyy").format(c.getTime());
-        return t;
+        return new SimpleDateFormat("yyyy").format(c.getTime());
     }
 
     /**
      * 根据一个日期，返回是星期几的字符串
      *
-     * @param sdate
-     * @return
+     * @param sdate .
+     * @return .
      */
     public static String getWeek(String sdate) {
         // 再转换为时间
         Date date = DateUtil.strToDate(sdate);
         Calendar c = Calendar.getInstance();
+        assert date != null;
         c.setTime(date);
         // int hour=c.get(Calendar.DAY_OF_WEEK);
         // hour中存的就是星期几了，其范围 1~7
@@ -717,35 +710,30 @@ public class DateUtil {
     public static String getWeekStr(String sdate) {
         String str = "";
         str = DateUtil.getWeek(sdate);
-        if ("1".equals(str)) {
-            str = "星期日";
-        } else if ("2".equals(str)) {
-            str = "星期一";
-        } else if ("3".equals(str)) {
-            str = "星期二";
-        } else if ("4".equals(str)) {
-            str = "星期三";
-        } else if ("5".equals(str)) {
-            str = "星期四";
-        } else if ("6".equals(str)) {
-            str = "星期五";
-        } else if ("7".equals(str)) {
-            str = "星期六";
-        }
+        str = switch (str) {
+            case "1" -> "星期日";
+            case "2" -> "星期一";
+            case "3" -> "星期二";
+            case "4" -> "星期三";
+            case "5" -> "星期四";
+            case "6" -> "星期五";
+            case "7" -> "星期六";
+            default -> str;
+        };
         return str;
     }
 
     /**
      * 两个时间之间的天数
      *
-     * @param date1
-     * @param date2
-     * @return
+     * @param date1 .
+     * @param date2 .
+     * @return .
      */
     public static long getDays(String date1, String date2) {
-        if (date1 == null || date1.equals(""))
+        if (date1 == null || date1.isEmpty())
             return 0;
-        if (date2 == null || date2.equals(""))
+        if (date2 == null || date2.isEmpty())
             return 0;
         // 转换为标准时间
         Date date = null;
@@ -754,9 +742,10 @@ public class DateUtil {
             date = formatter.parse(date1);
             mydate = formatter.parse(date2);
         } catch (Exception e) {
+            log.error(e);
         }
-        long day = (date.getTime() - mydate.getTime()) / (24 * 60 * 60 * 1000);
-        return day;
+        assert mydate != null;
+        return (date.getTime() - mydate.getTime()) / (24 * 60 * 60 * 1000);
     }
 
     /**
@@ -764,7 +753,7 @@ public class DateUtil {
      *
      * @param date1 减数
      * @param date2 被减数
-     * @return
+     * @return .
      */
     public static Long getDays(Date date1, Date date2) {
         return (date1.getTime() - date2.getTime()) / (1000 * 3600 * 24);
@@ -775,8 +764,8 @@ public class DateUtil {
      * 形成如下的日历 ， 根据传入的一个时间返回一个结构 星期日 星期一 星期二 星期三 星期四 星期五 星期六 下面是当月的各个时间
      * 此函数返回该日历第一行星期日所在的日期
      *
-     * @param sdate
-     * @return
+     * @param sdate .
+     * @return .
      */
     public static String getNowMonth(String sdate) {
         // 取该时间所在月的一号
@@ -787,8 +776,7 @@ public class DateUtil {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         int u = c.get(Calendar.DAY_OF_WEEK);
-        String newday = DateUtil.getNextDay(sdate, (1 - u) + "");
-        return newday;
+        return DateUtil.getNextDay(sdate, (1 - u) + "");
     }
 
     /**
@@ -933,7 +921,7 @@ public class DateUtil {
      * @version 2015-3-31 上午09:29:31 <br/>
      */
     public static String getOKDate(String sdate) {
-        if (sdate == null || sdate.equals(""))
+        if (sdate == null || sdate.isEmpty())
             return getStringDateShort();
 
 //      if (!VeStr.Isdate(sdate)) {
@@ -946,15 +934,14 @@ public class DateUtil {
             sdate = sdate.substring(0, 4) + "-" + sdate.substring(4, 6) + "-" + sdate.substring(6, 8);
         ParsePosition pos = new ParsePosition(0);
         Date strtodate = formatter.parse(sdate, pos);
-        String dateString = formatter.format(strtodate);
-        return dateString;
+        return formatter.format(strtodate);
     }
 
     /**
      * 获取当前时间的前一天时间
      *
-     * @param cl
-     * @return
+     * @param cl .
+     * @return .
      */
     private static String getBeforeDay(Calendar cl) {
         //使用roll方法进行向前回滚
@@ -968,8 +955,8 @@ public class DateUtil {
     /**
      * 获取当前时间的后一天时间
      *
-     * @param cl
-     * @return
+     * @param cl .
+     * @return .
      */
     private static String getAfterDay(Calendar cl) {
         //使用roll方法进行回滚到后一天的时间
@@ -997,16 +984,10 @@ public class DateUtil {
         try {
             long ldate1 = formatter.parse(date1).getTime();
             long ldate2 = formatter.parse(date2).getTime();
-            if (ldate1 > ldate2) {
-                i = 1;
-            } else if (ldate1 == ldate2) {
-                i = 0;
-            } else {
-                i = -1;
-            }
+            i = Long.compare(ldate1, ldate2);
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return i;
     }
@@ -1044,7 +1025,7 @@ public class DateUtil {
     /**
      * 每周的第一天和最后一天
      *
-     * @return
+     * @return .
      */
     public static Date[] getFirstAndLastOfWeek(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -1068,7 +1049,7 @@ public class DateUtil {
     /**
      * 获取今天的最后一秒
      *
-     * @return
+     * @return .
      */
     public static Date getNowDateLastSecond() {
         Calendar cal = Calendar.getInstance();
@@ -1098,13 +1079,12 @@ public class DateUtil {
     /**
      * 首先将 Date 转化为 yyyy-MM-dd 然后 在转化成Date
      *
-     * @param date
-     * @return
+     * @param date .
+     * @return .
      */
     public static Date toShortDate(Date date) {
         String format = formatter.format(date);
-        Date date1 = strToDate(format);
-        return date1;
+        return strToDate(format);
     }
 
     /**
@@ -1125,8 +1105,8 @@ public class DateUtil {
     /**
      * 当前时间与传入的时间相减 返回年份
      *
-     * @param date
-     * @return
+     * @param date .
+     * @return .
      */
     public static int nowSubtractYear(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -1170,24 +1150,22 @@ public class DateUtil {
     /**
      * 把LocalDateTime 转换成 Date
      *
-     * @return
+     * @return .
      */
     public static Date toDateByLocalDate(LocalDateTime localDateTime) {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = localDateTime.atZone(zone).toInstant();
-        Date date = Date.from(instant);
-        return date;
+        return Date.from(instant);
     }
 
     /**
      * 把LocalDateTime 转换成 str
      *
-     * @return
+     * @return .
      */
     public static String toStringByLocalDate(LocalDateTime date, String pattern) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
-        String localTime = df.format(date);
-        return localTime;
+        return df.format(date);
     }
 
     /**
@@ -1262,22 +1240,3 @@ public class DateUtil {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

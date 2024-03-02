@@ -4,7 +4,6 @@ import com.example.common.v0.data.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

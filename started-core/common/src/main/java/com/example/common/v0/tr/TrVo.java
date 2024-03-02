@@ -2,7 +2,6 @@ package com.example.common.v0.tr;
 
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

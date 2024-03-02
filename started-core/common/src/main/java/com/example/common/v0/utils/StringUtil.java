@@ -841,7 +841,7 @@ public class StringUtil {
         }
         int closeLen = close.length();
         int openLen = open.length();
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         int pos = 0;
         while (pos < strLen - closeLen) {
             int start = str.indexOf(open, pos);
