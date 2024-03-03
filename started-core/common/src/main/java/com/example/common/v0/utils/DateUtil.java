@@ -12,10 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+import java.util.*;
 
 @Log4j2
 public class DateUtil {
@@ -527,9 +524,8 @@ public class DateUtil {
          * 详细设计： 1.被400整除是闰年，否则： 2.不能被4整除则不是闰年 3.能被4整除同时不能被100整除则是闰年
          * 3.能被4整除同时能被100整除则不是闰年
          */
-        Date d = strToDate(ddate);
         GregorianCalendar gc = (GregorianCalendar) Calendar.getInstance();
-        gc.setTime(d);
+        gc.setTime(Objects.requireNonNull(strToDate(ddate)));
         int year = gc.get(Calendar.YEAR);
         if ((year % 400) == 0)
             return true;

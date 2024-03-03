@@ -1,6 +1,7 @@
 package com.example.commons.dynamic.datasource.aspect;
 
 import com.example.commons.dynamic.datasource.annotation.DataSource;
+import com.example.commons.dynamic.datasource.config.DynamicContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -38,14 +39,8 @@ public class DataSourceAspect {
         DataSource targetDataSource = targetClass.getAnnotation(DataSource.class);
         DataSource methodDataSource = method.getAnnotation(DataSource.class);
         if (targetDataSource != null || methodDataSource != null) {
-            String value;
-            if (methodDataSource != null) {
-                value = methodDataSource.value();
-            } else {
-                value = targetDataSource.value();
-            }
-
-//            DynamicContextHolder.push(value);
+            DataSource dataSource = Objects.requireNonNullElse(methodDataSource, targetDataSource);
+            DynamicContextHolder.push(dataSource.value());
         }
 
         return point.proceed();

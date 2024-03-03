@@ -15,108 +15,106 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * 定时任务
- *
- *
  */
 @RestController
 @RequestMapping("/sys/schedule")
-@Api(tags="定时任务")
+@Api(tags = "定时任务")
+@AllArgsConstructor
 public class ScheduleJobController {
-	@Autowired
-	private ScheduleJobService scheduleJobService;
+    private final ScheduleJobService scheduleJobService;
 
-	@PostMapping("page")
-	@ApiOperation("分页")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = Constant.PAGE.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-		@ApiImplicitParam(name = Constant.PAGE.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-		@ApiImplicitParam(name = Constant.PAGE.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-		@ApiImplicitParam(name = Constant.PAGE.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String") ,
-		@ApiImplicitParam(name = "beanName", value = "beanName", paramType = "query", dataType="String")
-	})
+    @PostMapping("page")
+    @ApiOperation("分页")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = Constant.PAGE.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.PAGE.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.PAGE.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.PAGE.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "beanName", value = "beanName", paramType = "query", dataType = "String")
+    })
 
-	public Result<PageData<ScheduleJobDTO>> page(@RequestBody ScheduleJobBo params){
-		PageData<ScheduleJobDTO> page = scheduleJobService.page(params);
+    public Result<PageData<ScheduleJobDTO>> page(@RequestBody ScheduleJobBo params) {
+        PageData<ScheduleJobDTO> page = scheduleJobService.page(params);
 
-		return new Result<PageData<ScheduleJobDTO>>().ok(page);
-	}
+        return Result.ok(page);
+    }
 
-	@GetMapping("{id}")
-	@ApiOperation("信息")
+    @GetMapping("{id}")
+    @ApiOperation("信息")
 
-	public Result<ScheduleJobDTO> info(@PathVariable("id") Long id){
-		ScheduleJobDTO schedule = scheduleJobService.get(id);
+    public Result<ScheduleJobDTO> info(@PathVariable("id") Long id) {
+        ScheduleJobDTO schedule = scheduleJobService.get(id);
 
-		return new Result<ScheduleJobDTO>().ok(schedule);
-	}
+        return Result.ok(schedule);
+    }
 
-	@PostMapping
-	@ApiOperation("保存")
-	@LogOperation("保存")
+    @PostMapping
+    @ApiOperation("保存")
+    @LogOperation("保存")
 
-	public Result<?> save(@RequestBody ScheduleJobDTO dto){
-		ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+    public Result<?> save(@RequestBody ScheduleJobDTO dto) {
+        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-		scheduleJobService.save(dto);
+        scheduleJobService.save(dto);
 
-		return new Result<>();
-	}
+        return new Result<>();
+    }
 
-	@PutMapping
-	@ApiOperation("修改")
-	@LogOperation("修改")
+    @PutMapping
+    @ApiOperation("修改")
+    @LogOperation("修改")
 
-	public Result<?> update(@RequestBody ScheduleJobDTO dto){
-		ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+    public Result<?> update(@RequestBody ScheduleJobDTO dto) {
+        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-		scheduleJobService.update(dto);
+        scheduleJobService.update(dto);
 
-		return new Result<>();
-	}
+        return new Result<>();
+    }
 
-	@DeleteMapping
-	@ApiOperation("删除")
-	@LogOperation("删除")
+    @DeleteMapping
+    @ApiOperation("删除")
+    @LogOperation("删除")
 
-	public Result<?> delete(@RequestBody Long[] ids){
-		scheduleJobService.deleteBatch(ids);
+    public Result<?> delete(@RequestBody Long[] ids) {
+        scheduleJobService.deleteBatch(ids);
 
-		return new Result<>();
-	}
+        return new Result<>();
+    }
 
-	@PutMapping("/run")
-	@ApiOperation("立即执行")
-	@LogOperation("立即执行")
+    @PutMapping("/run")
+    @ApiOperation("立即执行")
+    @LogOperation("立即执行")
 
-	public Result<?> run(@RequestBody Long[] ids){
-		scheduleJobService.run(ids);
+    public Result<?> run(@RequestBody Long[] ids) {
+        scheduleJobService.run(ids);
 
-		return new Result<>();
-	}
+        return new Result<>();
+    }
 
-	@PutMapping("/pause")
-	@ApiOperation("暂停")
-	@LogOperation("暂停")
+    @PutMapping("/pause")
+    @ApiOperation("暂停")
+    @LogOperation("暂停")
 
-	public Result<?> pause(@RequestBody Long[] ids){
-		scheduleJobService.pause(ids);
+    public Result<?> pause(@RequestBody Long[] ids) {
+        scheduleJobService.pause(ids);
 
-		return new Result<>();
-	}
+        return new Result<>();
+    }
 
-	@PutMapping("/resume")
-	@ApiOperation("恢复")
-	@LogOperation("恢复")
+    @PutMapping("/resume")
+    @ApiOperation("恢复")
+    @LogOperation("恢复")
 
-	public Result<?> resume(@RequestBody Long[] ids){
-		scheduleJobService.resume(ids);
+    public Result<?> resume(@RequestBody Long[] ids) {
+        scheduleJobService.resume(ids);
 
-		return new Result<>();
-	}
+        return new Result<>();
+    }
 
 }

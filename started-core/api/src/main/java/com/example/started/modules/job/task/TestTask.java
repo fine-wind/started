@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("testTask")
 public class TestTask implements ITask {
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void run(String params) {
