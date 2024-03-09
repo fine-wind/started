@@ -44,7 +44,7 @@ public class SysLogLoginController {
     public Result<PageData<SysLogLoginDTO>> page(@ApiIgnore @RequestBody SysLogLoginBo params) {
         PageData<SysLogLoginDTO> page = sysLogLoginService.page(params);
 
-        return new Result<PageData<SysLogLoginDTO>>().ok(page);
+        return Result.ok(page);
     }
 
 }

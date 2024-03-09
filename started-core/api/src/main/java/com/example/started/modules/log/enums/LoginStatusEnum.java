@@ -19,7 +19,7 @@ public enum LoginStatusEnum {
      */
     LOCK(2);
 
-    private int value;
+    private final int value;
 
     LoginStatusEnum(int value) {
         this.value = value;

@@ -16,7 +16,6 @@ import java.util.Date;
 @Data
 @ApiModel(value = "操作日志")
 public class SysLogOperationDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "id")
 	private Long id;

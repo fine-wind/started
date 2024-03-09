@@ -41,7 +41,7 @@ public class SysLogOperationController {
     public Result<PageData<SysLogOperationDTO>> page(@RequestBody SysLogOperationBo params) {
         PageData<SysLogOperationDTO> page = sysLogOperationService.page(params);
 
-        return new Result<PageData<SysLogOperationDTO>>().ok(page);
+        return Result.ok(page);
     }
 
 }

@@ -15,7 +15,6 @@ import java.util.Date;
 @Data
 @ApiModel(value = "异常日志")
 public class SysLogErrorDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id")
     private Long id;

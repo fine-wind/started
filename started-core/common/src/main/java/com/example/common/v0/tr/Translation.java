@@ -1,11 +1,12 @@
 package com.example.common.v0.tr;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.common.v0.base.TrService;
 import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.utils.StringUtil;
 import com.example.common.v1.annotation.Ti;
 import com.example.common.v1.annotation.TiField;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,9 @@ import java.util.*;
  */
 @Slf4j
 @Service
-@NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 public class Translation {
-//    private final TrService dictDataDao;
+    private final TrService dictDataDao;
 
     /**
      * 翻译一个对象
@@ -121,7 +121,7 @@ public class Translation {
         }
         /* 查询数据库*/
         if (isSelect) {
-            Map<String, Object> t = new HashMap<>();// todo dictDataDao.selectValueByTableAndColumn(String.join(",", columnField), tableName.value(), annotation.key(), String.valueOf(value));
+            Map<String, Object> t = dictDataDao.selectValueByTableAndColumn(String.join(",", columnField), tableName.value(), annotation.key(), String.valueOf(value));
             if (Objects.nonNull(t)) {
                 stringStringMap.putAll(t);
             }

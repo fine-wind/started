@@ -42,7 +42,6 @@ public class ScheduleJobLogController {
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-
     public Result<ScheduleJobLogDTO> info(@PathVariable("id") Long id) {
         ScheduleJobLogDTO log = scheduleJobLogService.get(id);
 

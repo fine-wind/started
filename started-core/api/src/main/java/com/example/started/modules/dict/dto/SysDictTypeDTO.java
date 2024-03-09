@@ -21,7 +21,6 @@ import java.util.Date;
 @Data
 @ApiModel(value = "字典类型")
 public class SysDictTypeDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id")
     @Null(message = "{id.null}", groups = AddGroup.class)

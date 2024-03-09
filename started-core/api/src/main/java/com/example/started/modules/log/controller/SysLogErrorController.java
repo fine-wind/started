@@ -40,7 +40,7 @@ public class SysLogErrorController {
     public Result<PageData<SysLogErrorDTO>> page(@ApiIgnore @RequestBody SysLogErrorBo params) {
         PageData<SysLogErrorDTO> page = sysLogErrorService.page(params);
 
-        return new Result<PageData<SysLogErrorDTO>>().ok(page);
+        return Result.ok(page);
     }
 
 }

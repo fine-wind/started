@@ -16,7 +16,6 @@ import java.util.Date;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class SysRegionBo extends BaseBo implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     /**
      * id
