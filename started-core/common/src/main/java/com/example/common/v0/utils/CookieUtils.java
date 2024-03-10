@@ -3,6 +3,8 @@ package com.example.common.v0.utils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j2;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map;
  *
  * @author 行星
  */
+@Log4j2
 public class CookieUtils {
 
     public static final int COOKIE_HALF_HOUR = 30 * 60;
@@ -103,7 +106,7 @@ public class CookieUtils {
         try {
             response.flushBuffer();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 

@@ -12,7 +12,12 @@ import java.util.stream.Stream;
 public class BeanUtils {
 
     /**
-     * 比较两个对象属性值是否相同,如果不同返回修改过的属性信息集合,包括：字段名,原始数据值，新值，更改类型     *     * @param source  原始对象     * @param target  新对象     * @return ArrayList<BeanDiff>  变化后的数据集合
+     * 比较两个对象属性值是否相同,如果不同返回修改过的属性信息集合
+     * 包括：字段名,原始数据值，新值，更改类型
+     *
+     * @param source 原始对象
+     * @param target 新对象
+     * @return ArrayList<BeanDiff>  变化后的数据集合
      */
     public static ArrayList<BeanDiff> compareInstance(Object source, Object target) {
         ArrayList<BeanDiff> compareResultList = new ArrayList<>();
@@ -25,7 +30,7 @@ public class BeanUtils {
         /* source中有的,target中有但是内容变化->字段内容被更新   */
         for (Field field : fileds_source.values()) {
             BeanDiff BeanDiff = new BeanDiff();
-            Object v1 = null;
+            Object v1;
             try {
                 v1 = field.get(source);
             } catch (IllegalAccessException e) {
@@ -38,7 +43,7 @@ public class BeanUtils {
                 compareResultList.add(BeanDiff);
                 continue;
             }
-            Object v2 = null;
+            Object v2;
             try {
                 v2 = fields_target.get(field.getName()).get(target);
             } catch (IllegalAccessException e) {

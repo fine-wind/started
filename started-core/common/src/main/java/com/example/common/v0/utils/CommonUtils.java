@@ -25,8 +25,6 @@ import java.util.regex.Pattern;
 @Log4j2
 public class CommonUtils {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CommonUtils.class);
-
 
     /**
      * 把obj对象转换为map
@@ -55,11 +53,11 @@ public class CommonUtils {
                     }
                     reMap.put(field.getName(), o);
                 } catch (NoSuchFieldException e) {
-                    LOG.error("NoSuchFieldException", e);
+                    log.error("NoSuchFieldException", e);
                 } catch (IllegalArgumentException e) {
-                    LOG.error("IllegalArgumentException", e);
+                    log.error("IllegalArgumentException", e);
                 } catch (IllegalAccessException e) {
-                    LOG.error("IllegalAccessException", e);
+                    log.error("IllegalAccessException", e);
                 }
             }
         }
@@ -142,7 +140,7 @@ public class CommonUtils {
                 }
             }
         } catch (Exception e) {
-            LOG.error("property copy error", e);
+            log.error("property copy error", e);
         }
     }
 

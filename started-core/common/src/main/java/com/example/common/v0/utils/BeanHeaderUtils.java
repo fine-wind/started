@@ -1,5 +1,6 @@
 package com.example.common.v0.utils;
 
+import lombok.Getter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContextAware;
@@ -19,7 +20,10 @@ import org.slf4j.LoggerFactory;
 public class BeanHeaderUtils implements ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(CommonUtils.class);
 
-    // 上下文对象
+    /**
+     * 获取上下文对象
+     */
+    @Getter
     private static ApplicationContext applicationContext;
 
     /**
@@ -31,15 +35,6 @@ public class BeanHeaderUtils implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         BeanHeaderUtils.applicationContext = applicationContext;
-    }
-
-    /**
-     * 获取上下文对象
-     *
-     * @return applicationContext
-     */
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
     }
 
     /**

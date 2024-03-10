@@ -22,7 +22,6 @@ public class CaptchaUtils {
     /**
      * @param width  验证码宽
      * @param height 验证码高
-     * @param uuid   验证码唯一标识
      * @return 验证码base64
      * @throws IOException io异常
      */
@@ -98,7 +97,6 @@ public class CaptchaUtils {
         if (Boolean.parseBoolean(CAPTCHA.getValue())) {
 //            String captcha = SpringContextUtils.getBean(RedisUtils.class).getCache(CacheCommonKeys.getCaptchaKey(uuid));
 //            return code.equalsIgnoreCase(captcha);
-            return true;
         }
         //获取验证码
         return true;

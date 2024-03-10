@@ -587,15 +587,12 @@ public class DateUtil {
         cal2.setTime(date2);
         int subYear = cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR);
         if (0 == subYear) {
-            if (cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR))
-                return true;
-        } else if (1 == subYear && 11 == cal2.get(Calendar.MONTH)) {
+            return cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR);
+        } else if (1 == subYear && Calendar.DECEMBER == cal2.get(Calendar.MONTH)) {
             // 如果12月的最后一周横跨来年第一周的话则最后一周即算做来年的第一周
-            if (cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR))
-                return true;
-        } else if (-1 == subYear && 11 == cal1.get(Calendar.MONTH)) {
-            if (cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR))
-                return true;
+            return cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR);
+        } else if (-1 == subYear && Calendar.DECEMBER == cal1.get(Calendar.MONTH)) {
+            return cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR);
         }
         return false;
     }

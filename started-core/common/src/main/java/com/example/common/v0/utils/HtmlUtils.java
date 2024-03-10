@@ -11,7 +11,7 @@ public class HtmlUtils {
     /**
      * 压缩html
      *
-     * @param htmlStr
+     * @param htmlStr .
      * @return zip htmlStr
      */
     public static String zip(String htmlStr) {
@@ -33,8 +33,8 @@ public class HtmlUtils {
     /**
      * 去掉html标签
      *
-     * @param htmlStr
-     * @return
+     * @param htmlStr .
+     * @return .
      */
     public static String delHTMLTag(String htmlStr) {
         //定义script的正则表达式

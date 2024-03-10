@@ -2,8 +2,11 @@ package com.example.common.v0.utils;
 
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j2;
+
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 下载工具类
@@ -11,12 +14,13 @@ import java.net.URLEncoder;
  * @author 行星
  * @date 2020/4/24 17:38
  */
+@Log4j2
 public class DownloadUtils {
     /**
      * @param response response
      * @param fileName filename
-     * @return
-     * @throws IOException
+     * @return .
+     * @throws IOException .
      */
     public static Result<Object> download(HttpServletResponse response, String fileName) throws IOException {
 
@@ -35,7 +39,7 @@ public class DownloadUtils {
         response.setHeader("content-type", "application/octet-stream");
         response.setContentType("application/octet-stream");
         // 下载文件能正常显示中文
-        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(file.getName(), "UTF-8"));
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(file.getName(), StandardCharsets.UTF_8));
         // 实现文件下载
         byte[] buffer = new byte[1024];
         FileInputStream fis = null;
@@ -57,14 +61,14 @@ public class DownloadUtils {
                 try {
                     bis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
             if (fis != null) {
                 try {
                     fis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }

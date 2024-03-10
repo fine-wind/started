@@ -1,10 +1,13 @@
 package com.example.common.v0.utils;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.UnsupportedEncodingException;
 
 /**
  * URL 转码解码
  */
+@Log4j2
 public class UrlUtil {
     private final static String ENCODE = "UTF-8";
 
@@ -21,7 +24,7 @@ public class UrlUtil {
         try {
             result = java.net.URLDecoder.decode(str, ENCODE);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -37,7 +40,7 @@ public class UrlUtil {
         try {
             result = java.net.URLEncoder.encode(str, ENCODE);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
