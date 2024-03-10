@@ -36,7 +36,7 @@ public class SecurityUser {
     }
 
     /**
-     * 获取用户ID
+     * todo 判断用户是不是系统管理员
      */
     public static boolean superAdmin() {
         return Constant.Status.SUCCESS.equals(Constant.Status.SUCCESS);

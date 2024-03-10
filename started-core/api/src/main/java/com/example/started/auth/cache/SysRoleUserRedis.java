@@ -2,7 +2,7 @@ package com.example.started.auth.cache;
 
 import com.example.started.auth.role.user.SecurityUser;
 import com.example.started.redis.CacheCommonKeys;
-import com.example.started.redis.RedisUtils;
+import com.example.common.v3.cache.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

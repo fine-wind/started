@@ -1,7 +1,7 @@
 package com.example.started.config;
 
 import com.example.started.auth.role.user.SecurityUser;
-import com.example.started.redis.RedisUtils;
+import com.example.common.v3.cache.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

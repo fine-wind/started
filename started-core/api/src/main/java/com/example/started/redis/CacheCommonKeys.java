@@ -5,7 +5,6 @@ package com.example.started.redis;
  */
 public class CacheCommonKeys {
 
-    public static final String LANGUAGE = "sys:language";
 
     /**
      * 系统参数Key
@@ -21,12 +20,6 @@ public class CacheCommonKeys {
         return "sys:userLcs:" + username;
     }
 
-    /**
-     * 验证码Key
-     */
-    public static String getCaptchaKey(String uuid) {
-        return "sys:captcha:" + uuid;
-    }
 
     /**
      * 登录用户Key

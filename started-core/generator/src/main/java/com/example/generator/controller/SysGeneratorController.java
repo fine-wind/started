@@ -6,6 +6,8 @@ import com.example.generator.utils.PageUtils;
 import com.example.generator.utils.Query;
 import com.example.generator.utils.R;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +22,10 @@ import java.util.Map;
  * 代码生成器
  */
 @Controller
+@AllArgsConstructor
 @RequestMapping("/sys/generator")
 public class SysGeneratorController {
-    @Autowired
-    private SysGeneratorService sysGeneratorService;
+    final SysGeneratorService sysGeneratorService;
 
     /**
      * 列表
@@ -48,6 +50,6 @@ public class SysGeneratorController {
         response.addHeader("Content-Length", "" + data.length);
         response.setContentType("application/octet-stream; charset=UTF-8");
 
-        // todo IOUtils.write(data, response.getOutputStream());
+        IOUtils.write(data, response.getOutputStream());
     }
 }

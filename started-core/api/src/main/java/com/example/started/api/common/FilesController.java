@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,16 +36,15 @@ public class FilesController {
     /**
      * todo 此接口鉴权 成功后301到图片地址 否则就返回其他错误
      *
-     * @param fileid
-     * @param request
-     * @param response
-     * @throws IOException
+     * @param fileid   .
+     * @param request  .
+     * @param response .
      */
     @ApiOperation("展示图片接口")
     @GetMapping(value = "/showImage/{fileid}.png", name = "展示图片接口", produces = MediaType.IMAGE_JPEG_VALUE)
     public void showImage(@ApiParam(value = "文件id", required = true) @PathVariable("fileid") String fileid,
                           HttpServletRequest request,
-                          HttpServletResponse response) throws IOException {
+                          HttpServletResponse response) {
         String cacheControl = request.getHeader("Cache-Control");
         if (StringUtil.isNotEmpty(cacheControl) && !cacheControl.startsWith("no-")) {
             // response.setContentType(MediaType.IMAGE_PNG_VALUE);

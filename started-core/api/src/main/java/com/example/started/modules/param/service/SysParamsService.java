@@ -54,7 +54,7 @@ public interface SysParamsService extends BaseService<SysParamsBo, SysParamsEnti
     void updateValueByCode(String paramCode, String paramValue);
 
     /**
-     * 清除已有缓存
+     * 清除并重新加载参数缓存
      */
-    void clear();
+    void reload();
 }

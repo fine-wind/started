@@ -11,6 +11,7 @@ import java.util.Objects;
 
 /**
  * todo 接口控制
+ * 根据spring 提供的请求地址进行解析后转发到相应的接口上
  */
 @Slf4j
 @Component
@@ -30,7 +31,7 @@ public class WebSocketRequestServer {
             case "b":
             case "c":
         }
-        return new Result<>().error("未找到地址");
+        return Result.error("未找到地址");
     }
 
 

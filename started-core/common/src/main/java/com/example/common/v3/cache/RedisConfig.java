@@ -1,4 +1,4 @@
-package com.example.started.redis;
+package com.example.common.v3.cache;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -79,22 +79,26 @@ public class RedisConfig {
     }
 
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
-        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(5);
+        Map<String, RedisCacheConfiguration> map = new HashMap<>(5);
         //自定义设置缓存时间
-        redisCacheConfigurationMap.put(CacheCommonKeys.LANGUAGE, this.getRedisCacheConfigurationWithTtl(Duration.ofMinutes(30).getSeconds()));
-        return redisCacheConfigurationMap;
+        CacheKeysTime.CACHE_KEY_TIME.forEach((k, v) -> map.put(k, this.getTtl(Duration.ofMinutes(v).getSeconds())));
+        return map;
     }
 
-    private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(long seconds) {
+    /**
+     * @param seconds 秒
+     * @return 配置
+     */
+    private RedisCacheConfiguration getTtl(long seconds) {
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(om, Object.class);
+        Jackson2JsonRedisSerializer<Object> jjrs = new Jackson2JsonRedisSerializer<>(om, Object.class);
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
         redisCacheConfiguration = redisCacheConfiguration.serializeValuesWith(
                 RedisSerializationContext
                         .SerializationPair
-                        .fromSerializer(jackson2JsonRedisSerializer)
+                        .fromSerializer(jjrs)
         ).entryTtl(Duration.ofSeconds(seconds));
 
         return redisCacheConfiguration;

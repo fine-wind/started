@@ -1,10 +1,12 @@
 package com.example.started.auth.role.aspect;
 
 import com.example.common.v0.annotation.DataFilter;
+import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.bo.BaseBo;
 import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.exception.UniversalCode;
 import com.example.common.v0.utils.StringUtil;
+import com.example.started.auth.role.user.SecurityUser;
 import com.example.started.auth.role.user.SecurityUserDetails;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
@@ -37,9 +39,9 @@ public class DataFilterAspect {
         if (params instanceof BaseBo) {
 
             //todo 如果是超级管理员，则不进行数据过滤
-//            if (Constant.Status.SUCCESS.equals(user.getSuperAdmin())) {
-//                return;
-//            }
+            if (SecurityUser.superAdmin()) {
+                return;
+            }
 
             try {
                 //否则进行数据过滤

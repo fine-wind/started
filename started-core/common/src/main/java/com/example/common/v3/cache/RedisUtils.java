@@ -1,4 +1,4 @@
-package com.example.started.redis;
+package com.example.common.v3.cache;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static com.example.common.v3.cache.CacheKeysTime.DEFAULT_EXPIRE;
 
 /**
  * Redis工具类
@@ -25,10 +27,7 @@ public class RedisUtils {
         this.redisTemplate = redisTemplate;
     }
 
-    /**
-     * 默认过期时长为30分钟，单位：秒
-     */
-    public final static long DEFAULT_EXPIRE = 60 * 30;
+
     /**
      * 过期时长为1小时，单位：秒
      */
@@ -42,7 +41,7 @@ public class RedisUtils {
     /**
      * @param key   key
      * @param value value
-     * @see RedisUtils#DEFAULT_EXPIRE 缓存默认时长
+     * @see CacheKeysTime#DEFAULT_EXPIRE 缓存默认时长
      */
     public void setCache(String key, Object value) {
         this.setCache(key, value, DEFAULT_EXPIRE);

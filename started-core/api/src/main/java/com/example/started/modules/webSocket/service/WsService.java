@@ -28,6 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class WsService {
 
+    final WebSocketRequestServer webSocketRequestServer;
+
     /**
      * 客户端连接信息
      * username: session
@@ -87,8 +89,8 @@ public class WsService {
                 requestBody.setType("");
             }
             switch (requestBody.getType()) {
-                case "api" ->
-                        result = Objects.requireNonNull(BeanHeaderUtils.getBean(WebSocketRequestServer.class)).run(requestBody.getTo(), requestBody.getMsg());
+                case "api" -> result = webSocketRequestServer.run(requestBody.getTo(), requestBody.getMsg());
+                case "todo" -> result = webSocketRequestServer.run(requestBody.getTo(), requestBody.getMsg());
                 default -> {
                 }
             }

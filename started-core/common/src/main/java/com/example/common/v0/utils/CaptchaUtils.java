@@ -1,5 +1,8 @@
 package com.example.common.v0.utils;
 
+import com.example.common.v3.cache.CacheKeysTime;
+import com.example.common.v3.cache.RedisUtils;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -95,8 +98,8 @@ public class CaptchaUtils {
      */
     public static boolean validate(String uuid, String code) {
         if (Boolean.parseBoolean(CAPTCHA.getValue())) {
-//            String captcha = SpringContextUtils.getBean(RedisUtils.class).getCache(CacheCommonKeys.getCaptchaKey(uuid));
-//            return code.equalsIgnoreCase(captcha);
+            String captcha = SpringContextUtils.getBean(RedisUtils.class).getCache(CacheKeysTime.SYS_CAPTCHA + uuid);
+            return code.equalsIgnoreCase(captcha);
         }
         //获取验证码
         return true;

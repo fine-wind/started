@@ -6,6 +6,7 @@ import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.utils.StringUtil;
 import com.example.common.v1.annotation.Ti;
 import com.example.common.v1.annotation.TiField;
+import com.example.common.v3.cache.RedisUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.*;
 @AllArgsConstructor
 public class Translation {
     private final TrService dictDataDao;
+    private final RedisUtils redisUtils;
 
     /**
      * 翻译一个对象
@@ -113,7 +115,7 @@ public class Translation {
         String cacheKey = tableName.value() + ':' + annotation.key();
         Map<String, Object> stringStringMap = new HashMap<>(columnField.size(), 1);
         boolean isSelect = false;
-        Map<String, Object> stringObjectMap = new HashMap<>(); // todo redisUtils.hashGetAll(cacheKey);
+        Map<String, Object> stringObjectMap = redisUtils.hashGetAll(cacheKey);
         for (String k : columnField) {
             Object v = stringObjectMap.get(k);
             isSelect = isSelect || Objects.isNull(v);
@@ -125,7 +127,7 @@ public class Translation {
             if (Objects.nonNull(t)) {
                 stringStringMap.putAll(t);
             }
-            // redisUtils.hashMSet(cacheKey, stringStringMap);
+            redisUtils.hashMSet(cacheKey, stringStringMap);
         }
         return stringStringMap;
     }

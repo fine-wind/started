@@ -97,7 +97,7 @@ public class SysParamsController {
     @ApiOperation("清除缓存")
     @LogOperation("清除缓存")
     public Result<?> clear() {
-        sysParamsService.clear();
+        sysParamsService.reload();
         return new Result<>();
     }
 

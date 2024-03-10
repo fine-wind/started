@@ -176,10 +176,10 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParams
     }
 
     /**
-     * 清除并重新加载缓存
+     * 清除并重新加载参数缓存
      */
     @Override
-    public void clear() {
+    public void reload() {
         log.trace("清除并重新加载参数缓存");
         this.loadAllParam();
     }
