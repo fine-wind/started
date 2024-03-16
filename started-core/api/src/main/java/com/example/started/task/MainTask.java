@@ -1,17 +1,15 @@
 package com.example.started.task;
 
 import com.example.started.modules.param.service.SysParamsService;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class MainTask implements CommandLineRunner {
 
     final SysParamsService paramsService;
-
-    public MainTask(SysParamsService paramsService) {
-        this.paramsService = paramsService;
-    }
 
     /**
      * Callback used to run the bean.

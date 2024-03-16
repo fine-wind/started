@@ -10,10 +10,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -39,14 +40,16 @@ public class SecurityConfiguration {
         //登陆
         http.addFilterAt(jwtTokenCheckFilter, LogoutFilter.class);
         //路径配置
-        http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+        http.csrf().disable()
+                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(whiteList.toArray(new String[0])).permitAll()
                         .anyRequest().authenticated())
                 //登陆
                 .addFilterAt(jwtTokenCheckFilter, UsernamePasswordJSONAuthenticationFilter.class)
                 .formLogin((e) -> {
-//                     e.init();
+                    e.loginProcessingUrl(Constant.User.LOGIN);
                 })
+//                .rememberMe().rememberMeServices(rememberMeServices)  //rememberMe
                 //登出
                 .logout((lo) -> lo.logoutUrl(Constant.User.LOGOUT).logoutSuccessHandler(mixHandler))
 
@@ -54,16 +57,21 @@ public class SecurityConfiguration {
                 .sessionManagement((e) -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
         ;
-        // http.formLogin((a) -> {
-        //     a.loginProcessingUrl(Constant.User.LOGIN);
-        // });
-
-        //rememberMe
-//         http.rememberMe().rememberMeServices(rememberMeServices);
 
         // 权限不足时的处理
         http.exceptionHandling((a) -> a.authenticationEntryPoint(mixHandler));
         return http.build();
     }
 
+    /**
+     * 获取AuthenticationManager（认证管理器），登录时认证使用
+     *
+     * @param authenticationConfiguration
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }

@@ -66,7 +66,7 @@ public class UsernamePasswordJSONAuthenticationFilter extends UsernamePasswordAu
                     SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.FORBIDDEN, "请输入用户名或密码"));
                     return null;
                 }
-                long aLong = loginService.aLogin(username);
+                long aLong = loginService.login(username);
                 /* 超过5次登录 情况后验证验证码 todo 验证码的5次需要可配置*/
                 if (aLong > 5 && !CaptchaUtils.validate(uuid, code)) {
                     SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.PRECONDITION_FAILED, "验证码过期或不正确"));

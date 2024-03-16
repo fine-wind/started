@@ -1,5 +1,6 @@
 package com.example.started.modules.index.page;
 
+import com.example.common.v0.utils.CaptchaUtils;
 import com.example.common.v0.utils.DateUtil;
 import com.example.common.v0.utils.Result;
 import com.example.started.modules.index.vo.IndexVo;
@@ -10,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.example.common.v0.constant.Constant.PARAM_CONF.APP_SETTINGS_CONF.*;
 
@@ -25,7 +30,7 @@ public class IndexController {
     static long startTime = System.currentTimeMillis();
 
     @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<IndexVo> index(@RequestParam(name = "init", defaultValue = "false") boolean init) {
+    public IndexVo index(@RequestParam(name = "init", defaultValue = "false") boolean init) {
         IndexVo index = new IndexVo();
         index.setStartTime(DateUtil.toString(new Date(startTime)));
         index.setBindingDomainName(THIS_HOST.getValue());
@@ -33,11 +38,19 @@ public class IndexController {
         index.setShortName(THIS_SHORT_NAME.getValue());
         index.setCopyright(COPYRIGHT.getValue());
         index.setCaptcha(Boolean.parseBoolean(CAPTCHA.getValue()));
-        // todo init = init && userServiceV1.count(new LambdaQueryWrapper<>()) == 0;
+        // init = init && userServiceV1.count(new LambdaQueryWrapper<>()) == 0;
         index.setInit(init);
         index.setRegister(Boolean.parseBoolean(REGISTER.getValue()));
+        return index;
+    }
 
-        return Result.ok(index);
+    @RequestMapping(value = "/captcha.png", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Result<?> captcha() throws IOException {
+        String uuid = UUID.randomUUID().toString();
+        Map<String, String> map = new HashMap<>(2);
+        map.put("uuid", uuid);
+        map.put("img", CaptchaUtils.create(uuid));
+        return Result.ok(map);
     }
 
 }

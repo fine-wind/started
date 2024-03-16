@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.example.common.v3.cache.RedisUtils;
 import com.example.started.modules.param.dto.SysParamsDTO;
 import com.example.started.modules.param.entity.SysParamsEntity;
 import com.example.common.v0.constant.Constant;
@@ -16,8 +17,8 @@ import com.example.common.v0.utils.ConvertUtils;
 import com.example.started.modules.param.bo.SysParamsBo;
 import com.example.started.modules.param.dao.SysParamsDao;
 import com.example.started.modules.param.service.SysParamsService;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,7 @@ import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
  */
 @Log4j2
 @Service
-@Primary
+@AllArgsConstructor
 public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParamsDao, SysParamsEntity> implements SysParamsService {
 
     public void loadAllParam() {

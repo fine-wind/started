@@ -5,7 +5,6 @@ import com.example.common.v0.constant.Constant;
 import com.example.common.v0.tr.Translation;
 import com.example.common.v0.utils.Result;
 import com.example.common.v0.utils.StringUtil;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.MethodParameter;
@@ -30,7 +29,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     private final Translation translation;
 
     @Override
-    public boolean supports(@NotNull MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         log.debug("ResponseAdvice 过滤方法 -> {} {}", returnType, converterType);
         return true;
     }
@@ -40,15 +39,20 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Nullable
     public Object beforeBodyWrite(
             @Nullable Object body,
-            @NotNull MethodParameter returnType,
-            @NotNull MediaType selectedContentType,
-            @NotNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
+            MethodParameter returnType,
+            MediaType selectedContentType,
+            Class<? extends HttpMessageConverter<?>> selectedConverterType,
             ServerHttpRequest request,
-            @NotNull ServerHttpResponse response
+            ServerHttpResponse response
     ) {
         long l1 = System.currentTimeMillis();
-        if (body instanceof Result<?> result && result.isSuccess()) {
-            translation.trRoot(result.getData());
+        if (body instanceof Result<?> result) {
+            if (result.isSuccess()) {
+                translation.trRoot(result.getData());
+            }
+        } else {
+            translation.trRoot(body);
+            body = Result.ok(body);
         }
         long l2 = System.currentTimeMillis();
         /* 耗时*/

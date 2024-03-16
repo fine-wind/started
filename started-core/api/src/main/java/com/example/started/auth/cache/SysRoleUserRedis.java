@@ -21,7 +21,7 @@ import java.util.Set;
 @Service()
 @AllArgsConstructor
 public class SysRoleUserRedis {
-    RedisUtils redisUtils;
+    private final RedisUtils redisUtils;
     final String cacheKey = "sys:role:user:";
 
     /**

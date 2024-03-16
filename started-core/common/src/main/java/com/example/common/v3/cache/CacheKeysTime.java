@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CacheKeysTime {
+    /**
+     * 语言key
+     */
     public static final String SYS_LANGUAGE = "sys:language:";
 
     /**

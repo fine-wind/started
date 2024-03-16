@@ -28,7 +28,8 @@ public class CaptchaUtils {
      * @return 验证码base64
      * @throws IOException io异常
      */
-    public static String create(Integer width, Integer height, String word) throws IOException {
+    public static String create(String uuid) throws IOException {
+        Integer width = 100, height = 100;
         // 步骤一 绘制一张内存中图片
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -49,6 +50,7 @@ public class CaptchaUtils {
 
         // 定义x坐标
         int x = 5;
+        String word = word();
         for (int i = 0; i < word.length(); i++) {
             // 随机颜色
             graphics2d.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
@@ -85,7 +87,7 @@ public class CaptchaUtils {
     /**
      * @return 随机的验证码内容
      */
-    public static String work() {
+    private static String word() {
         return String.valueOf(random.nextInt(9999));
     }
 
