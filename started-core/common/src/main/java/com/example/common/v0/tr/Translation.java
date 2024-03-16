@@ -1,5 +1,6 @@
 package com.example.common.v0.tr;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.common.v0.base.TrService;
 import com.example.common.v0.data.page.PageData;
@@ -74,9 +75,12 @@ public class Translation {
                 for (Field field1 : tableFields) {
                     Ti ti = field1.getAnnotation(Ti.class);
                     if (Objects.nonNull(ti)) {
-                        if (Arrays.asList(ti.column()).contains(clazz))
-                            columnField.add(field1.getName());
-                        // todo 此处如果用注解改变了数据库列名怎么办？
+                        if (Arrays.asList(ti.column()).contains(clazz)) {
+                            // todo 用注解改变了数据库列名的情况
+                            TableField annotation = field1.getAnnotation(TableField.class);
+                            String fieldName = Objects.nonNull(annotation) ? annotation.value() : field1.getName();
+                            columnField.add(fieldName);
+                        }
                     }
                 }
                 if (!columnField.isEmpty()) {
