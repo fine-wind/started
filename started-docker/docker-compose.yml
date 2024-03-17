@@ -1,12 +1,13 @@
 version: "3.3"
 services:
   nginx:
-    image: nginx:stable-alpine-perl
+    image: nginx
     restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/html:/html:ro
     ports:
       - "80:80"
       - "443:443"

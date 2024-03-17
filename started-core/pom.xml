@@ -14,6 +14,7 @@
         <module>common</module>
         <module>dynamic-datasource</module>
         <module>generator</module>
+        <module>api</module>
     </modules>
 
     <properties>
