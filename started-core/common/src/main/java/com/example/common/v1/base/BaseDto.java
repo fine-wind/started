@@ -12,10 +12,9 @@ import java.io.Serializable;
  * 公共Bo
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value = "公共Bo")
-public class BaseDto extends TrVo implements Serializable {
+public class BaseDto implements Serializable {
 
     /**
      * id

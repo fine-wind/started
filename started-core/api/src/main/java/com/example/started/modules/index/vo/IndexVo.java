@@ -16,13 +16,13 @@ public class IndexVo extends TrVo {
     /**
      * 网站域名
      */
-    private String bindingDomainName;
+    private String domainName;
     /*网站名称*/
     private String name;
     /**
      * 网站名称简称
      */
-    @TiField(table = SysParamsEntity.class, key = "param_value")
+    @TiField(source = SysParamsEntity.class, key = "param_value")
     private String shortName;
     /**
      * 版权配置

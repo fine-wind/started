@@ -16,10 +16,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface TiField {
+
     /**
+     * 某个字段需要引用哪个类的数据
+     *
      * @return 获取翻译的类类型
      */
-    Class<? extends BaseEntity> table();
+    Class<? extends BaseEntity> source();
 
     /**
      * 数据表里的对应列，多为主键

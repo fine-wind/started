@@ -19,6 +19,6 @@ public class MainTask implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        new Thread(paramsService::reload).start();
+        Thread.startVirtualThread(paramsService::reload);
     }
 }

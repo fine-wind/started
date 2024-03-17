@@ -37,32 +37,6 @@ import static com.example.common.v0.constant.Constant.TABLE.CREATE_DATE;
 @AllArgsConstructor
 public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParamsDao, SysParamsEntity> implements SysParamsService {
 
-    public void loadAllParam() {
-        List<SysParamsDTO> list = list(new SysParamsBo());
-        Constant.PARAM_CONF.APP_SETTINGS_CONF.init();
-        list.forEach(e -> {
-            Constant.PARAM_CONF.KVR kvr = CONF_MAP.get(e.getParamCode());
-            if (Objects.isNull(kvr)) {
-                return;
-            }
-            kvr.setValue(e.getParamValue());
-        });
-
-        /* 网站配置 */
-        CONF_MAP.forEach((code, kvr) -> {
-            SysParamsDTO sysParamsDTO = list.stream().filter(e -> kvr.getCode().equals(e.getParamCode())).findAny().orElse(null);
-            if (sysParamsDTO == null) {
-                SysParamsDTO dto = new SysParamsDTO();
-                dto.setParamCode(code);
-                dto.setParamValue(kvr.getValue());
-                dto.setParamType(Constant.PARAM_CONF.CONF_TYPE.SYS);
-                dto.setRemark(kvr.getRemark());
-                this.save(dto);
-            }
-        });
-
-    }
-
     @Override
     public LambdaQueryWrapper<SysParamsEntity> getQueryWrapper(SysParamsBo params) {
 
@@ -182,7 +156,29 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParams
     @Override
     public void reload() {
         log.trace("清除并重新加载参数缓存");
-        this.loadAllParam();
+        List<SysParamsDTO> list = list(new SysParamsBo());
+        Constant.PARAM_CONF.APP_SETTINGS_CONF.init();
+        list.forEach(e -> {
+            Constant.PARAM_CONF.KVR kvr = CONF_MAP.get(e.getParamCode());
+            if (Objects.isNull(kvr)) {
+                return;
+            }
+            kvr.setValue(e.getParamValue());
+        });
+
+        /* 网站配置 */
+        CONF_MAP.forEach((code, kvr) -> {
+            SysParamsDTO sysParamsDTO = list.stream().filter(e -> kvr.getCode().equals(e.getParamCode())).findAny().orElse(null);
+            if (sysParamsDTO == null) {
+                SysParamsDTO dto = new SysParamsDTO();
+                dto.setParamCode(code);
+                dto.setParamValue(kvr.getValue());
+                dto.setParamType(Constant.PARAM_CONF.CONF_TYPE.SYS);
+                dto.setRemark(kvr.getRemark());
+                this.save(dto);
+            }
+        });
+
     }
 
 }

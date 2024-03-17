@@ -71,7 +71,7 @@ public class Translation {
                     continue;
                 }
                 List<String> columnField = new LinkedList<>();
-                Field[] tableFields = tiField.table().getDeclaredFields();
+                Field[] tableFields = tiField.source().getDeclaredFields();
                 for (Field field1 : tableFields) {
                     Ti ti = field1.getAnnotation(Ti.class);
                     if (Objects.nonNull(ti)) {
@@ -92,7 +92,7 @@ public class Translation {
                         log.error("翻译出错", e);
                     }
                     // log.info("翻译的字段：{} -> {}", name, s);
-                    TableName tableName = tiField.table().getAnnotation(TableName.class);
+                    TableName tableName = tiField.source().getAnnotation(TableName.class);
                     this.idt(tiField, tableName, columnField, value)
                             .forEach((k, v) -> trVo.getTr().put(field.getName() + "_" + k, v));
                 }
@@ -118,15 +118,10 @@ public class Translation {
         /* 缓存的key*/
         String cacheKey = tableName.value() + ':' + annotation.key();
         Map<String, Object> stringStringMap = new HashMap<>(columnField.size(), 1);
-        boolean isSelect = false;
         Map<String, Object> stringObjectMap = redisUtils.hashGetAll(cacheKey);
-        for (String k : columnField) {
-            Object v = stringObjectMap.get(k);
-            isSelect = isSelect || Objects.isNull(v);
-            stringStringMap.put(k, v);
-        }
+        columnField.forEach(k -> stringStringMap.put(k, stringObjectMap.get(k)));
         /* 查询数据库*/
-        if (isSelect) {
+        if (stringObjectMap.size() != columnField.size()) {
             Map<String, Object> t = dictDataDao.selectValueByTableAndColumn(String.join(",", columnField), tableName.value(), annotation.key(), String.valueOf(value));
             if (Objects.nonNull(t)) {
                 stringStringMap.putAll(t);

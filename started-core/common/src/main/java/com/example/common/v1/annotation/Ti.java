@@ -12,5 +12,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface Ti {
 
+    /**
+     * @return 某个字段被注解了，被可以被哪些类翻译
+     */
     Class<?>[] column();
 }

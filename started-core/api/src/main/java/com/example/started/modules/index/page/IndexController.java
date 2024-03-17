@@ -7,9 +7,7 @@ import com.example.started.modules.index.vo.IndexVo;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Date;
@@ -29,11 +27,11 @@ public class IndexController {
 
     static long startTime = System.currentTimeMillis();
 
-    @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public IndexVo index(@RequestParam(name = "init", defaultValue = "false") boolean init) {
         IndexVo index = new IndexVo();
         index.setStartTime(DateUtil.toString(new Date(startTime)));
-        index.setBindingDomainName(THIS_HOST.getValue());
+        index.setDomainName(THIS_HOST.getValue());
         index.setName(THIS_NAME.getValue());
         index.setShortName(THIS_SHORT_NAME.getValue());
         index.setCopyright(COPYRIGHT.getValue());
@@ -44,7 +42,7 @@ public class IndexController {
         return index;
     }
 
-    @RequestMapping(value = "/captcha.png", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/captcha.png", produces = MediaType.APPLICATION_JSON_VALUE)
     public Result<?> captcha() throws IOException {
         String uuid = UUID.randomUUID().toString();
         Map<String, String> map = new HashMap<>(2);

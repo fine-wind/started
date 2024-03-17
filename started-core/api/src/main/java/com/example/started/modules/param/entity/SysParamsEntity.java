@@ -43,6 +43,7 @@ public class SysParamsEntity extends BaseEntity {
     /**
      * 备注
      */
+    @Ti(column = IndexVo.class)
     private String remark;
     /**
      * 更新者

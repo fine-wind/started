@@ -45,7 +45,7 @@ public class SysParamsController {
     public Result<PageData<SysParamsDTO>> page(@RequestBody SysParamsBo params) {
         PageData<SysParamsDTO> page = sysParamsService.page(params);
 
-        return new Result<PageData<SysParamsDTO>>().ok(page);
+        return Result.ok(page);
     }
 
     @GetMapping("{id}")
@@ -53,7 +53,7 @@ public class SysParamsController {
     public Result<SysParamsDTO> get(@PathVariable("id") Long id) {
         SysParamsDTO data = sysParamsService.get(id);
 
-        return new Result<SysParamsDTO>().ok(data);
+        return Result.ok(data);
     }
 
     @PostMapping
@@ -94,8 +94,8 @@ public class SysParamsController {
     }
 
     @PutMapping("/clear")
-    @ApiOperation("清除缓存")
-    @LogOperation("清除缓存")
+    @ApiOperation("重载缓存")
+    @LogOperation("重载缓存")
     public Result<?> clear() {
         sysParamsService.reload();
         return new Result<>();

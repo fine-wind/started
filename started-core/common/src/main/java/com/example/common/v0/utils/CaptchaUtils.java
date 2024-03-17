@@ -23,8 +23,7 @@ public class CaptchaUtils {
     static Random random = new Random();
 
     /**
-     * @param width  验证码宽
-     * @param height 验证码高
+     * @param uuid  验证码标识
      * @return 验证码base64
      * @throws IOException io异常
      */
@@ -50,7 +49,7 @@ public class CaptchaUtils {
 
         // 定义x坐标
         int x = 5;
-        String word = word();
+        String word = String.valueOf(random.nextInt(9999));;
         for (int i = 0; i < word.length(); i++) {
             // 随机颜色
             graphics2d.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
@@ -81,14 +80,8 @@ public class CaptchaUtils {
         graphics.dispose();// 释放资源
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, "png", stream);
+        SpringContextUtils.getBean(RedisUtils.class).setCache(CacheKeysTime.SYS_CAPTCHA + uuid, word);
         return "data:image/png;base64," + new String(Base64.getEncoder().encode(stream.toByteArray()));
-    }
-
-    /**
-     * @return 随机的验证码内容
-     */
-    private static String word() {
-        return String.valueOf(random.nextInt(9999));
     }
 
     /**

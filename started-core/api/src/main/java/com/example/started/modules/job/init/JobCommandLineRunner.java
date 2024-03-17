@@ -29,8 +29,9 @@ public class JobCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        long start = System.currentTimeMillis();
         log.trace("开始加载定时任务");
-        new Thread(() -> {
+        Thread.startVirtualThread(() -> {
             List<ScheduleJobEntity> scheduleJobList = scheduleJobDao.selectList(null);
             for (ScheduleJobEntity scheduleJob : scheduleJobList) {
                 CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getId());
@@ -41,7 +42,7 @@ public class JobCommandLineRunner implements CommandLineRunner {
                     ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
                 }
             }
-            log.trace("定时任务加载完毕");
-        }).start();
+            log.trace("定时任务加载完毕，耗时：{}ms", System.currentTimeMillis() - start);
+        });
     }
 }
