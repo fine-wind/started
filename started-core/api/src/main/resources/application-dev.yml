@@ -15,9 +15,9 @@ spring:
   data:
     redis:
       client-name:
-      host: localhost
+      host: 59.110.152.124
       port: 6379
-      password:
+      password: foobared99293028uu3y
       database: 6
       timeout: 5s
   servlet:
@@ -31,10 +31,9 @@ spring:
       minimum-idle: 5
       max-lifetime: 120000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://59.110.152.124:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: toor
-#    password: jjlanwlnawklnelglgknxlehsnlegll
+    password: jjlanwlnawklnelglgknxlehsnleli719j
 #dynamic:
 #  datasource:
 #    slave1:
