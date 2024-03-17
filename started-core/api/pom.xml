@@ -6,7 +6,6 @@
         <artifactId>core</artifactId>
         <version>0.0.1</version>
     </parent>
-    <groupId>com.example.started.modules</groupId>
     <artifactId>api</artifactId>
     <version>0.0.1</version>
     <name>${project.groupId}-${project.artifactId}</name>
