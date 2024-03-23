@@ -3,6 +3,7 @@ package com.example.started.modules.table.bo.add;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,8 +13,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ShowDataBo {
-    private static final long serialVersionUID = 1L;
+public class ShowDataBo implements Serializable {
 
     private String name;
     private String value;

@@ -3,7 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   productionSourceMap: false,
   assetsDir: 'static',
-  outputDir: 'love.wanglian',
+  outputDir: 'dict',
   devServer: {
     proxy: {
       '/api': {

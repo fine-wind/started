@@ -1,7 +1,7 @@
 package com.example.started.modules.table.controller;
 
 import com.example.started.modules.table.bo.add.ShowDataBo;
-import com.example.started.modules.table.service.ShowService;
+import com.example.started.modules.table.service.TableDbService;
 import com.example.started.modules.table.vo.list.ShowDataVo;
 import com.example.started.modules.table.bo.ShowQueryBo;
 import com.example.common.v0.utils.Result;
@@ -18,11 +18,11 @@ import java.util.List;
 @Api(tags = "有关显示的接口")
 public class ShowController {
 
-    private final ShowService showService;
+    private final TableDbService tableDbService;
 
     @Autowired
-    public ShowController(ShowService showService) {
-        this.showService = showService;
+    public ShowController(TableDbService tableDbService) {
+        this.tableDbService = tableDbService;
     }
 
     /**
@@ -33,7 +33,7 @@ public class ShowController {
      */
     @GetMapping("t/{vp}")
     public Result<ShowEditVo> tableInfo(@PathVariable("vp") String vp) {
-        return Result.ok(showService.tableInfo(vp));
+        return Result.ok(tableDbService.tableInfo(vp));
     }
 
     /**
@@ -47,7 +47,7 @@ public class ShowController {
     @PutMapping("/{vp}")
     public Result<Object> add(@PathVariable("vp") String vp, @RequestBody List<ShowDataBo> addBody) {
         // todo 数据校验
-        showService.add(vp, addBody);
+        tableDbService.saveData(vp, addBody);
         return Result.ok();
     }
 
@@ -88,7 +88,7 @@ public class ShowController {
     @PostMapping("/list/{vp}")
     public Result<ShowDataVo> list(@PathVariable("vp") String vp, @RequestBody ShowQueryBo queryBo) {
         // todo  权限校验 和 查询字段校验
-        ShowDataVo list = showService.list(vp, queryBo);
+        ShowDataVo list = tableDbService.list(vp, queryBo);
         return Result.ok(list);
     }
 

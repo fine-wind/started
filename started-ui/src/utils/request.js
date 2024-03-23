@@ -4,9 +4,9 @@ import {getToken} from "@/auth";
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 const service = axios.create({
-  baseURL: `${location.origin}/api`,
+  baseURL: `${location.origin}/API`,
   withCredentials: true,
-  timeout: 10000
+  timeout: 5000
 })
 
 // request拦截器

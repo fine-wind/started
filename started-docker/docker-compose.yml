@@ -21,7 +21,7 @@ services:
       - ./app:/app
       - ./app/upload:/upload
 
-    command: java -jar *.jar
+    command: java -cp ./jar/lib/* -jar ./jar/com.example.started-api-0.0.1.jar
     ports:
       - "0:8080"
   redis:

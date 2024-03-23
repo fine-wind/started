@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class ShowEditVo {
     /**
-     * 格式集合
+     * 表头格式集合
      */
     private List<ShowEditFieldVo> fields;
     /**

@@ -65,7 +65,7 @@ const onSubmit = () => {
   }).catch(error => {
     setTimeout(() => {
       messageHandler1.close();
-      if (error.data.code === 412) {
+      if (error?.data?.code === 412) {
         reCaptcha();
       }
       console.error(error)
