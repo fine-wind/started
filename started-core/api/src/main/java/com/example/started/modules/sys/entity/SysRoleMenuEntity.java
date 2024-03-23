@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_role_menu")
 public class SysRoleMenuEntity extends BaseEntity {
-    private static final long serialVersionUID = 1L;
     /**
      * 角色ID
      */

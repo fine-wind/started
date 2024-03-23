@@ -10,7 +10,7 @@ import com.example.started.modules.dict.dao.SysDictDataDao;
 import com.example.started.modules.dict.entity.SysDictDataEntity;
 import com.example.common.v0.utils.ConvertUtils;
 import com.example.started.modules.dict.bo.SysDictDataBo;
-import com.example.started.modules.dict.dao.SysDictDataDTO;
+import com.example.started.modules.dict.dto.SysDictDataDTO;
 import com.example.started.modules.dict.service.SysDictDataService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Primary;
@@ -25,7 +25,6 @@ import java.util.Objects;
  * 字典类型
  */
 @Service
-@Primary
 public class SysDictDataServiceImpl extends BaseServiceImpl<SysDictDataBo, SysDictDataDao, SysDictDataEntity> implements SysDictDataService {
 
     @Override

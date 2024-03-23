@@ -1,4 +1,4 @@
-package com.example.started.config;
+package com.example.started.auth;
 
 import com.example.started.auth.role.user.SecurityUser;
 import com.example.common.v3.cache.RedisUtils;
@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Filter配置
  */
-@Component("sf")
+@Component(value = "sf")
 @AllArgsConstructor
 public class Se {
     private final RedisUtils redisUtils;

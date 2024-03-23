@@ -30,10 +30,8 @@ import java.util.Map;
 public class SysMenuController {
     @Autowired
     private SysMenuService sysMenuService;
-//    @Autowired
-//    private SecurityService securityService;
 
-    @PreAuthorize("@sf.login()")
+    @PreAuthorize("hasAuthority")
     @GetMapping("/nav")
     @ApiOperation("导航")
     public Result<List<SysMenuDTO>> nav() {
@@ -108,7 +106,7 @@ public class SysMenuController {
 
         //判断是否有子菜单或按钮
         List<SysMenuDTO> list = sysMenuService.getListPid(id);
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             return Result.error(Constant.UniversalCode.UNPROCESSABLE_ENTITY, "存在子菜单或按钮");
         }
 

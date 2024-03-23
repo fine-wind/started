@@ -1,4 +1,4 @@
-package com.example.started.modules.dict.dao;
+package com.example.started.modules.dict.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.common.v0.validator.group.AddGroup;

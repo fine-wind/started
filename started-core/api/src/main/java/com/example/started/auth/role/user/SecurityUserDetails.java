@@ -65,10 +65,6 @@ public class SecurityUserDetails implements Serializable, UserDetails {
         return Objects.isNull(username) ? "" : username;
     }
 
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
     @Override
     public String getPassword() {
         return password;

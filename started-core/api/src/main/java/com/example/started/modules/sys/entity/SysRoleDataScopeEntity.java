@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_role_data_scope")
 public class SysRoleDataScopeEntity extends BaseEntity {
-    private static final long serialVersionUID = 1L;
 
     /**
      * 角色ID

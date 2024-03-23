@@ -2,7 +2,6 @@ package com.example.started.modules.webSocket.service;
 
 import com.alibaba.fastjson.JSON;
 import com.example.common.v0.constant.Constant;
-import com.example.common.v0.utils.BeanHeaderUtils;
 import com.example.common.v0.utils.Result;
 import com.example.common.v0.utils.StringUtil;
 import com.example.started.modules.webSocket.data.SockedBody;

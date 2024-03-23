@@ -22,8 +22,8 @@ public class SecurityUser {
 
         Object username = authentication.getPrincipal();
 
-        if (username instanceof SecurityUserDetails) {
-            username = ((SecurityUserDetails) username).getUsername();
+        if (username instanceof SecurityUserDetails a) {
+            username = a.getUsername();
         }
         return String.valueOf(username);
     }

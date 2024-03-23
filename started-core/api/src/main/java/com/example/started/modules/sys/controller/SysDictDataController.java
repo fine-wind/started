@@ -9,7 +9,7 @@ import com.example.common.v0.validator.ValidatorUtils;
 import com.example.common.v0.validator.group.DefaultGroup;
 import com.example.common.v0.validator.group.UpdateGroup;
 import com.example.started.modules.dict.bo.SysDictDataBo;
-import com.example.started.modules.dict.dao.SysDictDataDTO;
+import com.example.started.modules.dict.dto.SysDictDataDTO;
 import com.example.started.modules.dict.service.SysDictDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

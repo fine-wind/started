@@ -263,6 +263,7 @@ public interface Constant {
         /**
          * 网站配置
          */
+        @Getter
         enum APP_SETTINGS_CONF {
 
             THIS_NAME(new KVR("THIS_NAME", "网站名称", "网站名称")),
@@ -291,7 +292,6 @@ public interface Constant {
             JWT_EXPIRATION(new KVR("JWT_EXPIRATION", String.valueOf(3600), "jwt过期时间(秒), 默认" + 3600 / 60 + "分钟")),
             ;
 
-            @Getter
             private final KVR kvr;
 
             APP_SETTINGS_CONF(KVR kvr) {

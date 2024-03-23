@@ -15,7 +15,6 @@ import java.util.Date;
 @Data
 @TableName("sys_region")
 public class SysRegionEntity extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     /**
      * id

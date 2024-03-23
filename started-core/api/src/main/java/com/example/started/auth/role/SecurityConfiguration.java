@@ -1,6 +1,8 @@
 package com.example.started.auth.role;
 
+import com.example.common.v0.constant.Constant;
 import com.example.common.v0.utils.SpringContextUtils;
+import com.example.started.auth.UsernamePasswordJSONAuthenticationFilter;
 import com.example.started.config.MixHandler;
 import com.example.started.config.WhiteListConf;
 import com.example.started.filter.JwtTokenCheckFilter;
@@ -38,10 +40,17 @@ public class SecurityConfiguration {
         http.addFilterAt(jwtTokenCheckFilter, LogoutFilter.class);
         //路径配置
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(whiteList.toArray(new String[0])).permitAll()
-                .anyRequest().authenticated())
-                //禁用 csrf
-                .csrf(AbstractHttpConfigurer::disable)
+                        .requestMatchers(whiteList.toArray(new String[0])).permitAll()
+                        .anyRequest().authenticated())
+                //登陆
+                .addFilterAt(jwtTokenCheckFilter, UsernamePasswordJSONAuthenticationFilter.class)
+                .formLogin((e) -> {
+//                     e.init();
+                })
+                //登出
+                .logout((lo) -> lo.logoutUrl(Constant.User.LOGOUT).logoutSuccessHandler(mixHandler))
+
+                // .csrf(AbstractHttpConfigurer::disable) //禁用 csrf
                 .sessionManagement((e) -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
         ;

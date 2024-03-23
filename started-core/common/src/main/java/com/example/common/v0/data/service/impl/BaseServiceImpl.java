@@ -43,7 +43,7 @@ public abstract class BaseServiceImpl<Bo extends BaseBo, Dao extends BaseDao<E>,
     @Autowired
     protected Dao baseDao;
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings("all")
     protected Class<E> currentModelClass() {
         return (Class<E>) ReflectionKit.getSuperClassGenericType(BaseServiceImpl.class, getClass(), 2);
     }

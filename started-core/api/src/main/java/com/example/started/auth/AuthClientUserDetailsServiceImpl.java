@@ -1,4 +1,4 @@
-package com.example.started.config;
+package com.example.started.auth;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
