@@ -33,7 +33,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://59.110.152.124:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: jjlanwlnawklnelglgknxlehsnleli719j
+    password: e230u42o3og293jskbg3793uhi2bk3
 #dynamic:
 #  datasource:
 #    slave1:

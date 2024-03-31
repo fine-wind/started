@@ -9,11 +9,13 @@ server:
       cookie:
         http-only: true
 spring:
-  redis: # redis配置
-    host: redis
-    port: 6379
-    password:  # 密码（默认为空）
-    database: 0
+  data:
+    redis: # redis配置
+      host: redis
+      port: 6379
+      username: default
+      password:  # 密码（默认为空）
+      database: 0
     timeout: 5s
   servlet:
     multipart:
@@ -28,7 +30,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://mysql:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: e230u42o3og293jskbg3793uhi2bk3
 
 # 日志配置
 logging:

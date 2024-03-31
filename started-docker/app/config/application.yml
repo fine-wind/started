@@ -1,7 +1,6 @@
 # 生产环境
 # Tomcat
 server:
-  port: 80
   servlet:
     context-path: /
 spring:
