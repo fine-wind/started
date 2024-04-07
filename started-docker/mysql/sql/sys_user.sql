@@ -15,7 +15,7 @@ CREATE TABLE `sys_user`  (
   `gender` tinyint UNSIGNED NULL DEFAULT NULL COMMENT '性别   0：男   1：女    2：保密',
   `mobile` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '手机号',
   `dept_id` bigint NULL DEFAULT NULL COMMENT '部门ID',
-  `Multiple_login` tinyint UNSIGNED NULL DEFAULT 0 COMMENT ' 多处登录   0：否   1：是',
+  `multiple_login` tinyint UNSIGNED NULL DEFAULT 0 COMMENT ' 多处登录   0：否   1：是',
   `status` tinyint NULL DEFAULT NULL COMMENT '状态  0：停用   1：正常',
   `creator` bigint NULL DEFAULT NULL COMMENT '创建者',
   `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',

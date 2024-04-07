@@ -40,7 +40,7 @@ public class UsernamePasswordJSONAuthenticationFilter extends UsernamePasswordAu
 
     /**
      * 重写登录
-     * 调用 {@link  UserDetailsServiceImpl#loadUserByUsername(String)} 方法
+     * 调用 {@link  AuthClientUserDetailsServiceImpl#loadUserByUsername(String)} 方法
      *
      * @param request  from which to extract parameters and perform the authentication
      * @param response the response, which may be needed if the implementation has to do a

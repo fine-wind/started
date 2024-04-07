@@ -22,6 +22,5 @@ CREATE TABLE `sys_user_super`  (
 -- ----------------------------
 -- Records of sys_user_super
 -- ----------------------------
-INSERT INTO `sys_user_super` VALUES (1, 1, 1, NULL, NULL, NULL, NULL, NULL, '0');
 
 SET FOREIGN_KEY_CHECKS = 1;

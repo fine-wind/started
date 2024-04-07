@@ -38,10 +38,10 @@
 
 <script setup>
 const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
+  console.log(111111, key, keyPath)
 }
 const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
+  console.log(111111, key, keyPath)
 }
 </script>
 <style scoped>

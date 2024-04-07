@@ -12,7 +12,7 @@
           <el-form-item label="密码">
             <el-input v-model="form.password" type="password" @keyup.enter="onSubmit()"/>
           </el-form-item>
-          <el-form-item label="验证码" v-if="form.uuid">
+          <el-form-item label="验证码" v-if="form.captcha">
             <el-input v-model="form.uuid" type="hidden"/>
             <el-row>
               <el-col :span="12">
