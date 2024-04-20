@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WsService {
 
     final WebSocketRequestServer webSocketRequestServer;
-
+    private JwtUtils jwtUtils;
     /**
      * 客户端连接信息
      * username: session
@@ -46,7 +46,7 @@ public class WsService {
 
         String username;
         try {
-            Claims decoder = JwtUtils.decoder(token);
+            Claims decoder = jwtUtils.parseJWT(token);
             assert decoder != null;
             username = decoder.getSubject();
         } catch (Exception e) {

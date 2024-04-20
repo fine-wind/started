@@ -3,8 +3,7 @@
     <el-row>
       <el-col :span="8" :offset="8">
         <h1><a v-text="thisDomain.name" href="/"></a></h1>
-        <h3 v-if="thisDomain.init">首次配置，将自动注册用户</h3>
-        <h3 v-else>登录</h3>
+        <h3>登录</h3>
         <el-form :model="form" label-width="120px">
           <el-form-item label="用户名">
             <el-input v-model="form.username"/>
@@ -55,7 +54,11 @@ setToken('')
 const onSubmit = () => {
   const messageHandler1 = ElMessage.success('正在登录');
   const closeTime = Date.now() + 2000;
-  HTTP.POST('/user/logIn', form.value).then((res) => {
+  const body = []
+  for (let k in form.value) {
+    body.push(k + '=' + form.value[k])
+  }
+  HTTP.POST_FROM('/login', body.join('&')).then((res) => {
     setTimeout(() => {
       messageHandler1.close();
       setToken(res.data)

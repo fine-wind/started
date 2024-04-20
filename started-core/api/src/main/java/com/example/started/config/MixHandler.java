@@ -38,22 +38,22 @@ public class MixHandler implements
         if (e instanceof UsernameNotFoundException) {
             SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.UNPROCESSABLE_ENTITY, "用户名或密码错误"));
         } else {
-            SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.PRECONDITION_FAILED, "用户名或密码错误"));
+            SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.PRECONDITION_FAILED, "服务器异常"));
         }
     }
 
     @Override
-    public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException, ServletException {
+    public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse httpServletResponse) {
         log.info("用户登录超时，访问[{}]失败", request.getRequestURI());
     }
 
     @Override
-    public void onExpiredSessionDetected(SessionInformationExpiredEvent request) throws IOException, ServletException {
+    public void onExpiredSessionDetected(SessionInformationExpiredEvent request) {
         log.info("同一账号同时登录的用户数受限的处理，访问[{}]失败", request);
     }
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
         log.warn("用户需要登录，访问[{}]失败", request.getRequestURI());
         SysResponseJSON.render(request, response, Result.error("需要登录"));
     }

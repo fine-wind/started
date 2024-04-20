@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @RestController
 @AllArgsConstructor
-@Api(tags = "公司的配置")
+@Api(tags = "系统用户")
 public class SysUserController {
 
     final LoginService loginService;

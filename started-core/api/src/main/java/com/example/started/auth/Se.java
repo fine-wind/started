@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 /**
- * Filter配置
+ * 安全
  */
-@Component(value = "sf")
+@Component(value = "se")
 @AllArgsConstructor
 public class Se {
     private final RedisUtils redisUtils;
@@ -21,6 +21,7 @@ public class Se {
 
     /**
      * 校验是否具有某个角色
+     * todo 自动创建资源
      *
      * @param roles 可访问的角色列表
      * @return 校验结果

@@ -2,40 +2,34 @@ package com.example.started.auth;
 
 
 import com.example.common.v0.constant.Constant;
+import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.utils.CaptchaUtils;
-import com.example.common.v0.utils.Result;
-import com.example.common.v0.utils.StringUtil;
 import com.example.started.config.MixHandler;
-import com.example.started.config.SysResponseJSON;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.MediaType;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-
+@Log4j2
 @Component
 public class UsernamePasswordJSONAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Resource
     LoginService loginService;
 
-    public UsernamePasswordJSONAuthenticationFilter(AuthenticationManager authenticationManager, LoginSuccessHandler loginSuccessHandler, MixHandler failureHandler) {
+    public UsernamePasswordJSONAuthenticationFilter(AuthenticationManager authenticationManager, MixHandler failureHandler) {
         super(authenticationManager);
-        setAuthenticationFailureHandler(failureHandler);
-        setAuthenticationSuccessHandler(loginSuccessHandler);
+        this.setAuthenticationFailureHandler(failureHandler);
         //登陆使用的路径
         this.setFilterProcessesUrl(Constant.User.LOGIN);
+        this.setUsernameParameter(Constant.User.Login.USERNAME);
+        this.setPasswordParameter(Constant.User.Login.PASSWORD);
     }
 
     /**
@@ -50,35 +44,25 @@ public class UsernamePasswordJSONAuthenticationFilter extends UsernamePasswordAu
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE) || request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
-            ObjectMapper mapper = new ObjectMapper();
-            UsernamePasswordAuthenticationToken authRequest = null;
-            try (InputStream is = request.getInputStream()) {
-                Map<String, String> authenticationBean = mapper.readValue(is, new TypeReference<>() {
-                });
-                String username = authenticationBean.getOrDefault(Constant.User.Login.USERNAME, "");
-                String password = authenticationBean.getOrDefault(Constant.User.Login.PASSWORD, "");
-                String uuid = authenticationBean.getOrDefault(Constant.User.Login.UUID, "");
-                String code = authenticationBean.getOrDefault(Constant.User.Login.CODE, "");
+        try {
+            this.check(request, response);
+        } catch (ServerException e) {
+            throw new AccountExpiredException("");
+        }
 
-                if (StringUtil.isEmpty(username) || StringUtil.isEmpty(password)) {
-                    // throw new UsernameNotFoundException("请输入用户名和密码");
-                    SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.FORBIDDEN, "请输入用户名或密码"));
-                    return null;
-                }
-                long aLong = loginService.login(username);
-                /* 超过5次登录 情况后验证验证码 todo 验证码的5次需要可配置*/
-                if (aLong > 5 && !CaptchaUtils.validate(uuid, code)) {
-                    SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.PRECONDITION_FAILED, "验证码过期或不正确"));
-                    return null;
-                }
-                authRequest = new UsernamePasswordAuthenticationToken(username.trim(), password.trim());
-            } catch (IOException ignored) {
-            }
-            this.setDetails(request, authRequest);
-            return this.getAuthenticationManager().authenticate(authRequest);
-        } else {
-            return super.attemptAuthentication(request, response);
+        return super.attemptAuthentication(request, response);
+    }
+
+    private void check(HttpServletRequest request, HttpServletResponse response) throws ServerException {
+        String username = obtainUsername(request);
+        String uuid = request.getParameter(Constant.User.Login.UUID);
+        String code = request.getParameter(Constant.User.Login.CODE);
+        /* 超过5次登录 情况后验证验证码 todo 验证码的5次需要可配置*/
+        long aLong = loginService.login(username);
+
+        if (aLong > 5 && !CaptchaUtils.validate(uuid, code)) {
+            // SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.PRECONDITION_FAILED, "验证码过期或不正确"));
+            throw new ServerException("验证码过期或不正确");
         }
     }
 

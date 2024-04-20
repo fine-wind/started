@@ -19,9 +19,4 @@ CREATE TABLE `sys_user_conf`  (
   UNIQUE INDEX `username`(`item` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统用户-个人信息配置统计' ROW_FORMAT = DYNAMIC;
 
--- ----------------------------
--- Records of sys_user_conf
--- ----------------------------
-INSERT INTO `sys_user_conf` VALUES (1, 1, 'contribution', '1', 1, '2022-02-25 15:22:36', NULL, NULL, '0');
-
 SET FOREIGN_KEY_CHECKS = 1;

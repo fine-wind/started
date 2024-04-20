@@ -1,0 +1,14 @@
+h2 {
+    margin-top: 0;
+}
+
+@media screen and (min-width: 900px) {
+    body {
+        background-color: #eadfd6;
+    }
+
+    .box-card div {
+        padding: 0;
+        margin-top: 2px;
+    }
+}

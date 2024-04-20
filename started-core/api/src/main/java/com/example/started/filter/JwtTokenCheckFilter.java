@@ -21,13 +21,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 @Log4j2
 @Configuration
 @AllArgsConstructor
 public class JwtTokenCheckFilter extends OncePerRequestFilter {
+
+    private JwtUtils jwtUtils;
 
     /**
      * 每次请求都会走这个方法
@@ -47,14 +48,14 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
         String bearer = Constant.REQUEST.HEADER.TOKEN_PREFIX;
         if (StringUtil.isNotEmpty(tokenStr) && tokenStr.startsWith(bearer)) {
             String token = tokenStr.substring(bearer.length());
-            Claims decoder = JwtUtils.decoder(token);
+            Claims decoder = jwtUtils.parseJWT(token);
             if (Objects.nonNull(decoder) && Objects.nonNull(decoder.getExpiration()) && decoder.getExpiration().before(DateUtil.now())) {
                 username = decoder.getSubject();
             }
         }
 
         CurrentUser.setUserName(username);
-        log.debug("this request login user is {}", username);
+        log.debug("this request [{}] login user is [{}]", request.getRequestURI(), username);
 
         UsernamePasswordAuthenticationToken upa = new UsernamePasswordAuthenticationToken(username, tokenStr, new ArrayList<SimpleGrantedAuthority>(0));
         SecurityContextHolder.getContext().setAuthentication(upa);

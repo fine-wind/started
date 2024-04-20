@@ -3,6 +3,7 @@ package com.example.started.modules.index.page;
 import com.example.common.v0.utils.CaptchaUtils;
 import com.example.common.v0.utils.DateUtil;
 import com.example.common.v0.utils.Result;
+import com.example.started.auth.LoginService;
 import com.example.started.modules.index.vo.IndexVo;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,10 +26,11 @@ import static com.example.common.v0.constant.Constant.PARAM_CONF.APP_SETTINGS_CO
 @AllArgsConstructor
 public class IndexController {
 
+    final LoginService loginService;
     static long startTime = System.currentTimeMillis();
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public IndexVo index(@RequestParam(name = "init", defaultValue = "false") boolean init) {
+    public IndexVo index() {
         IndexVo index = new IndexVo();
         index.setStartTime(DateUtil.toString(new Date(startTime)));
         index.setDomainName(THIS_HOST.getValue());
@@ -36,8 +38,7 @@ public class IndexController {
         index.setShortName(THIS_SHORT_NAME.getValue());
         index.setCopyright(COPYRIGHT.getValue());
         index.setCaptcha(Boolean.parseBoolean(CAPTCHA.getValue()));
-        // init = init && userServiceV1.count(new LambdaQueryWrapper<>()) == 0;
-        index.setInit(init);
+        index.setInit(loginService.init());
         index.setRegister(Boolean.parseBoolean(REGISTER.getValue()));
         return index;
     }

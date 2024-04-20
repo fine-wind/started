@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface LoginService {
 
+    boolean init();
+
     void join(LogInRegisterDTO mobile);
 
     /**

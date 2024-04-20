@@ -30,7 +30,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        log.debug("ResponseAdvice 过滤方法 -> {} {}", returnType, converterType);
+        log.debug("过滤方法 -> {} {}", returnType, converterType);
         return true;
     }
 
@@ -56,7 +56,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         }
         long l2 = System.currentTimeMillis();
         /* 耗时*/
-        log.info("翻译耗时{}ms {} 返回-> {}", l2 - l1, request.getURI(), JSON.toJSONString(body));
+        log.info("翻译耗时 {}ms {} 返回-> {}", l2 - l1, request.getURI(), JSON.toJSONString(body));
         return body;
     }
 

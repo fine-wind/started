@@ -1,4 +1,5 @@
 use started;
+source /opt/sql/plan_event.sql;
 source /opt/sql/sys_user.sql;
 source /opt/sql/sys_user_conf.sql;
 source /opt/sql/sys_user_super.sql;

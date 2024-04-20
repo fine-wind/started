@@ -98,7 +98,7 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParams
         List<String> paramCodeList = baseDao.getParamCodeList(ids);
         String[] paramCodes = paramCodeList.toArray(new String[0]);
         //删除
-        deleteBatchIds(Arrays.asList(ids));
+        this.deleteBatchIds(Arrays.asList(ids));
     }
 
     /**
@@ -154,6 +154,7 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsBo, SysParams
      * 清除并重新加载参数缓存
      */
     @Override
+    @Transactional
     public void reload() {
         log.trace("清除并重新加载参数缓存");
         List<SysParamsDTO> list = list(new SysParamsBo());

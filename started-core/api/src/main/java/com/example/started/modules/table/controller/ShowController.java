@@ -43,7 +43,7 @@ public class ShowController {
      * @param addBody 要添加的数据
      * @return 结果
      */
-    @PreAuthorize("@sf.hasRole('show.table.put')")
+    @PreAuthorize("@se.hasRole('show.table.put')")
     @PutMapping("/{vp}")
     public Result<Object> add(@PathVariable("vp") String vp, @RequestBody List<ShowDataBo> addBody) {
         // todo 数据校验
@@ -84,7 +84,7 @@ public class ShowController {
      * @param queryBo .
      * @return .
      */
-    @PreAuthorize("@sf.hasRole('show.table.list')")
+    @PreAuthorize("@se.hasRole('show.table.list')")
     @PostMapping("/list/{vp}")
     public Result<ShowDataVo> list(@PathVariable("vp") String vp, @RequestBody ShowQueryBo queryBo) {
         // todo  权限校验 和 查询字段校验

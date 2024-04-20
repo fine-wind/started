@@ -12,8 +12,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_user_super")
 public class SysUserSuperEntity extends BaseEntity {
-
-    private String userId;
-    private String status;
+    private Long userId;
     private String companyId;
 }

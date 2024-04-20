@@ -15,7 +15,6 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
-@Service
 public class WebSocketRequestServer {
 //    @Autowired
 //    private SystemController systemController;

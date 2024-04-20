@@ -27,7 +27,9 @@ service.interceptors.request.use(config => {
     // }
     // console.debug('请求拦截器', config)
     if (!isRepeatSubmit && (config.method === 'post' || config.method === 'put' || config.method === 'delete')) {
-        config.data = JSON.stringify(config.data)
+        if (typeof config.data !== 'string') {
+            config.data = JSON.stringify(config.data)
+        }
     }
     return config
 }, error => {
@@ -87,6 +89,17 @@ const HTTP = {
             method: "POST",
             data: data,
             params: params
+        })
+    },
+    POST_FROM: (url, data, params) => {
+        return service({
+            url: url,
+            method: "POST",
+            data: data,
+            params: params,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
         })
     },
 }

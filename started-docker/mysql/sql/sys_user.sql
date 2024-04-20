@@ -31,8 +31,5 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin@hefang.group', '$e0801$EGrfGqJc85FvyE7IlltAvF85qnKNuk1e65qfxIsRwDWEaoncIULETKyMFWiaoTWX6mSKb3F3RLespDPKCp0uvg==$8HK4b2q7YXmb48kLDjubKMtZNqFwYTmHN7wU5VJBkP8=', 'admin@hefang.group', '管理员昵称', NULL, NULL, NULL, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, '0');
-INSERT INTO `sys_user` VALUES (1492317946579197954, '123@hefang.group', '$e0801$EGrfGqJc85FvyE7IlltAvF85qnKNuk1e65qfxIsRwDWEaoncIULETKyMFWiaoTWX6mSKb3F3RLespDPKCp0uvg==$8HK4b2q7YXmb48kLDjubKMtZNqFwYTmHN7wU5VJBkP8=', '123@hefang.group', '123@hefang.group', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, NULL, '0');
-INSERT INTO `sys_user` VALUES (1494929410638610434, 'ekjlks', '$e0801$WYxOsQXD45k24x1D9Q6h5GmdnycilcnO6HyAzEUF//0ogp4q+oTP4WuvbTzU61LhFh8TIDDE45o0pzuXXXYdUw==$sF39+uRKbXEFlp39hHE/+QgJpv0p+9HvGsVb72TBxgg=', 'jlsei@lo.com', 'jlsei@lo.com', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, NULL, '0');
 
 SET FOREIGN_KEY_CHECKS = 1;

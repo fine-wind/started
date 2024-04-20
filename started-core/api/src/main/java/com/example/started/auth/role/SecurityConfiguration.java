@@ -2,6 +2,7 @@ package com.example.started.auth.role;
 
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.utils.SpringContextUtils;
+import com.example.started.auth.LoginSuccessHandler;
 import com.example.started.auth.UsernamePasswordJSONAuthenticationFilter;
 import com.example.started.config.MixHandler;
 import com.example.started.config.WhiteListConf;
@@ -36,6 +37,7 @@ public class SecurityConfiguration {
 
     private final JwtTokenCheckFilter jwtTokenCheckFilter;
     private final MixHandler mixHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
 
 
     @Bean("security.auth.client")
@@ -46,6 +48,7 @@ public class SecurityConfiguration {
         http.addFilterAt(jwtTokenCheckFilter, LogoutFilter.class);
         //路径配置
         http.csrf().disable()
+                .cors().disable()
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(whiteList.toArray(new String[0])).permitAll()
                         .anyRequest().authenticated())
@@ -53,6 +56,7 @@ public class SecurityConfiguration {
                 .addFilterAt(jwtTokenCheckFilter, UsernamePasswordJSONAuthenticationFilter.class)
                 .formLogin((e) -> {
                     e.loginProcessingUrl(Constant.User.LOGIN);
+                    e.successHandler(loginSuccessHandler);
                 })
 //                .rememberMe().rememberMeServices(rememberMeServices)  //rememberMe
                 //登出
@@ -60,7 +64,6 @@ public class SecurityConfiguration {
 
                 // .csrf(AbstractHttpConfigurer::disable) //禁用 csrf
                 .sessionManagement((e) -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
         ;
 
         // 权限不足时的处理

@@ -36,7 +36,7 @@ public interface Constant {
      */
     interface User {
         String JOIN = "/user/join";
-        String LOGIN = "/user/logIn";
+        String LOGIN = "/login";
         String LOGOUT = "/user/logout";
         String WEB_SOCKET = "/ws.io";
 
@@ -287,8 +287,6 @@ public interface Constant {
 
             SCRIPT(new KVR("SCRIPT", ";console.error('测试SCRIPT插入');", "输入script代码即可运行")),
 
-            JWT_SECRET_KEY(new KVR("JWT_SECRET_KEY", "JWT_SECRET_KEY", "用户登录token加密密钥")),
-
             JWT_EXPIRATION(new KVR("JWT_EXPIRATION", String.valueOf(3600), "jwt过期时间(秒), 默认" + 3600 / 60 + "分钟")),
             ;
 
@@ -315,7 +313,6 @@ public interface Constant {
                 CONF_MAP.put(REGISTER.name(), REGISTER.getKvr());
                 CONF_MAP.put(CAPTCHA.name(), CAPTCHA.getKvr());
                 CONF_MAP.put(SCRIPT.name(), SCRIPT.getKvr());
-                CONF_MAP.put(JWT_SECRET_KEY.name(), JWT_SECRET_KEY.getKvr());
                 CONF_MAP.put(JWT_EXPIRATION.name(), JWT_EXPIRATION.getKvr());
             }
         }
