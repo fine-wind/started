@@ -1,4 +1,4 @@
-package com.example.commons.dynamic.datasource.properties;
+package com.example.common.dynamic.datasource.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

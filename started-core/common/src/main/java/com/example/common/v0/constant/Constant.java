@@ -218,7 +218,7 @@ public interface Constant {
     String MAIL_CONFIG_KEY = "MAIL_CONFIG_KEY";
 
     /**
-     * 参数配置
+     * 系统参数配置
      */
     interface PARAM_CONF {
         @Getter
@@ -339,6 +339,17 @@ public interface Constant {
 
         public int getValue() {
             return value;
+        }
+    }
+
+    @Getter
+    enum UserConfigItemEnum {
+        SUPER_USER(0),
+        ;
+        private final Integer value;
+
+        UserConfigItemEnum(Integer value) {
+            this.value = value;
         }
     }
 

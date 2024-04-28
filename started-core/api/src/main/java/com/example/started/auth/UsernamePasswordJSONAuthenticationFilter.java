@@ -4,7 +4,6 @@ package com.example.started.auth;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.exception.ServerException;
 import com.example.common.v0.utils.CaptchaUtils;
-import com.example.started.config.MixHandler;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,11 +22,10 @@ public class UsernamePasswordJSONAuthenticationFilter extends UsernamePasswordAu
     @Resource
     LoginService loginService;
 
-    public UsernamePasswordJSONAuthenticationFilter(AuthenticationManager authenticationManager, MixHandler failureHandler) {
+    public UsernamePasswordJSONAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
-        this.setAuthenticationFailureHandler(failureHandler);
         //登陆使用的路径
-        this.setFilterProcessesUrl(Constant.User.LOGIN);
+        // this.setFilterProcessesUrl(Constant.User.LOGIN);
         this.setUsernameParameter(Constant.User.Login.USERNAME);
         this.setPasswordParameter(Constant.User.Login.PASSWORD);
     }

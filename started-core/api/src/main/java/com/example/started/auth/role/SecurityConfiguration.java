@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -47,27 +48,20 @@ public class SecurityConfiguration {
         //登陆
         http.addFilterAt(jwtTokenCheckFilter, LogoutFilter.class);
         //路径配置
-        http.csrf().disable()
-                .cors().disable()
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(whiteList.toArray(new String[0])).permitAll()
-                        .anyRequest().authenticated())
+        http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers(whiteList.toArray(new String[0])).permitAll().anyRequest().authenticated())
                 //登陆
-                .addFilterAt(jwtTokenCheckFilter, UsernamePasswordJSONAuthenticationFilter.class)
-                .formLogin((e) -> {
+                .addFilterAt(jwtTokenCheckFilter, UsernamePasswordJSONAuthenticationFilter.class).formLogin((e) -> {
                     e.loginProcessingUrl(Constant.User.LOGIN);
                     e.successHandler(loginSuccessHandler);
+                    e.failureHandler(mixHandler);
                 })
 //                .rememberMe().rememberMeServices(rememberMeServices)  //rememberMe
-                //登出
-                .logout((lo) -> lo.logoutUrl(Constant.User.LOGOUT).logoutSuccessHandler(mixHandler))
-
-                // .csrf(AbstractHttpConfigurer::disable) //禁用 csrf
-                .sessionManagement((e) -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        ;
+                .logout((lo) -> lo.logoutUrl(Constant.User.LOGOUT).logoutSuccessHandler(mixHandler))//登出
+                .csrf(AbstractHttpConfigurer::disable) //禁用 csrf
+                .cors().disable().sessionManagement((e) -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // 权限不足时的处理
-        http.exceptionHandling((a) -> a.authenticationEntryPoint(mixHandler));
+        // http.exceptionHandling((a) -> a.authenticationEntryPoint(mixHandler));
         return http.build();
     }
 

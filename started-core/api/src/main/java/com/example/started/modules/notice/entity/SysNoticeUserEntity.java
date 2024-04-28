@@ -15,7 +15,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_notice_user")
 public class SysNoticeUserEntity extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
     /**
      * 通知ID
      */

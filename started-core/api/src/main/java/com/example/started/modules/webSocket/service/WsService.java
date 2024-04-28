@@ -44,12 +44,8 @@ public class WsService {
 
     public void open(Session session, String token) {
 
-        String username;
-        try {
-            Claims decoder = jwtUtils.parseJWT(token);
-            assert decoder != null;
-            username = decoder.getSubject();
-        } catch (Exception e) {
+        String username = jwtUtils.parseJWT(token);
+        if (username.length() < 5) {
             log.error("连接ws时token失效");
             Result<?> result = Result.error(Constant.UniversalCode.UNAUTHORIZED, "登录失效了");
             sendMessage(session, result);

@@ -6,12 +6,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 系统用户-超级管理员
+ * 角色
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("sys_user_super")
-public class SysUserSuperEntity extends BaseEntity {
+@TableName("sys_role_user")
+public class SysRoleUserEntity extends BaseEntity {
+
+    /**
+     * 角色名称
+     */
+    private Long roleId;
+    /**
+     * 备注
+     */
     private Long userId;
-    private String companyId;
 }

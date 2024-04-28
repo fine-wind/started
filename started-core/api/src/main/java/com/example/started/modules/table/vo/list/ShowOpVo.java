@@ -6,23 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+/**
+ * 按钮
+ */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShowColumnsVo {
-    /**
-     * @see ShowTableFieldEntity#getType()
-     */
-    private Integer type;
-    private String key;
-    private String dataKey;
+public class ShowOpVo {
     /**
      * 显示的标题
      */
     private String title;
-    /**
-     * 显示的宽度
-     */
-    private int width;
 }

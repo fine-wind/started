@@ -2,10 +2,7 @@ package com.example.started.filter;
 
 import com.example.common.v0.constant.Constant;
 import com.example.started.util.JwtUtils;
-import com.example.common.v0.utils.DateUtil;
 import com.example.common.v0.utils.StringUtil;
-import com.example.started.auth.role.user.CurrentUser;
-import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
@@ -48,14 +45,10 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
         String bearer = Constant.REQUEST.HEADER.TOKEN_PREFIX;
         if (StringUtil.isNotEmpty(tokenStr) && tokenStr.startsWith(bearer)) {
             String token = tokenStr.substring(bearer.length());
-            Claims decoder = jwtUtils.parseJWT(token);
-            if (Objects.nonNull(decoder) && Objects.nonNull(decoder.getExpiration()) && decoder.getExpiration().before(DateUtil.now())) {
-                username = decoder.getSubject();
-            }
+            username = jwtUtils.parseJWT(token);
         }
 
-        CurrentUser.setUserName(username);
-        log.debug("this request [{}] login user is [{}]", request.getRequestURI(), username);
+        log.debug("[{}] this request login user is [{}]", request.getRequestURI(), username);
 
         UsernamePasswordAuthenticationToken upa = new UsernamePasswordAuthenticationToken(username, tokenStr, new ArrayList<SimpleGrantedAuthority>(0));
         SecurityContextHolder.getContext().setAuthentication(upa);

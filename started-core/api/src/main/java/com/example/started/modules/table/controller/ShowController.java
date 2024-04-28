@@ -2,6 +2,7 @@ package com.example.started.modules.table.controller;
 
 import com.example.started.modules.table.bo.add.ShowDataBo;
 import com.example.started.modules.table.service.TableDbService;
+import com.example.started.modules.table.vo.list.ShowColumnsVo;
 import com.example.started.modules.table.vo.list.ShowDataVo;
 import com.example.started.modules.table.bo.ShowQueryBo;
 import com.example.common.v0.utils.Result;
@@ -80,16 +81,40 @@ public class ShowController {
     /**
      * 获取列表
      *
+     * @param vp 虚拟路径
+     * @return .
+     */
+    // @PreAuthorize("@se.hasRole('show.table.list')")
+    @PostMapping("/columns/{vp}")
+    public Result<List<ShowColumnsVo>> columns(@PathVariable("vp") String vp) {
+        return Result.ok(tableDbService.columns(vp));
+    }
+
+    /**
+     * 根据条件，找到符合条件的结果数量
+     *
+     * @param vp      虚拟路径
+     * @param queryBo 参数
+     * @return
+     */
+    @PostMapping("/count/{vp}")
+    public Result<Long> count(@PathVariable("vp") String vp, @RequestBody ShowQueryBo queryBo) {
+        return Result.ok(tableDbService.count(vp, queryBo));
+    }
+
+    /**
+     * 获取列表
+     *
      * @param vp      虚拟路径
      * @param queryBo .
      * @return .
      */
-    @PreAuthorize("@se.hasRole('show.table.list')")
+    // @PreAuthorize("@se.hasRole('show.table.list')")
     @PostMapping("/list/{vp}")
     public Result<ShowDataVo> list(@PathVariable("vp") String vp, @RequestBody ShowQueryBo queryBo) {
         // todo  权限校验 和 查询字段校验
-        ShowDataVo list = tableDbService.list(vp, queryBo);
-        return Result.ok(list);
+        ShowDataVo page = tableDbService.list(vp, queryBo);
+        return Result.ok(page);
     }
 
     /**

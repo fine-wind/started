@@ -134,8 +134,9 @@ public class RedisUtils {
     /**
      * hash存在这个key
      */
-    public boolean hashHasKey(String key, String field) {
-        return redisTemplate.opsForHash().hasKey(key, field);
+    public boolean hasHashKey(String key, String field) {
+        Boolean b = redisTemplate.opsForHash().hasKey(key, field);
+        return Objects.nonNull(b) && b;
     }
 
     @SuppressWarnings("unchecked")

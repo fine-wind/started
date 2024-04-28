@@ -1,4 +1,4 @@
-package com.example.commons.dynamic.datasource.config;
+package com.example.common.dynamic.datasource.config;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

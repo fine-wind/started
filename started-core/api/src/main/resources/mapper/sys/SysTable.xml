@@ -15,5 +15,21 @@
             </foreach>
         </foreach>
     </insert>
+    <sql id="selectSql">
+        select
+        <foreach collection="table.fields" item="item" separator=",">`${item}`</foreach>
+        from ${table.tableName}
+        <where>
+            <foreach collection="table.wheres" item="where">
+                AND ${where.field} ${where.type.value} #{where.value}
+            </foreach>
+        </where>
+    </sql>
+    <select id="selectTableData" resultType="java.util.Map">
+       <include refid="selectSql"></include>
+    </select>
+    <select id="selectTableDataPage" resultType="java.util.Map">
+        <include refid="selectSql"></include>
+    </select>
 
 </mapper>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>PLAN A</h2>
+    <h2><a href="">PLAN A</a> </h2>
     <el-row>
       <el-col :span="1" v-for="dt in dates" :key="dt.date">
         <div class="date" style="" @wheel="wheelX" @click="yEvent = 0">{{ dt.date.substring(2) }}
@@ -9,7 +9,7 @@
         </div>
         <el-button plain @click="clickAddPlan(dt.date)">添加</el-button>
         <template v-for="(event, index) in (finalDates[dt.date]||[])" :key="index">
-          <el-card class="box-card" :style="{backgroundColor: event.color}" v-show="index >= yEvent">
+          <el-card class="box-card" :style="{backgroundColor: event.color}" v-show="index >= yEvent" v-contextmenu:itemId="handleContextMenu">
             <el-popover :width="200" trigger="hover">
               <template #reference>
                 <div @wheel="wheelY">
@@ -24,10 +24,13 @@
         </template>
       </el-col>
     </el-row>
+    <ul v-show="showContextMenu" v-bind:style="{ top: contextMenuTop + 'px', left: contextMenuLeft + 'px' }">
+      <li v-for="item in menuItems" v-bind:key="item.id" v-text="item.label"></li>
+    </ul>
     <el-dialog v-model="dialogTableVisible" title="添加或修改">
       <el-form :model="form" label-width="120px">
         <el-form-item label="日期">
-          <el-date-picker v-model="form.dt" type="date" placeholder="Pick a day" format="YYYY-MM-DD" value-format="YYYY-MM-DD" @input="changeTime"/>
+          <el-date-picker v-model="form.dt" type="date" placeholder="Pick a day" format="YYYY-M-D" value-format="YYYY-M-D" @input="changeTime"/>
         </el-form-item>
         <el-form-item label="信息">
           <el-input v-model="form.text"/>
@@ -67,14 +70,20 @@ const form = reactive({
 })
 
 /* 数据集合*/
-const finalDates = {
+const finalDates = ref({
   // '2023-12-05': [
   //     {
   //         text: '',
   //         color: '',
   //     }
   // ]
-}
+})
+
+const showContextMenu = reactive({
+  show: false,
+  contextMenuTop: 0,
+  contextMenuLeft: 0,
+})
 /* 初始化表头*/
 HTTP.GET(`/plan/init`).then((res) => {
   res.data.forEach(function (item) {
@@ -94,7 +103,6 @@ HTTP.GET(`/plan/init`).then((res) => {
 })
 
 function wheelX(e) {
-  console.debug('wheel', e)
   if (e.wheelDelta) {
     if (e.wheelDelta > 0) { //当鼠标滚轮向上滚动时
       upDates(-1)
@@ -116,11 +124,9 @@ function wheelX(e) {
 function wheelY(e) {
   if (e.wheelDelta) {
     if (e.wheelDelta > 0) { //当鼠标滚轮向上滚动时
-      console.debug("滚轮向上滚动时")
       upEvents(-1)
     }
     if (e.wheelDelta < 0) {
-      console.debug("滚轮向下滚动时")
       upEvents(1)
     }
   }
@@ -152,7 +158,6 @@ function upDates(type) {
 
 function upEvents(type) {
   yEvent.value = Math.max(0, yEvent.value + type);
-  console.debug(yEvent)
 }
 
 function getPlanEvent(dt) {
@@ -165,12 +170,11 @@ function clickAddPlan(dt) {
   dialogTableVisible.value = true
   form.dt = dt;
   form.text = dt;
-  console.debug(dt, form.text)
 }
 
 function changeTime(e) {
-  this.$forceUpdate()
   console.debug(e)
+  this.$forceUpdate()
 }
 
 
@@ -179,6 +183,12 @@ const onSubmit = () => {
     ElMessage.success(res.msg)
     finalDates[form.dt] = res.data
   })
+}
+const handleContextMenu = (event) => {
+  event.preventDefault();
+  this.showContextMenu.show = true;
+  this.showContextMenu.contextMenuTop = event.clientY;
+  this.showContextMenu.contextMenuLeft = event.clientX;
 }
 </script>
 <style scoped>

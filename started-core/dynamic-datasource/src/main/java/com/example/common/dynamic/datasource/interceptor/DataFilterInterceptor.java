@@ -1,4 +1,4 @@
-package com.example.commons.dynamic.datasource.interceptor;
+package com.example.common.dynamic.datasource.interceptor;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import net.sf.jsqlparser.JSQLParserException;

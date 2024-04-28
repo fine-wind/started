@@ -1,6 +1,7 @@
 package com.example.started.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.started.auth.Se;
 import com.example.started.modules.sys.bo.SysMenuBo;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.service.impl.BaseServiceImpl;
@@ -87,10 +88,10 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
     public List<SysMenuDTO> getMenuList(SysMenuBo bo) {
         List<SysResourcesEntity> menuList;
         //系统管理员，拥有最高权限
-        if (SecurityUser.superAdmin()) {
+        if (Se.SUPER_USER()) {
             menuList = baseDao.selectList(getQueryWrapper(bo));
         } else {
-            menuList = baseDao.getUserMenuList(SecurityUser.getUserId(), bo.getType(), HttpContextUtils.getLanguage());
+            menuList = baseDao.getUserMenuList(Se.getUserId().toString(), bo.getType(), HttpContextUtils.getLanguage());
         }
 
         return ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);
@@ -116,7 +117,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
     @Override
     public Set<String> getListByIds(List<Long> ids) {
 
-        if (Objects.nonNull(ids) && ids.size() == 0) {
+        if (Objects.nonNull(ids) && ids.isEmpty()) {
             ids.add(Constant.Status.FAIL.longValue());
         }
         SysMenuBo params = new SysMenuBo();

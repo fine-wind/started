@@ -26,5 +26,4 @@ public class SysMenuVo {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
-
 }

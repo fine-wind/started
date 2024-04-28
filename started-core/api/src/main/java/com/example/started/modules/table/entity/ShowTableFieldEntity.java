@@ -2,6 +2,7 @@ package com.example.started.modules.table.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.common.v0.data.entity.BaseEntity;
+import com.example.started.modules.table.dto.SysTableFieldTypeEnum;
 import com.example.started.modules.table.vo.edit.ShowEditFieldVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +21,14 @@ public class ShowTableFieldEntity extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String tableId;
+
+    /**
+     * 表id
+     */
+    private Long tableId;
+    /**
+     * 显示名称
+     */
     private String title;
     /**
      * 传参名字
@@ -37,13 +45,20 @@ public class ShowTableFieldEntity extends BaseEntity {
 
     /**
      * todo 字段数据类型
+     *
+     * @see SysTableFieldTypeEnum
      */
-    private String type;
+    private Integer type;
 
     /**
      * todo 字段校验格式
      */
     private String verify;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
 
     public ShowEditFieldVo toEditVo() {
         ShowEditFieldVo vo = new ShowEditFieldVo();

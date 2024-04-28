@@ -30,16 +30,16 @@ public class PlanController {
     @GetMapping("/init")
     @ApiOperation("某天的数据")
     public Result<List<PlanEventDto>> get() {
-        List<PlanEventDto> page = planDayService.getOneDay();
-        return Result.ok(page);
+        List<PlanEventDto> data = planDayService.getOneDay();
+        return Result.ok(data);
     }
 
-    @PreAuthorize("@se.hasRole('plan.day')")
+    // @PreAuthorize("@se.hasRole('plan.day')")
     @GetMapping("/{day}")
     @ApiOperation("某天的数据")
     public Result<List<PlanEventDto>> get(@PathVariable String day) {
-        List<PlanEventDto> page = planDayService.getOneDay(DateUtil.strToDate(day));
-        return Result.ok(page);
+        List<PlanEventDto> data = planDayService.getOneDay(DateUtil.strToDate(day));
+        return Result.ok(data);
     }
 
     @PreAuthorize("@se.hasRole('plan.save')")

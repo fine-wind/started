@@ -29,17 +29,12 @@ public class MixHandler implements
         AuthenticationFailureHandler,
         InvalidSessionStrategy,
         SessionInformationExpiredStrategy,
-        AuthenticationEntryPoint,
         LogoutSuccessHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
         log.info("出现错误，访问[{}]失败 {}", request.getRequestURI(), e.getMessage());
-        if (e instanceof UsernameNotFoundException) {
-            SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.UNPROCESSABLE_ENTITY, "用户名或密码错误"));
-        } else {
-            SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.PRECONDITION_FAILED, "服务器异常"));
-        }
+        SysResponseJSON.render(request, response, Result.error(Constant.UniversalCode.UNPROCESSABLE_ENTITY, "用户名或密码错误"));
     }
 
     @Override
@@ -50,12 +45,6 @@ public class MixHandler implements
     @Override
     public void onExpiredSessionDetected(SessionInformationExpiredEvent request) {
         log.info("同一账号同时登录的用户数受限的处理，访问[{}]失败", request);
-    }
-
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
-        log.warn("用户需要登录，访问[{}]失败", request.getRequestURI());
-        SysResponseJSON.render(request, response, Result.error("需要登录"));
     }
 
     @Override

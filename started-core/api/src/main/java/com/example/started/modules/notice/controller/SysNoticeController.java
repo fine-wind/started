@@ -1,9 +1,9 @@
 package com.example.started.modules.notice.controller;
 
+import com.example.started.auth.Se;
 import com.example.started.modules.notice.bo.SysNoticeBo;
 import com.example.started.modules.notice.dto.SysNoticeDTO;
 import com.example.started.modules.notice.service.SysNoticeUserService;
-import com.example.started.auth.role.user.SecurityUser;
 import com.example.started.common.v0.annotation.LogOperation;
 import com.example.common.v0.constant.Constant;
 import com.example.common.v0.data.page.PageData;
@@ -85,7 +85,7 @@ public class SysNoticeController {
     @PutMapping("mynotice/read/{noticeId}")
     @ApiOperation("标记我的通知为已读")
     public Result<?> read(@PathVariable("noticeId") Long noticeId) {
-        sysNoticeUserService.updateReadStatus(SecurityUser.getUserId(), noticeId);
+        sysNoticeUserService.updateReadStatus(Se.getUserId().toString(), noticeId);
 
         return new Result<>();
     }
@@ -93,7 +93,7 @@ public class SysNoticeController {
     @GetMapping("mynotice/unread")
     @ApiOperation("我的通知未读读")
     public Result<Long> unRead() {
-        Long count = sysNoticeUserService.getUnReadNoticeCount(SecurityUser.getUserId());
+        Long count = sysNoticeUserService.getUnReadNoticeCount(Se.getUserId().toString());
 
         return Result.ok(count);
     }

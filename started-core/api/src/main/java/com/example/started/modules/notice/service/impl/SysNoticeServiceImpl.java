@@ -2,6 +2,7 @@ package com.example.started.modules.notice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.started.auth.Se;
 import com.example.started.modules.notice.bo.SysNoticeBo;
 import com.example.started.modules.notice.dao.SysNoticeDao;
 import com.example.started.modules.notice.dto.SysNoticeDTO;
@@ -15,7 +16,6 @@ import com.example.common.v0.data.page.PageData;
 import com.example.common.v0.data.service.impl.CrudServiceImpl;
 import com.example.common.v0.utils.ConvertUtils;
 import com.example.started.modules.notice.service.SysNoticeService;
-import com.example.started.auth.role.user.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +65,7 @@ public class SysNoticeServiceImpl extends CrudServiceImpl<SysNoticeBo, SysNotice
         IPage<SysNoticeEntity> page = getPage(params, null, false);
 
         //查询
-        List<SysNoticeEntity> list = baseDao.getMyNoticeList(SecurityUser.getUserId());
+        List<SysNoticeEntity> list = baseDao.getMyNoticeList(Se.getUserId().toString());
 
         return getPageData(0, 0, page.getTotal(), list, SysNoticeDTO.class);
     }
@@ -77,7 +77,7 @@ public class SysNoticeServiceImpl extends CrudServiceImpl<SysNoticeBo, SysNotice
 
         //更新发送者信息
         if (dto.getStatus() == NoticeStatusEnum.SEND.value()) {
-            entity.setSenderName(SecurityUser.getUserId());
+            entity.setSenderName(Se.getUserName());
             entity.setSenderDate(new Date());
         }
 
@@ -95,7 +95,7 @@ public class SysNoticeServiceImpl extends CrudServiceImpl<SysNoticeBo, SysNotice
 
         //更新发送者信息
         if (dto.getStatus() == NoticeStatusEnum.SEND.value()) {
-            entity.setSenderName(SecurityUser.getUserId());
+            entity.setSenderName(Se.getUserId().toString());
             entity.setSenderDate(new Date());
         }
 

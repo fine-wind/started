@@ -47,7 +47,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         //   这里生成token
         String jwt = jwtUtils.createJWT(principal.getUsername());
         long time = Long.parseLong(Constant.PARAM_CONF.APP_SETTINGS_CONF.JWT_EXPIRATION.getValue());
-        redisUtils.setCache(CacheCommonKeys.getSecurityUserToken(principal.getUsername()), jwt, time * 1000);    /* 放入缓存*/
+        redisUtils.setCache(CacheCommonKeys.getSecurityUserToken(principal.getUsername()), jwt, time);    /* 放入缓存*/
 
 
         SysLogLoginEntity log = new SysLogLoginEntity();

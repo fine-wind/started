@@ -1,7 +1,7 @@
-package com.example.commons.dynamic.datasource.aspect;
+package com.example.common.dynamic.datasource.aspect;
 
-import com.example.commons.dynamic.datasource.annotation.DataSource;
-import com.example.commons.dynamic.datasource.config.DynamicContextHolder;
+import com.example.common.dynamic.datasource.annotation.DataSource;
+import com.example.common.dynamic.datasource.config.DynamicContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,8 +24,8 @@ import java.util.Objects;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class DataSourceAspect {
 
-    @Pointcut("@annotation(com.example.commons.dynamic.datasource.annotation.DataSource) " +
-            "|| @within(com.example.commons.dynamic.datasource.annotation.DataSource)")
+    @Pointcut("@annotation(com.example.common.dynamic.datasource.annotation.DataSource) " +
+            "|| @within(com.example.common.dynamic.datasource.annotation.DataSource)")
     public void dataSourcePointCut() {
 
     }

@@ -28,10 +28,9 @@ public class PlanEventServiceImpl extends BaseServiceV1Impl<PlanEventBo, PlanEve
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void save(PlanEventDto bo) {
         PlanEventEntity entity = ConvertUtils.sourceToTarget(bo, PlanEventEntity.class);
-        insert(entity);
+        this.insert(entity);
     }
 
     @Override

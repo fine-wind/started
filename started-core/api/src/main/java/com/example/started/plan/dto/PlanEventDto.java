@@ -20,7 +20,7 @@ public class PlanEventDto implements Serializable {
     @ApiModelProperty(value = "id")
     private Long id;
     @ApiModelProperty(value = "日期")
-    @JSONField(format = "yyyy-M-d")
+    @JSONField(format = "yyyy-MM-dd")
     private Date dt;
     @ApiModelProperty(value = "文本")
     private String text;

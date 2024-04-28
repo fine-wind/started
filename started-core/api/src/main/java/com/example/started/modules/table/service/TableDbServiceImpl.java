@@ -1,7 +1,12 @@
 package com.example.started.modules.table.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.common.v0.exception.ServerException;
 import com.example.started.modules.table.bo.add.ShowDataBo;
+import com.example.started.modules.table.dto.SysTableDto;
+import com.example.started.modules.table.dto.SysTableFieldTypeEnum;
 import com.example.started.modules.table.to.ShowDataTo;
 import com.example.started.modules.table.bo.ShowQueryBo;
 import com.example.started.modules.table.dao.SysTableDao;
@@ -12,6 +17,7 @@ import com.example.started.modules.table.vo.edit.ShowEditChildFieldVo;
 import com.example.started.modules.table.vo.edit.ShowEditVo;
 import com.example.started.modules.table.vo.list.ShowColumnsVo;
 import com.example.started.modules.table.vo.list.ShowDataVo;
+import com.example.started.modules.table.vo.list.ShowOpVo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,43 +30,30 @@ import java.util.stream.Stream;
 @Service
 @AllArgsConstructor
 public class TableDbServiceImpl implements TableDbService {
-    private final SysTableDao tableDao;
+    private final SysTableDao sysTableDao;
     private final SysTableFieldDao tableFieldDao;
 
-    @Override
-    public ShowEditVo tableInfo(String vp) {
-
-        ShowEditVo showEditVo = new ShowEditVo();
-
-        LambdaQueryWrapper<ShowTableEntity> queryWrapper = new LambdaQueryWrapper<ShowTableEntity>()
-                .select(ShowTableEntity::getId, ShowTableEntity::getTableName)
-                .eq(ShowTableEntity::getVp, vp);
-        List<ShowTableEntity> showTableEntities = tableDao.selectList(queryWrapper);
-        showTableEntities.forEach(e -> {
-            // 当表字段
-            this.getFieldByTableId(e.getId()).forEach(fieldEntity -> showEditVo.getFields().add(fieldEntity.toEditVo()));
-            // 子表
-            this.getTableByPid(e.getId()).forEach(c -> {
-                ShowEditChildFieldVo e1 = new ShowEditChildFieldVo();
-                e1.setTitle(c.getTitle());
-                e1.setName(c.getName());
-                this.getFieldByTableId(c.getId()).forEach(cf -> e1.getFields().add(cf.toEditVo()));
-                showEditVo.getChildFields().add(e1);
-            });
-        });
-        return showEditVo;
+    private ShowTableEntity getTable(String vp) {
+        LambdaQueryWrapper<ShowTableEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ShowTableEntity::getVp, vp);
+        ShowTableEntity showTableEntities = sysTableDao.selectOne(queryWrapper);
+        if (Objects.isNull(showTableEntities)) {
+            throw new ServerException("路径不正确");
+        }
+        return showTableEntities;
     }
 
     private List<ShowTableFieldEntity> getFieldByTableId(long tableId) {
         LambdaQueryWrapper<ShowTableFieldEntity> queryWrapper1 = new LambdaQueryWrapper<ShowTableFieldEntity>()
-                .eq(ShowTableFieldEntity::getTableId, tableId);
+                .eq(ShowTableFieldEntity::getTableId, tableId)
+                .orderByAsc(ShowTableFieldEntity::getSort);
         return tableFieldDao.selectList(queryWrapper1);
     }
 
     private List<ShowTableEntity> getTableByPid(long pid) {
         LambdaQueryWrapper<ShowTableEntity> queryWrapper1 = new LambdaQueryWrapper<ShowTableEntity>()
                 .eq(ShowTableEntity::getPid, pid);
-        return tableDao.selectList(queryWrapper1);
+        return sysTableDao.selectList(queryWrapper1);
     }
 
     @Override
@@ -73,7 +66,7 @@ public class TableDbServiceImpl implements TableDbService {
         LambdaQueryWrapper<ShowTableEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.select(ShowTableEntity::getTableName);
         queryWrapper.eq(ShowTableEntity::getVp, vp);
-        List<ShowTableEntity> showTableEntities = tableDao.selectList(queryWrapper);
+        List<ShowTableEntity> showTableEntities = sysTableDao.selectList(queryWrapper);
         showTableEntities.forEach(e -> {
             LambdaQueryWrapper<ShowTableFieldEntity> queryWrapper1 = new LambdaQueryWrapper<>();
             queryWrapper1.eq(ShowTableFieldEntity::getTableId, e.getId());
@@ -88,28 +81,66 @@ public class TableDbServiceImpl implements TableDbService {
                 mainDataValue.add(o);
             });
             // 入库
-            tableDao.insertData(e.getTableName(), col.toList(), data);
+            sysTableDao.insertData(e.getTableName(), col.toList(), data);
         });
+    }
+
+    public List<ShowColumnsVo> operates(String vp, ShowQueryBo queryBo) {
+        ShowTableEntity showTableEntity = this.getTable(vp);
+        ShowDataVo showDataVo = new ShowDataVo();
+
+        SysTableDto sysTableDto = new SysTableDto();
+        sysTableDto.setTableName(showTableEntity.getTableName());
+        this.getFieldByTableId(showTableEntity.getId()).forEach(f -> {
+            /* 操作按钮*/
+            if (SysTableFieldTypeEnum.op(f.getType())) {
+                showDataVo.putOperate(new ShowOpVo(f.getTitle()));
+            }
+        });
+        return null;
+    }
+
+    /**
+     * 页面显示的表头
+     */
+    @Override
+    public List<ShowColumnsVo> columns(String vp) {
+        ShowTableEntity showTableEntity = this.getTable(vp);
+        List<ShowColumnsVo> columnsVos = new LinkedList<>();
+
+        SysTableDto sysTableDto = new SysTableDto();
+        sysTableDto.setTableName(showTableEntity.getTableName());
+        this.getFieldByTableId(showTableEntity.getId()).forEach(f -> {
+            if (SysTableFieldTypeEnum.show(f)) {
+                columnsVos.add(new ShowColumnsVo(f.getType(), f.getField(), f.getField(), f.getTitle(), 100));
+            }
+        });
+        return columnsVos;
+    }
+
+    @Override
+    public Long count(String vp, ShowQueryBo queryBo) {
+        return 1000L;// sysTableDao.selectCount(null);
     }
 
     @Override
     public ShowDataVo list(String vp, ShowQueryBo queryBo) {
+        ShowTableEntity showTableEntity = this.getTable(vp);
         ShowDataVo showDataVo = new ShowDataVo();
-        {
-            LinkedList<ShowColumnsVo> fields = new LinkedList<>();
-            fields.add(new ShowColumnsVo().setKey("key0").setDataKey("dk0").setTitle("标题0").setWidth(100));
-            fields.add(new ShowColumnsVo().setKey("key1").setDataKey("dk1").setTitle("标题1").setWidth(100));
-            fields.add(new ShowColumnsVo().setKey("key2").setDataKey("dk2").setTitle("标题2").setWidth(100));
-            fields.add(new ShowColumnsVo().setKey("key3").setDataKey("dk3").setTitle("标题3").setWidth(100));
-            showDataVo.setColumns(fields);
-        }
-        for (int i = 0; i < 50; i++) {
-            HashMap<String, Object> map = new HashMap<>();
-            for (int j = 0; j < 4; j++) {
-                map.put("dk" + j, "value" + i + ", " + j);
+
+        SysTableDto sysTableDto = new SysTableDto();
+        sysTableDto.setTableName(showTableEntity.getTableName());
+        this.getFieldByTableId(showTableEntity.getId()).forEach(f -> {
+            if (SysTableFieldTypeEnum.select(f.getType())) {
+                sysTableDto.putField(f.getField());
             }
-            showDataVo.getData().add(map);
-        }
+            if (SysTableFieldTypeEnum.op(f.getType())) {
+                showDataVo.putOperate(new ShowOpVo(f.getTitle()));
+            }
+        });
+        IPage<Map<String, Object>> maps = sysTableDao.selectTableDataPage(new Page<>(1, 10), sysTableDto);
+//        List<ShowTableEntity> showTableEntities = sysTableDao.selectList(null);
+        showDataVo.putRecords(maps);
         return showDataVo;
     }
 
@@ -128,4 +159,31 @@ public class TableDbServiceImpl implements TableDbService {
             body.put(e.getName(), e.getValue());
         });
     }
+
+
+    @Override
+    public ShowEditVo tableInfo(String vp) {
+
+        ShowEditVo showEditVo = new ShowEditVo();
+
+        LambdaQueryWrapper<ShowTableEntity> queryWrapper = new LambdaQueryWrapper<ShowTableEntity>()
+                .select(ShowTableEntity::getId, ShowTableEntity::getTableName)
+                .eq(ShowTableEntity::getVp, vp);
+
+        List<ShowTableEntity> showTableEntities = sysTableDao.selectList(queryWrapper);
+        showTableEntities.forEach(e -> {
+            // 当表字段
+            this.getFieldByTableId(e.getId()).forEach(fieldEntity -> showEditVo.getFields().add(fieldEntity.toEditVo()));
+            // 子表
+            this.getTableByPid(e.getId()).forEach(c -> {
+                ShowEditChildFieldVo e1 = new ShowEditChildFieldVo();
+                e1.setTitle(c.getTitle());
+                e1.setName(c.getName());
+                this.getFieldByTableId(c.getId()).forEach(cf -> e1.getFields().add(cf.toEditVo()));
+                showEditVo.getChildFields().add(e1);
+            });
+        });
+        return showEditVo;
+    }
+
 }

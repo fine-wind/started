@@ -3,6 +3,7 @@ package com.example.started.modules.table.service;
 import com.example.started.modules.table.bo.add.ShowDataBo;
 import com.example.started.modules.table.bo.ShowQueryBo;
 import com.example.started.modules.table.vo.edit.ShowEditVo;
+import com.example.started.modules.table.vo.list.ShowColumnsVo;
 import com.example.started.modules.table.vo.list.ShowDataVo;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public interface TableDbService {
     ShowEditVo tableInfo(String vp);
 
     void saveData(String vp, List<ShowDataBo> addBody);
+
+    List<ShowColumnsVo> columns(String vp);
+
+    Long count(String vp, ShowQueryBo queryBo);
 
     ShowDataVo list(String vp, ShowQueryBo queryBo);
 }

@@ -2,7 +2,7 @@ package com.example.started.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.example.common.v0.constant.Constant;
-import com.example.started.auth.role.user.SecurityUser;
+import com.example.started.auth.Se;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -30,13 +30,13 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
         //更新时间
         strictInsertFill(metaObject, UPDATE_DATE, Date.class, now);
 
-        String userId = SecurityUser.getUserId();
+        Long userId = Se.getUserId();
         // todo 创建者所属部门
 
         //创建者
-        strictInsertFill(metaObject, CREATOR, String.class, userId);
+        strictInsertFill(metaObject, CREATOR, Long.class, userId);
         //更新者
-        strictInsertFill(metaObject, UPDATER, String.class, userId);
+        strictInsertFill(metaObject, UPDATER, Long.class, userId);
 
     }
 
@@ -48,7 +48,7 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         //更新者
-        strictUpdateFill(metaObject, UPDATER, String.class, SecurityUser.getUserId());
+        strictUpdateFill(metaObject, UPDATER, Long.class, Se.getUserId());
         //更新时间
         strictUpdateFill(metaObject, UPDATE_DATE, Date.class, new Date());
     }

@@ -1,14 +1,16 @@
 use started;
+source /opt/sql/sys_table.sql;
+source /opt/sql/sys_table_field.sql;
 source /opt/sql/plan_event.sql;
 source /opt/sql/sys_user.sql;
 source /opt/sql/sys_user_conf.sql;
-source /opt/sql/sys_user_super.sql;
 source /opt/sql/sys_base_conf.sql;
 source /opt/sql/sys_dict_data.sql;
 source /opt/sql/sys_dict_type.sql;
 source /opt/sql/sys_group.sql;
 source /opt/sql/sys_group_resources.sql;
 source /opt/sql/sys_log_login.sql;
+source /opt/sql/sys_log_error.sql;
 source /opt/sql/sys_log_operation.sql;
 source /opt/sql/sys_mail_log.sql;
 source /opt/sql/sys_mail_template.sql;

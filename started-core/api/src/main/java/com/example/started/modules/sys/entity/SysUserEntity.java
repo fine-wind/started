@@ -16,7 +16,7 @@ public class SysUserEntity extends BaseEntity {
     private String username;
     private String password;
     private String email;
-    private String real_name;
+    private String realName;
     private String headUrl;
     private String gender;
     private String mobile;

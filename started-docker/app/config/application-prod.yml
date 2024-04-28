@@ -1,4 +1,6 @@
-# 测试环境
+application:
+  jwt-key: 啊哈，来啦老弟，猜猜密码吧，我打赌你猜不到，嘿嘿嘿嘿嘿嘿嘿
+# 正式环境
 server:
   tomcat:
     uri-encoding: UTF-8
@@ -36,11 +38,11 @@ spring:
 logging:
   level:
     org:
-      mybatis: debug
+      mybatis: info
     com:
       example: trace
   file:
     name: log/log.log
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

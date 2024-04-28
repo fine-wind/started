@@ -1,14 +1,12 @@
 package com.example.started.auth.cache;
 
-import com.example.started.auth.role.user.SecurityUser;
+import com.example.started.auth.Se;
 import com.example.started.redis.CacheCommonKeys;
 import com.example.common.v3.cache.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -32,14 +30,6 @@ public class SysRoleUserRedis {
         redisUtils.setCache(cacheKey + username, roles);
     }
 
-    public Set<Object> getRoles(String username) {
-        Set<Object> set = redisUtils.get(cacheKey + username);
-        if (Objects.isNull(set)) {
-            return new HashSet<>();
-        }
-        return set;
-    }
-
     /**
      * 是否包含某些角色
      *
@@ -50,7 +40,7 @@ public class SysRoleUserRedis {
             return true;
         }
         boolean b = false;
-        String username = SecurityUser.getUserName();
+        String username = Se.getUserName();
         Map<Object, Boolean> member = redisUtils.opsForSet().isMember(CacheCommonKeys.getSecurityRoleKey(username), roles);
         assert member != null;
         for (Boolean v : member.values()) {

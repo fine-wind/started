@@ -16,53 +16,48 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * 字典数据
- *
- *
  */
 @RestController
 @RequestMapping("sys/dict/data")
-@Api(tags="字典数据")
+@Api(tags = "字典数据")
+@AllArgsConstructor
 public class SysDictDataController {
-    @Autowired
-    private SysDictDataService sysDictDataService;
+    private final SysDictDataService sysDictDataService;
 
     @PostMapping("page")
     @ApiOperation("字典数据")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = Constant.PAGE.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.PAGE.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.PAGE.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constant.PAGE.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = "dictLabel", value = "字典标签", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name = "dictValue", value = "字典值", paramType = "query", dataType="String")
+            @ApiImplicitParam(name = Constant.PAGE.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.PAGE.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.PAGE.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.PAGE.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "dictLabel", value = "字典标签", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "dictValue", value = "字典值", paramType = "query", dataType = "String")
     })
-
-    public Result<PageData<SysDictDataDTO>> page(@RequestBody SysDictDataBo params){
+    public Result<PageData<SysDictDataDTO>> page(@RequestBody SysDictDataBo params) {
         //字典类型
         PageData<SysDictDataDTO> page = sysDictDataService.page(params);
 
-        return new Result<PageData<SysDictDataDTO>>().ok(page);
+        return Result.ok(page);
     }
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-
-    public Result<SysDictDataDTO> get(@PathVariable("id") Long id){
+    public Result<SysDictDataDTO> get(@PathVariable("id") Long id) {
         SysDictDataDTO data = sysDictDataService.get(id);
 
-        return new Result<SysDictDataDTO>().ok(data);
+        return Result.ok(data);
     }
 
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-
-    public Result<?> save(@RequestBody SysDictDataDTO dto){
+    public Result<?> save(@RequestBody SysDictDataDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, DefaultGroup.class);
 
@@ -74,8 +69,7 @@ public class SysDictDataController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-
-    public Result<?> update(@RequestBody SysDictDataDTO dto){
+    public Result<?> update(@RequestBody SysDictDataDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
@@ -87,8 +81,7 @@ public class SysDictDataController {
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
-
-    public Result<?> delete(@RequestBody Long[] ids){
+    public Result<?> delete(@RequestBody Long[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

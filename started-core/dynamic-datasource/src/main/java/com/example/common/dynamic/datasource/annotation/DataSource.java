@@ -1,4 +1,4 @@
-package com.example.commons.dynamic.datasource.annotation;
+package com.example.common.dynamic.datasource.annotation;
 
 import java.lang.annotation.*;
 
