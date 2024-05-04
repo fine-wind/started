@@ -13,7 +13,6 @@ import com.example.started.modules.sys.dto.SysMenuDTO;
 import com.example.started.modules.sys.entity.SysResourcesEntity;
 import com.example.started.modules.sys.service.SysMenuService;
 import com.example.started.modules.sys.service.SysRoleMenuService;
-import com.example.started.auth.role.user.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -154,8 +153,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuBo, SysMenuDao, S
         baseDao.updateById(entity);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
+    public void run() {
         LambdaQueryWrapper<SysResourcesEntity> objectLambdaQueryWrapper = new LambdaQueryWrapper<SysResourcesEntity>().orderByAsc(SysResourcesEntity::getSort);
         List<SysResourcesEntity> menuList = baseDao.selectList(objectLambdaQueryWrapper);
         List<SysMenuDTO> list = ConvertUtils.sourceToTarget(menuList, SysMenuDTO.class);

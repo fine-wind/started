@@ -81,7 +81,7 @@ public class TreeUtils {
             setLr(e.getChildren(), lr, parentId);
             Integer oldR = e.getR();
             e.setR(lr.getAndIncrement());
-            if (Objects.nonNull(parentId) && (!Objects.equals(oldL, e.getL()) || !Objects.equals(oldR ,e.getR()))) {
+            if (Objects.nonNull(parentId) && (!Objects.equals(oldL, e.getL()) || !Objects.equals(oldR, e.getR()))) {
                 parentId.accept(e);
             }
         });

@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Log4j2
 @Component
-public class JobCommandLineRunner implements CommandLineRunner {
+public class JobCommandLineRunner {
     private final Scheduler scheduler;
     private final ScheduleJobDao scheduleJobDao;
 
@@ -27,8 +27,7 @@ public class JobCommandLineRunner implements CommandLineRunner {
         this.scheduleJobDao = scheduleJobDao;
     }
 
-    @Override
-    public void run(String... args) {
+    public void run() {
         long start = System.currentTimeMillis();
         log.trace("开始加载定时任务");
         Thread.startVirtualThread(() -> {

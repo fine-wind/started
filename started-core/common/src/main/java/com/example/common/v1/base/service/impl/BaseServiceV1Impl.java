@@ -283,6 +283,11 @@ public class BaseServiceV1Impl<DTO extends BaseDto, DAO extends BaseDao<T>, T ex
         return SqlHelper.retBool(baseDao.deleteBatchIds(idList));
     }
     // endregion
-
+    /**
+     * 设置属性
+     */
+    public void putAttr(Serializable id){
+        baseDao.selectById(id);
+    }
 
 }

@@ -10,6 +10,7 @@ import com.example.common.v1.annotation.TiField;
 import com.example.common.v3.cache.RedisUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -22,7 +23,7 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class Translation {
-    private final TrService dictDataDao;
+    // private final TrService dictDataDao;
     private final RedisUtils redisUtils;
 
     /**
@@ -122,10 +123,10 @@ public class Translation {
         columnField.forEach(k -> stringStringMap.put(k, stringObjectMap.get(k)));
         /* 查询数据库*/
         if (stringObjectMap.size() != columnField.size()) {
-            Map<String, Object> t = dictDataDao.selectValueByTableAndColumn(String.join(",", columnField), tableName.value(), annotation.key(), String.valueOf(value));
-            if (Objects.nonNull(t)) {
-                stringStringMap.putAll(t);
-            }
+//            Map<String, Object> t = dictDataDao.selectValueByTableAndColumn(String.join(",", columnField), tableName.value(), annotation.key(), String.valueOf(value));
+//            if (Objects.nonNull(t)) {
+//                stringStringMap.putAll(t);
+//            }
             redisUtils.hashMSet(cacheKey, stringStringMap);
         }
         return stringStringMap;

@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * 菜单管理
  */
-public interface SysMenuService extends BaseService<SysMenuBo, SysResourcesEntity>, CommandLineRunner {
+public interface SysMenuService extends BaseService<SysMenuBo, SysResourcesEntity> {
 
     SysMenuDTO get(Long id);
 

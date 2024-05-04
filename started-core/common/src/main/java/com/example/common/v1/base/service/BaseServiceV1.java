@@ -141,4 +141,8 @@ public interface BaseServiceV1<DTO extends BaseDto, T extends BaseEntity> {
     boolean deleteBatchIds(Collection<? extends Serializable> idList);
     // endregion
 
+    /**
+     * 设置属性
+     */
+    void putAttr(Serializable id);
 }

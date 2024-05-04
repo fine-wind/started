@@ -1,5 +1,5 @@
 application:
-  jwt-key: The longer this place is, the safer it is; The longer this place is, the safer it is.
+  jwt-key: The longer this parameter is, system more secure it is;
 # 测试环境
 server:
   port: 80

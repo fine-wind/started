@@ -4,21 +4,12 @@ import java.util.Random;
 import java.util.concurrent.*;
 
 public class Test {
-
-
-    static final ExecutorService executorService = new ThreadPoolExecutor(
-            100,
-            1000,
-            1,
-            TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<>());
+    static final ExecutorService executorService = new ThreadPoolExecutor(100, 1000, 1, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
     public static void main(String[] args) throws Exception {
 
         long l = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i++) {
-            run(new Random().nextInt() % 10);
-        }
+        run(1000);
         System.out.println(System.currentTimeMillis() - l);
         System.exit(0);
     }
@@ -47,11 +38,10 @@ public class Test {
 
             run = !future.isDone();
             notOut = System.currentTimeMillis() - start < timeoutMS;
-            // System.out.println("\t\t 1次循环 > " + run + "  notOut: " + notOut);
         } while (run && notOut);
 
         try {
-            String result = future.get(1, TimeUnit.MILLISECONDS);
+            String result = future.get(0, TimeUnit.MILLISECONDS);
             long l = System.currentTimeMillis() - start;
             boolean b = l + 2 > timeoutMS;
             if (b) {

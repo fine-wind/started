@@ -5,8 +5,11 @@
 
     <!-- 获取被通知的用户列表 -->
     <select id="getNoticeUserList" resultType="com.example.started.modules.notice.entity.SysNoticeEntity">
-        select t2.real_name as receiver_name, t1.read_status, t1.read_date from sys_notice_user t1, sys_user t2
-        where t1.receiver_id = t2.id and t1.notice_id = #{value}
+        select t2.real_name as receiver_name, t1.read_status, t1.read_date
+        from sys_notice_user t1,
+             sys_user t2
+        where t1.receiver_id = t2.id
+          and t1.notice_id = #{value}
     </select>
 
     <!-- 获取我的通知列表 -->
