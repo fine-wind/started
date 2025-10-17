@@ -11,6 +11,17 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 500M
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+        compress: "false"
   api:
     image: openjdk:21
     restart: unless-stopped
@@ -35,6 +46,17 @@ services:
     command: /home/redis/redis.conf
     ports:
       - "6379:6379"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.00"
+          memory: 1G
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+        compress: "false"
   mysql:
     image: mysql:8.0
     volumes:
@@ -47,13 +69,31 @@ services:
     command: --default-authentication-plugin=caching_sha2_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --lower_case_table_names=1
     restart: unless-stopped
     environment:
-      - "MYSQL_ROOT_PASSWORD=jjlanwlnawklnelglgknxlehsnlegll"
+      - "MYSQL_ROOT_PASSWORD=e230u42o3og293jskbg3793uhi2bk3"
       - "MYSQL_DATABASE=started"
       - "TZ=Asia/Shanghai"
     ports:
       - "3306:3306"
-#  adminer:
-#    image: adminer
-#    restart: unless-stopped
-#    ports:
-#      - 8080:8080
+  monitoring:
+    image: openjdk:21
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./monitoring:/app
+    command: java -Xmx500m -XX:MaxRAM=500m -Dloader.path=./jar/lib -jar ./jar/monitoring.jar
+    ports:
+      - "80"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 512M
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: continue
+        monitor: 60s
+        max_failure_ratio: 0.3

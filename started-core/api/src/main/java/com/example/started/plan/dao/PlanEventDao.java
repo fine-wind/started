@@ -1,6 +1,6 @@
 package com.example.started.plan.dao;
 
-import com.example.common.v0.data.dao.BaseDao;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.started.plan.entity.PlanEventEntity;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 1.0.0
  */
 @Mapper
-public interface PlanEventDao extends BaseDao<PlanEventEntity> {
+public interface PlanEventDao extends BaseMapper<PlanEventEntity> {
 
 }

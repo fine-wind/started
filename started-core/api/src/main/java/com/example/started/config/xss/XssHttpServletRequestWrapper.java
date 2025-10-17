@@ -1,9 +1,8 @@
 package com.example.started.config.xss;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.example.common.v0.xss.XssUtils;
+import com.example.started.common.v0.xss.XssUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -48,22 +47,24 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         if (StringUtils.isBlank(json)) {
             return super.getInputStream();
         }
-
         //xss过滤
-        JSONObject jsonObject = JSON.parseObject(json);
-        for (Map.Entry<String, Object> entry : jsonObject.entrySet()) {
-            if (entry.getValue() != null) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        LinkedHashMap jsonObject = objectMapper.readValue(json, LinkedHashMap.class);
+        for (Object key : jsonObject.entrySet()) {
+            Object entry = jsonObject.get(key);
+            if (entry != null) {
 //                if (entry.getValue() instanceof Map) {
 //                    System.out.println(123123);
 //                }
-                if (entry.getValue() instanceof String) {
-                    String a = xssEncode(entry.getValue().toString());
-                    entry.setValue(a);
+                if (entry instanceof String) {
+                    String a = xssEncode(entry.toString());
+                    entry = a;
                 }
             }
-            jsonObject.put(entry.getKey(), entry.getValue());
+            jsonObject.put(key, entry);
         }
-        final ByteArrayInputStream bis = new ByteArrayInputStream(jsonObject.toJSONString().getBytes(StandardCharsets.UTF_8));
+
+        final ByteArrayInputStream bis = new ByteArrayInputStream(objectMapper.writeValueAsString(jsonObject).getBytes(StandardCharsets.UTF_8));
         return new ServletInputStream() {
             @Override
             public boolean isFinished() {

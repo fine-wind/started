@@ -1,9 +1,7 @@
 package com.example.started.plan.bo;
 
-import com.example.common.v1.base.BaseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -13,8 +11,7 @@ import java.util.Date;
  * @since 1.0.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class PlanEventBo extends BaseDto {
+public class PlanEventBo {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dt;

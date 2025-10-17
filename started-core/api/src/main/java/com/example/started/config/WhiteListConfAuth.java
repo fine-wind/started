@@ -1,6 +1,6 @@
 package com.example.started.config;
 
-import com.example.common.v0.constant.Constant;
+import com.example.started.common.constant.Constant;
 import org.springframework.stereotype.Component;
 
 @Component

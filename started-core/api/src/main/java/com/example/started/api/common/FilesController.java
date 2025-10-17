@@ -1,8 +1,7 @@
 package com.example.started.api.common;
 
-import com.example.common.v0.exception.ServerException;
-import com.example.common.v0.utils.StringUtil;
-import com.example.started.modules.oss.service.SysOssService;
+import com.example.started.common.v0.exception.ServerException;
+import com.example.started.common.v0.utils.StringUtil;
 import io.swagger.annotations.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +28,7 @@ import java.util.Objects;
 @Api(tags = "文件信息表")
 @Log4j2
 public class FilesController {
-    @Autowired
-    @Lazy
-    private SysOssService filesService;
+
 
     /**
      * todo 此接口鉴权 成功后301到图片地址 否则就返回其他错误
@@ -54,7 +51,7 @@ public class FilesController {
             response.setStatus(HttpStatus.NOT_MODIFIED.value());
             return;
         }
-        File file = filesService.getFileId(fileid);
+        File file = null;// filesService.getFileId(fileid);
 
         if (Objects.isNull(file) || !file.exists()) {
             throw new ServerException("获取文件失败");

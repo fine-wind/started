@@ -1,16 +1,15 @@
 package com.example.started.plan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.common.v0.utils.ConvertUtils;
-import com.example.common.v0.utils.DateUtil;
-import com.example.common.v1.base.service.impl.BaseServiceV1Impl;
+import com.example.started.common.v0.utils.ConvertUtils;
+import com.example.started.common.v0.utils.DateUtil;
 import com.example.started.plan.bo.PlanEventBo;
 import com.example.started.plan.dao.PlanEventDao;
 import com.example.started.plan.dto.PlanEventDto;
 import com.example.started.plan.entity.PlanEventEntity;
 import com.example.started.plan.service.PlanDayService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -18,10 +17,13 @@ import java.util.*;
  * @since 1.0.0
  */
 @Service
-public class PlanEventServiceImpl extends BaseServiceV1Impl<PlanEventBo, PlanEventDao, PlanEventEntity> implements PlanDayService {
+@AllArgsConstructor
+public class PlanEventServiceImpl implements PlanDayService {
+
+    final PlanEventDao baseDao;
 
     public LambdaQueryWrapper<PlanEventEntity> getWrapper(PlanEventBo params) {
-        return super.getQueryWrapper(params)
+        return new LambdaQueryWrapper<PlanEventEntity>()
                 .eq(Objects.nonNull(params.getDt()), PlanEventEntity::getDt, DateUtil.dateToStr(params.getDt()))
                 .orderByDesc(PlanEventEntity::getSort)
                 ;
@@ -30,7 +32,7 @@ public class PlanEventServiceImpl extends BaseServiceV1Impl<PlanEventBo, PlanEve
     @Override
     public void save(PlanEventDto bo) {
         PlanEventEntity entity = ConvertUtils.sourceToTarget(bo, PlanEventEntity.class);
-        this.insert(entity);
+        baseDao.insert(entity);
     }
 
     @Override

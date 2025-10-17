@@ -1,6 +1,6 @@
 package com.example.started.util;
 
-import com.example.common.v0.constant.Constant;
+import com.example.started.common.constant.Constant;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

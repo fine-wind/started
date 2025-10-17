@@ -1,6 +1,5 @@
 package com.example.started.plan.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,7 +19,7 @@ public class PlanEventDto implements Serializable {
     @ApiModelProperty(value = "id")
     private Long id;
     @ApiModelProperty(value = "日期")
-    @JSONField(format = "yyyy-MM-dd")
+    // @JSONField(format = "yyyy-MM-dd")
     private Date dt;
     @ApiModelProperty(value = "文本")
     private String text;

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: api  # 服务名称，对应配置文件的名称
+  cloud:
+    config:
+      import: "optional:configserver:http://localhost:8761"  # 配置中心地址
+      # 或者使用服务发现
+      discovery:
+        enabled: true
+        service-id: config-server

@@ -1,9 +1,6 @@
 package com.example.started.plan.service;
 
-import com.example.common.v1.base.service.BaseServiceV1;
-import com.example.started.plan.bo.PlanEventBo;
 import com.example.started.plan.dto.PlanEventDto;
-import com.example.started.plan.entity.PlanEventEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface PlanDayService extends BaseServiceV1<PlanEventBo, PlanEventEntity> {
+public interface PlanDayService  {
 
     void save(PlanEventDto bo);
 
