@@ -1,0 +1,4 @@
+INSERT INTO `auth_permission` (`id`, `creator`, `create_date`, `updater`, `update_date`, `del_flag`, `name`, `code`, `remark`) VALUES (1, 1067246875800000001, '2020-06-20 23:47:04', 1067246875800000001, '2020-06-20 23:47:04', '0', 'read', NULL, '测试角色');
+INSERT INTO `auth_permission` (`id`, `creator`, `create_date`, `updater`, `update_date`, `del_flag`, `name`, `code`, `remark`) VALUES (2, 1, '2021-07-31 22:23:51', 1, '2021-08-01 10:00:45', '0', 'write', NULL, '普通人员');
+INSERT INTO `auth_permission` (`id`, `creator`, `create_date`, `updater`, `update_date`, `del_flag`, `name`, `code`, `remark`) VALUES (3, 1, '2021-08-01 09:59:57', 1, '2021-08-01 09:59:57', '0', 'execute', NULL, '公司权限');
+INSERT INTO `auth_permission` (`id`, `creator`, `create_date`, `updater`, `update_date`, `del_flag`, `name`, `code`, `remark`) VALUES (4, NULL, NULL, NULL, NULL, NULL, 'delete', NULL, NULL);

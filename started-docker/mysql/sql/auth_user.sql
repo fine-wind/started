@@ -1,0 +1,1 @@
+INSERT INTO `auth_user` (`id`, `username`, `password`, `email`, `real_name`, `status`, `creator`, `create_date`, `updater`, `update_date`, `del_flag`) VALUES (1, 'adminadmin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
