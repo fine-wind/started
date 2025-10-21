@@ -7,7 +7,6 @@
         <version>0.0.1</version>
     </parent>
     <artifactId>server-demo</artifactId>
-    <version>0.0.1</version>
     <packaging>jar</packaging>
     <description>项目模板</description>
     <dependencies>
@@ -29,8 +28,8 @@
             <version>2.1.3</version>
         </dependency>
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
         <dependency>
             <groupId>com.example.started</groupId>
@@ -40,6 +39,10 @@
             <groupId>com.example.started</groupId>
             <artifactId>dynamic-datasource</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -56,6 +59,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.example.started</groupId>
+            <artifactId>cache</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -122,7 +130,7 @@
                             <!-- 外部依赖jar包的最终位置 -->
                             <classpathPrefix>lib/</classpathPrefix>
                             <!-- 配置项目启动类 -->
-                            <mainClass>com.example.started.ServerDemoApplication</mainClass>
+                            <mainClass>com.example.started.demo.ServerDemoApplication</mainClass>
                         </manifest>
                         <!-- 指定配置文件的新目录-->
                         <manifestEntries>

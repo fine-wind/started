@@ -201,7 +201,7 @@
                             <!-- 外部依赖jar包的最终位置 -->
                             <classpathPrefix>lib/</classpathPrefix>
                             <!-- 配置项目启动类 -->
-                            <mainClass>com.example.started.ServerDemoApplication</mainClass>
+                            <mainClass>com.example.started.demo.ServerDemoApplication</mainClass>
                         </manifest>
                         <!-- 指定配置文件的新目录-->
                         <manifestEntries>

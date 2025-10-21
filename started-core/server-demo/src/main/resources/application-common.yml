@@ -11,6 +11,20 @@ spring:
   cloud:
     compatibility-verifier:
       enabled: false
+  freemarker:
+    suffix: .ftlh
+    template-loader-path: classpath:/templates/
+    cache: false
+    # 编码
+    charset: UTF-8
+    # Content-Type
+    content-type: text/html
+    # 检查模板位置
+    check-template-location: true
+    # 其他配置
+    settings:
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      number_format: 0.##
 #  aop:
 #    proxy-target-class: true
 
@@ -18,7 +32,6 @@ spring:
 mybatis-plus:
   #实体扫描，多个package用逗号或者分号分隔
   type-aliases-package: com.example.modules.*.entity
-  type-aliases-super-type: com.example.common.dynamic.datasource.BaseEntity
   global-config:
     #数据库相关配置
     db-config:

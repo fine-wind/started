@@ -23,7 +23,7 @@ spring:
       client-name:
       host: 59.110.152.124
       port: 6379
-      password: foobared99293028uu3y
+      password:
       database: 6
       timeout: 5s
   servlet:

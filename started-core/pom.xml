@@ -12,14 +12,15 @@
 
     <modules>
         <module>common</module>
+        <module>cache</module>
         <module>auth</module>
         <module>dynamic-datasource</module>
         <module>config-server</module>
         <module>generator</module>
         <module>eureka-server</module>
         <module>gateway</module>
-        <module>api</module>
         <module>server-demo</module>
+        <module>api</module>
     </modules>
 
     <properties>
@@ -35,7 +36,6 @@
         <commons.lang.version>3.7</commons.lang.version>
         <commons.io.version>2.7</commons.io.version>
         <joda.time.version>2.9.9</joda.time.version>
-        <knife4j.version>2.0.1</knife4j.version>
         <maven.build.timestamp.format>yyyyMMddHH</maven.build.timestamp.format>
     </properties>
     <dependencyManagement>
@@ -66,7 +66,7 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-extension</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatisplus.version}</version>
                 <scope>compile</scope>
             </dependency>

@@ -45,3 +45,5 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
+# 项目
+/started-core/forum/
