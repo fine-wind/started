@@ -127,8 +127,9 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
+      <groupId>com.example.started</groupId>
+      <artifactId>auth-client</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->

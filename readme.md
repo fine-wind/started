@@ -5,8 +5,8 @@
 
 一个简单的快速开发脚手架， 用来帮助开发者快速创建自己的项目，它启动较快，尽量使用了较新的技术，来帮助人们学习和进步
 
-[开发文档](./doc/DEVELOP.MD)
-[前端读我](./started-ui/README.md)
+- [开发文档](./doc/DEVELOP.MD)
+- [前端读我](./started-ui/README.md)
 
 ```text
 ```
