@@ -2,10 +2,7 @@ package com.example.started.api.common;
 
 import com.example.started.common.v0.exception.ServerException;
 import com.example.started.common.v0.utils.StringUtil;
-import io.swagger.annotations.*;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.*;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -25,21 +22,19 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/files")
-@Api(tags = "文件信息表")
 @Log4j2
 public class FilesController {
 
-
     /**
      * todo 此接口鉴权 成功后301到图片地址 否则就返回其他错误
+     * 展示图片接口
      *
      * @param fileid   .
      * @param request  .
      * @param response .
      */
-    @ApiOperation("展示图片接口")
     @GetMapping(value = "/showImage/{fileid}.png", name = "展示图片接口", produces = MediaType.IMAGE_JPEG_VALUE)
-    public void showImage(@ApiParam(value = "文件id", required = true) @PathVariable("fileid") String fileid,
+    public void showImage(@PathVariable("fileid") String fileid,
                           HttpServletRequest request,
                           HttpServletResponse response) {
         String cacheControl = request.getHeader("Cache-Control");

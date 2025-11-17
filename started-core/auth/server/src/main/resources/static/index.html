@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 统一登录系统</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6cf7;
+            --primary-dark: #3a57d4;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --border-color: #eaeaea;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 主要内容区域 */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* 特性区域 */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            background-color: rgba(74, 108, 247, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
+        /* 关于区域 */
+        .about {
+            padding: 80px 0;
+            background-color: var(--card-bg);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        /* 页脚 */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>统一登录</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#">首页</a>
+                    <a href="#">功能</a>
+                    <a href="#">关于</a>
+                    <a href="#">文档</a>
+                    <a href="#">联系我们</a>
+                </div>
+                <div class="user-actions">
+                    <a href="login.html" class="btn btn-outline">登录</a>
+                    <a href="login.html" class="btn btn-primary">注册</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="container">
+                <h1>安全、便捷的统一身份认证平台</h1>
+                <p>为企业提供安全可靠的身份认证解决方案，简化登录流程，提升用户体验，保护您的数字资产。</p>
+                <div class="hero-buttons">
+                    <a href="login.html" class="btn btn-primary">立即体验</a>
+                    <a href="#" class="btn btn-outline">了解更多</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 特性区域 -->
+        <section class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>核心特性</h2>
+                    <p>我们提供全面的身份认证解决方案，满足各种业务场景需求</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>高级安全防护</h3>
+                        <p>采用多重加密技术和安全协议，确保用户身份和数据安全，防止未授权访问。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>快速集成</h3>
+                        <p>提供简洁的API和SDK，支持多种开发语言，快速集成到您的应用中。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>统一用户管理</h3>
+                        <p>集中管理用户身份信息，支持单点登录，简化用户操作流程。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>多平台支持</h3>
+                        <p>全面支持Web、移动端、桌面应用等多种平台，提供一致的认证体验。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>实时监控分析</h3>
+                        <p>提供详细的登录日志和数据分析，帮助您了解用户行为和安全状况。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>高度可定制</h3>
+                        <p>根据您的业务需求，灵活配置认证流程和安全策略。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于区域 -->
+        <section class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>为什么选择我们的统一登录系统</h2>
+                        <p>我们的统一登录系统专为现代企业设计，提供安全、便捷的身份认证解决方案。通过集中管理用户身份，简化登录流程，提升用户体验。</p>
+                        <p>我们采用最新的安全技术和协议，确保用户数据的安全性和隐私保护。同时，我们的系统具有高度可扩展性，能够满足不同规模企业的需求。</p>
+                        <div class="hero-buttons">
+                            <a href="#" class="btn btn-primary">查看文档</a>
+                            <a href="#" class="btn btn-outline">联系我们</a>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <!-- 这里可以放置一张图片 -->
+                        <div style="background-color: #e6e9ff; height: 300px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-lock" style="font-size: 5rem; color: var(--primary-color);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">公司简介</a></li>
+                        <li><a href="#">团队介绍</a></li>
+                        <li><a href="#">新闻动态</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>产品服务</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">统一登录</a></li>
+                        <li><a href="#">身份管理</a></li>
+                        <li><a href="#">安全认证</a></li>
+                        <li><a href="#">API文档</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>技术支持</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">帮助中心</a></li>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">开发者文档</a></li>
+                        <li><a href="#">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关注我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-weibo"></i> 微博</a></li>
+                        <li><a href="#"><i class="fab fa-weixin"></i> 微信</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> 邮箱</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 统一登录系统 版权所有</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                // 可以在这里添加Vue数据
+            };
+        },
+        methods: {
+            // 可以在这里添加Vue方法
+        },
+        mounted() {
+            // 页面加载完成后执行
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

@@ -4,8 +4,6 @@ import com.example.started.common.v0.utils.DateUtil;
 import com.example.started.common.v0.utils.Result;
 import com.example.started.plan.dto.PlanEventDto;
 import com.example.started.plan.service.PlanDayService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +11,10 @@ import java.util.List;
 
 
 /**
- * 操作日志
+ * v
  *
  * @since 1.0.0
  */
-@Api(tags = "计划")
 @RestController
 @RequestMapping("/plan")
 @AllArgsConstructor
@@ -25,16 +22,25 @@ public class PlanController {
 
     private final PlanDayService planDayService;
 
+    /**
+     * 某天的数据
+     *
+     * @return
+     */
     @GetMapping("/init")
-    @ApiOperation("某天的数据")
     public Result<List<PlanEventDto>> get() {
         List<PlanEventDto> data = planDayService.getOneDay();
         return Result.ok(data);
     }
 
+    /**
+     * 某天的数据
+     *
+     * @param day
+     * @return
+     */
     // @PreAuthorize("@se.hasRole('plan.day')")
     @GetMapping("/{day}")
-    @ApiOperation("某天的数据")
     public Result<List<PlanEventDto>> get(@PathVariable String day) {
         List<PlanEventDto> data = planDayService.getOneDay(DateUtil.strToDate(day));
         return Result.ok(data);

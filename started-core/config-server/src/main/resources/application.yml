@@ -4,15 +4,25 @@ server:
 spring:
   application:
     name: config-server
+  profiles:
+    active: native  # 明确指定使用native profile
   cloud:
     config:
       server:
-        git:
-          uri: https://github.com/your-repo/config-repo  # 你的配置仓库
-          default-label: main
-          search-paths: '{application}'  # 按应用名查找文件夹
+        native:
+          search-locations:
+            - classpath:/config/
+            - file:./config/
+#        git:
+#          uri: https://github.com/your-repo/config-repo
+#          default-label: main
+#          search-paths: '{application}'
+#          username: ${GIT_USERNAME:your-username}
+#          password: ${GIT_PASSWORD:your-token}
+#          basedir: ./local-cache
+#          timeout: 10
 
+# 注册到 Eureka
 eureka:
   client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+    enabled: false

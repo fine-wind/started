@@ -1,7 +1,5 @@
 package com.example.started.plan.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,19 +11,25 @@ import java.util.Date;
  * @since 1.0.0
  */
 @Data
-@ApiModel(value = "计划")
 public class PlanEventDto implements Serializable {
 
-    @ApiModelProperty(value = "id")
     private Long id;
-    @ApiModelProperty(value = "日期")
+    /**
+     * 日期
+     */
     // @JSONField(format = "yyyy-MM-dd")
     private Date dt;
-    @ApiModelProperty(value = "文本")
+    /**
+     * 文本
+     */
     private String text;
-    @ApiModelProperty(value = "颜色")
+    /**
+     * 颜色
+     */
     private String color;
-    @ApiModelProperty(value = "优先级")
+    /**
+     * 优先级
+     */
     private Integer sort;
 
 }

@@ -1,30 +1,4 @@
-#mybatis
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.example.modules.*.entity
-  global-config:
-    #数据库相关配置
-    db-config:
-      id-type: ASSIGN_ID
-    banner: false
-  #原生配置
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-    call-setters-on-nulls: true
-    jdbc-type-for-null: 'null'
-# 日志配置
-logging:
-  level:
-    org:
-      mybatis: debug
-    com:
-      example: trace
-  file:
-    name: logs/log.log
-
+# 开发环境配置
 app:
   jwt:
     accessSecret: 01K85GAJVZRZCWX1DSND38JG4701K85GAJVZRZCWX1DSND38JG47CWX1DSND38JG470
@@ -43,8 +17,6 @@ server:
       cookie:
         http-only: true
 spring:
-  messages:
-    encoding: UTF-8
   cloud:
     config:
       import-check:
@@ -71,3 +43,8 @@ spring:
     url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: e230u42o3og293jskbg3793uhi2bk3
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,0 +1,9 @@
+# 全局默认配置
+app:
+  name: 微服务系统
+  version: 1.0.0
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud: DEBUG

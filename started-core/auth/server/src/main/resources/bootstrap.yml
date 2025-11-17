@@ -1,10 +1,18 @@
+# application.yml
 spring:
   application:
-    name: api  # 服务名称，对应配置文件的名称
+    name: auth-service
+  profiles:
+    active: dev
   cloud:
     config:
-      import: "optional:configserver:http://localhost:8761"  # 配置中心地址
-      # 或者使用服务发现
-      discovery:
-        enabled: true
-        service-id: config-server
+      import: "optional:configserver:http://localhost:8888"
+      profile: dev
+      label: main
+      fail-fast: true
+
+# 本地基础配置，会被配置中心覆盖
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

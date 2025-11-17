@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证中心</title>
+    <link rel="stylesheet" href="../css/common/loading.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<!-- Loading 遮罩层 -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">加载中...</div>
+</div>
+
+<div id="app">
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span class="logo-text">验证中心</span>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索..." v-model="searchKeyword">
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="user-menu">
+                <div class="user-avatar" @click="toggleUserMenu">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-dropdown" v-if="showUserMenu">
+                    <div class="user-info">
+                        <strong>{{ userInfo.username }}</strong>
+                        <span>{{ userInfo.email || '未设置邮箱' }}</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        个人资料
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-cog"></i>
+                        账户设置
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item logout" @click="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        退出登录
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <!-- 树形菜单 -->
+            <div class="nav-tree">
+                <div v-for="item in menuTree" :key="item.id" class="tree-node">
+                    <div class="tree-item" :class="{ active: item.active, 'has-children': item.children }"
+                         @click="toggleMenuItem(item)">
+                        <i :class="item.icon"></i>
+                        <span class="tree-label">{{ item.label }}</span>
+                        <span v-if="item.badge" class="badge">{{ item.badge }}</span>
+                        <i
+                                v-if="item.children"
+                                class="tree-arrow fas"
+                                :class="item.expanded ? 'fa-chevron-down' : 'fa-chevron-right'"
+                        ></i>
+                    </div>
+                    <!-- 子菜单 -->
+                    <div
+                            v-if="item.children && item.expanded"
+                            class="tree-children"
+                    >
+                        <div
+                                v-for="child in item.children"
+                                :key="child.id"
+                                class="tree-child-item"
+                                :class="{ active: child.active }"
+                                @click="handleMenuClick(child)"
+                        >
+                            <i :class="child.icon"></i>
+                            <span class="tree-label">{{ child.label }}</span>
+                            <span v-if="child.badge" class="badge">{{ child.badge }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 主内容区 - 完全改为iframe -->
+    <main class="main-content">
+        <div class="iframe-container" :class="{ 'iframe-loading': iframeLoading }">
+            <iframe
+                    ref="contentFrame"
+                    :src="currentIframeSrc"
+                    frameborder="0"
+                    @load="onIframeLoad"
+                    @error="onIframeError"
+                    title="内容框架">
+            </iframe>
+
+            <!-- iframe 加载状态 -->
+            <div class="iframe-loading-overlay" v-if="iframeLoading">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">页面加载中...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 通知组件 -->
+    <div class="notification" :class="[notification.type, { show: notification.show }]">
+        <i class="fas" :class="notification.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'"></i>
+        {{ notification.message }}
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="dashboard.js"></script>
+<script src="../js/common/js.js"></script>
+</body>
+</html>

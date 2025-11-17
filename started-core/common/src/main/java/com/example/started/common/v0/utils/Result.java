@@ -66,7 +66,7 @@ public class Result<T> implements Serializable {
         return new Result<T>().setMsg(msg);
     }
 
-    public static Result<?> error(String msg) {
+    public static <T> Result<T> error(String msg) {
         return Result.error(Constant.UniversalCode.SERVER_ERROR, msg);
     }
 
