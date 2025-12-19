@@ -1,9 +1,0 @@
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980545721284898817', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980546997859041282', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980547121666523137', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980547717064736770', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980550185030926338', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980550307383078913', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980552764620271617', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980554262120968193', '123456', NULL, NULL, NULL, 1, NULL, 22);
-INSERT INTO `demo_table` (`id`, `creator`, `create_Date`, `updater`, `update_date`, `del_flag`, `a`, `b`) VALUES ('1980557746778066945', '123456', NULL, NULL, NULL, 1, NULL, 22);

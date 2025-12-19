@@ -1,0 +1,43 @@
+# application.yml
+spring:
+  application:
+    name: auth-service
+  profiles:
+    active: dev
+  cloud:
+    config:
+      import: "optional:configserver:http://localhost:8888"
+      profile: dev
+      label: main
+      fail-fast: true
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        # 服务注册配置
+#        register: true
+#        # 健康检查路径
+#        health-check-path: /actuator/health
+#        # 健康检查间隔
+#        health-check-interval: 15s
+#        # 实例ID
+#        instance-id: ${spring.application.name}:${server.port}
+#        # 服务 tags
+#        tags:
+#          - version=1.0
+#          - env=dev
+
+# 启用健康检查端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+# 本地基础配置，会被配置中心覆盖
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

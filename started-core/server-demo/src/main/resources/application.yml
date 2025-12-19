@@ -1,8 +1,0 @@
-spring:
-  profiles:
-    active: dev
-    include: common,bootstrap
-  cloud:
-    config:
-      import-check:
-        enabled: false
