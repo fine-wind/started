@@ -4,7 +4,9 @@ import com.example.started.common.v0.validator.AssertUtils;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * 树形结构工具类，如：菜单、部门等
@@ -66,6 +68,24 @@ public class TreeUtils {
     }
 
 
+    public static <T, R> List<TreeNode2<T>> build(List<T> list, Function<T, R> idFunction, Function<T, R> pidFunction) {
+        List<TreeNode2<T>> result = new ArrayList<>();
+        Map<Object, TreeNode2<T>> map = new HashMap<>(list.size());
+        list.forEach(e -> map.put(idFunction.apply(e), new TreeNode2<>(e)));
+        list.forEach(e -> {
+            Object id = idFunction.apply(e);
+            Object pid = pidFunction.apply(e);
+            if (map.containsKey(pid) && !Objects.equals(id, pid)) {
+                map.get(pid).getChildren().add(map.get(id));
+            } else {
+                TreeNode2<T> tTreeNode2 = map.get(id);
+                result.add(tTreeNode2);
+                map.put(pid, tTreeNode2);
+            }
+        });
+        return result;
+    }
+
     /**
      * 原地算法 设置l和r
      *
@@ -85,5 +105,24 @@ public class TreeUtils {
                 parentId.accept(e);
             }
         });
+    }
+
+
+    public static <T extends TreeNode3> List<T> build3(List<T> list) {
+        List<T> result = new ArrayList<>();
+        Map<Object, T> map = new HashMap<>(list.size());
+        list.forEach(e -> map.put(e.getId(), e));
+        list.forEach(e -> {
+            Object id = e.getId();
+            Object pid = e.getPid();
+            if (map.containsKey(pid) && !Objects.equals(id, pid)) {
+                map.get(pid).getChildren().add(map.get(id));
+            } else {
+                T tTreeNode2 = map.get(id);
+                result.add(tTreeNode2);
+                map.put(pid, tTreeNode2);
+            }
+        });
+        return result;
     }
 }

@@ -34,10 +34,15 @@ public class ValidatorUtils {
      */
     public static void validateEntity(Object object, Class<?>... groups) throws ServerException {
         Locale.setDefault(LocaleContextHolder.getLocale());
-        Validator validator = Validation.byDefaultProvider().configure().messageInterpolator(
+
+
+        Validator validator = Validation.byDefaultProvider()
+                .configure()
+                .messageInterpolator(
                         null // todo new ResourceBundleMessageInterpolator(new MessageSourceResourceBundleLocator(getMessageSource()))
                 )
-                .buildValidatorFactory().getValidator();
+                .buildValidatorFactory()
+                .getValidator();
 
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
         if (!constraintViolations.isEmpty()) {

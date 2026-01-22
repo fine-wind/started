@@ -23,7 +23,7 @@ spring:
   data:
     redis:
       client-name:
-      host: 59.110.152.124
+      host: 127.0.0.1
       port: 6379
       password:
       database: 6
@@ -35,9 +35,12 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      connection-timeout: 20000
+      connection-timeout: 20000 # 连接超时时间ms
       minimum-idle: 5
-      max-lifetime: 120000
+      maximum-pool-size: 20
+      max-lifetime: 1800000 # 改为30分钟（1800000ms）
+      connection-test-query: select 1
+      initialization-fail-timeout: 0  # 0表示启动时必须连接成功，否则失败
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root

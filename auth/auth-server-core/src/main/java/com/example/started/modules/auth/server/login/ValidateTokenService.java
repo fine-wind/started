@@ -2,6 +2,7 @@ package com.example.started.modules.auth.server.login;
 
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.util.LinkedMultiValueMap;
@@ -17,8 +18,9 @@ import java.util.Objects;
 @Log4j2
 @Service
 public class ValidateTokenService {
+    @Value("app.cloudflare.secret")
+    private String secretKey;
     private static final String SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
-    private final String secretKey = "your-secret-key";
     private final RestTemplate restTemplate = new RestTemplate();
 
     public boolean validateToken(String token, String remoteip) {

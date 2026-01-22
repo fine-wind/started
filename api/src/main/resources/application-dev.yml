@@ -1,0 +1,59 @@
+application:
+  jwt-key: The longer this parameter is, system more secure it is;
+# 测试环境
+server:
+  port: 80
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 10
+  servlet:
+    # 应用的访问路径
+    context-path: /
+    session:
+      cookie:
+        http-only: true
+spring:
+  cloud:
+    config:
+      import-check:
+        enabled: false
+  data:
+    redis:
+      client-name:
+      host: 59.110.152.124
+      port: 6379
+      password:
+      database: 6
+      timeout: 5s
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 5
+      max-lifetime: 120000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+#dynamic:
+#  datasource:
+#    slave1:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#      username: root
+#      password: toor
+#    slave2:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/started?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghaiity
+#      username: root
+#      password: toor
+#
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

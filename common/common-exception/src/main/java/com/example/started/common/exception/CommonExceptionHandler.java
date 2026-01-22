@@ -9,8 +9,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
 
 /**
  * 通用异常处理器 - 放在 common 模块中
@@ -32,6 +35,24 @@ public class CommonExceptionHandler {
         log.error("[Common] Duplicate key for {} {}: {}", request.getMethod(), request.getRequestURI(), ex.getMessage());
 
         return Result.error(Constant.UniversalCode.SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<?> handleValidationException(MethodArgumentNotValidException e) {
+        String errorMsg = e.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+
+        return Result.error(errorMsg);
+    }
+
+    /**
+     * 处理通用异常 - 兜底处理
+     */
+    @ExceptionHandler(AppException.class)
+    public Result<?> handleException(AppException ex, HttpServletRequest request) {
+        log.error("[Common] Unhandled exception for {} {}: {}", request.getMethod(), request.getRequestURI(), ex.getMessage(), ex);
+        return Result.error(Constant.UniversalCode.SERVER_ERROR, ex.getMessage());
     }
 
     /**

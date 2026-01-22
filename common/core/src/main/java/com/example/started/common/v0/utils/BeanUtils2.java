@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 /**
  * 针对对象的比较
  */
-public class BeanUtils {
+public class BeanUtils2 {
 
     /**
      * 比较两个对象属性值是否相同,如果不同返回修改过的属性信息集合

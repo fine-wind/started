@@ -31,7 +31,7 @@ public class LoginController {
     public Result<?> register(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String password = request.get("password");
-        if (true || validateTokenService.validateToken(username, password)) {
+        if (validateTokenService.validateToken(username, password)) {
             return loginService.register(username, password);
         }
         return Result.error(Constant.UniversalCode.UN400);
@@ -62,6 +62,9 @@ public class LoginController {
         Result<TokenPair> tokenPairResult = jwtService.refreshToken(refreshToken, accessToken);
         if (tokenPairResult.isSuccess()) {
             TokenPair data = tokenPairResult.getData();
+            if (Objects.equals(accessToken, data.getAccessToken())) {
+                data.setAccessToken(null);
+            }
             String newRefreshToken = data.getRefreshToken();
             if (!Objects.equals(refreshToken, newRefreshToken)) {
                 LoginStatusVerification.setTokenCookie(request, response, newRefreshToken);

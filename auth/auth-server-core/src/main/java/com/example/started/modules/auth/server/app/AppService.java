@@ -1,6 +1,5 @@
 package com.example.started.modules.auth.server.app;
 
-import com.example.started.modules.auth.server.config.CustomPasswordEncoder;
 import com.example.started.modules.auth.validate.TokenPair;
 import com.example.started.modules.auth.validate.config.JwtConfig;
 import com.example.started.modules.auth.server.sys.user.AuthUserService;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AppService {
     private final AuthUserService authUserService;
-    private final CustomPasswordEncoder customPasswordEncoder;
     private final JwtConfig jwtConfig;
 
     /**

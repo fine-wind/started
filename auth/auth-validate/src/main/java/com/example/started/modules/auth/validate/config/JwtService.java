@@ -32,11 +32,18 @@ public class JwtService {
         Date expiration = this.getExpiration(refreshToken, jwtConfig.getRefreshSecretKey());
         if (Objects.nonNull(expiration)) {
             long curr = System.currentTimeMillis();
-            if (expiration.getTime() > curr && expiration.getTime() - curr < jwtConfig.getRefreshExpiration() / 3) {
-                String username = this.getUsernameFromRefreshToken(refreshToken);
-                String userId = this.getUserIdFromToken(accessToken);
 
+            String username = this.getUsernameFromRefreshToken(refreshToken);
+            String userId = this.getUserIdFromToken(accessToken);
+
+            if (expiration.getTime() > curr && expiration.getTime() - curr < jwtConfig.getRefreshExpiration() / 3) {
                 return Result.ok(this.generateTokenPair(username, userId));
+            }
+            expiration = this.getExpiration(accessToken, jwtConfig.getAccessSecretKey());
+            if (Objects.nonNull(expiration)) {
+                if (expiration.getTime() - curr < jwtConfig.getAccessExpiration() / 3) {
+                    return Result.ok(new TokenPair(refreshToken, this.generateAccessToken(username, userId)));
+                }
             }
             return Result.ok(new TokenPair(refreshToken, accessToken));
         }
@@ -120,6 +127,9 @@ public class JwtService {
     }
 
     private String getUsernameFromToken(String token, SecretKey secret) {
+        if (token.startsWith(Constant.REQUEST.HEADER.TOKEN_PREFIX)) {
+            token = token.substring(7);
+        }
         try {
             Claims claims = getClaimsFromToken(token, secret);
             return claims.getSubject();
@@ -130,6 +140,9 @@ public class JwtService {
     }
 
     private Date getExpiration(String token, SecretKey secret) {
+        if (token.startsWith(Constant.REQUEST.HEADER.TOKEN_PREFIX)) {
+            token = token.substring(7);
+        }
         try {
             Claims claims = getClaimsFromToken(token, secret);
             return claims.getExpiration();

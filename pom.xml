@@ -37,7 +37,6 @@
     <commons.lang.version>3.7</commons.lang.version>
     <commons.io.version>2.7</commons.io.version>
     <maven.build.timestamp.format>yyyyMMddHH</maven.build.timestamp.format>
-    <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -63,12 +62,12 @@
       <dependency>
         <groupId>com.example.started</groupId>
         <artifactId>common-exception</artifactId>
-        <version>0.0.1</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.example.started</groupId>
         <artifactId>auth-validate</artifactId>
-        <version>0.0.1</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId>
