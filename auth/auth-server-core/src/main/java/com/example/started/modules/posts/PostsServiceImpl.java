@@ -3,18 +3,13 @@ package com.example.started.modules.posts;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.started.common.v0.utils.ConvertUtils;
-import com.example.started.common.v0.utils.Result;
-import com.example.started.modules.auth.validate.dto.TokenUserId;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * service
@@ -28,6 +23,18 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
     @Override
     public List<PostsFindVo> find(PostsFindBo body) {
         LambdaQueryWrapper<PostsEntity> where = new LambdaQueryWrapper<>();
+
+        if (Objects.isNull(body.getLastDt())) {
+            body.setLastDt(new Date());
+        }
+        where.isNull(PostsEntity::getParentId);
+        where.like(Objects.nonNull(body.getTitle()), PostsEntity::getContent, body.getTitle());
+        switch (body.getSearchType()) {
+            case "createdAt" ->
+                    where.lt(PostsEntity::getCreatedAt, body.getLastDt()).orderByDesc(PostsEntity::getCreatedAt);
+            case "lastCommentAt" ->
+                    where.lt(PostsEntity::getLastCommentAt, body.getLastDt()).orderByDesc(PostsEntity::getLastCommentAt);
+        }
         where.last("limit 10");
         List<PostsEntity> postsEntities = baseMapper.selectList(where);
         return ConvertUtils.sourceToTarget(postsEntities, PostsFindVo.class);
