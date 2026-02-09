@@ -1,0 +1,10 @@
+# 认证服务默认配置-开发配置
+server:
+  post: 80
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 10
+    session:
+      cookie:
+        http-only: true

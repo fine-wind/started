@@ -10,6 +10,12 @@
   <artifactId>gateway</artifactId>
   <description>网关</description>
 
+  <properties>
+    <!-- 为 gateway 定义镜像名称 -->
+    <docker.image.name>${project.artifactId}-native</docker.image.name>
+    <docker.image.tag>${project.version}</docker.image.tag>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
@@ -29,4 +35,163 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
   </dependencies>
+<!--
+  <build>
+    <plugins>
+      &lt;!&ndash; Spring Boot Maven Plugin（核心插件，支持Buildpacks） &ndash;&gt;
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot.version}</version>
+        <configuration>
+          <mainClass>com.example.started.code.gateway.GatewayApplication</mainClass>
+          &lt;!&ndash; 启用分层，优化Docker镜像 &ndash;&gt;
+          <layers>
+            <enabled>true</enabled>
+          </layers>
+          &lt;!&ndash; Buildpacks 构建配置 &ndash;&gt;
+          <image>
+            <name>${docker.image.name}:${docker.image.tag}</name>
+            &lt;!&ndash; 使用 Paketo Buildpacks（支持GraalVM Native Image） &ndash;&gt;
+            <builder>paketobuildpacks/builder-jammy-tiny:latest</builder>
+            <env>
+              &lt;!&ndash; 启用原生镜像构建 &ndash;&gt;
+              <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+              &lt;!&ndash; 使用 GraalVM JDK &ndash;&gt;
+              <BP_JVM_VERSION>21</BP_JVM_VERSION>
+              &lt;!&ndash; 原生镜像构建参数 &ndash;&gt;
+              <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                &#45;&#45;verbose
+                &#45;&#45;no-fallback
+                &#45;&#45;enable-https
+                &#45;&#45;enable-url-protocols=http,https
+                -H:+AddAllCharsets
+                -H:+ReportExceptionStackTraces
+                &#45;&#45;report-unsupported-elements-at-runtime
+                &#45;&#45;allow-incomplete-classpath
+                &#45;&#45;initialize-at-build-time=org.slf4j.LoggerFactory,ch.qos.logback.classic.Logger
+                &#45;&#45;initialize-at-run-time=io.netty.util.internal.logging.Log4JLogger
+              </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+            </env>
+            <buildpacks>
+              &lt;!&ndash; 使用 GraalVM Native Image Buildpack &ndash;&gt;
+              <buildpack>gcr.io/paketo-buildpacks/graalvm</buildpack>
+              <buildpack>gcr.io/paketo-buildpacks/java-native-image</buildpack>
+            </buildpacks>
+            &lt;!&ndash; 运行用户 &ndash;&gt;
+            <runImage>paketobuildpacks/run-jammy-tiny:latest</runImage>
+          </image>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <configuration>
+              <classifier>exec</classifier>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      &lt;!&ndash; 保留 native-maven-plugin 作为可选方案 &ndash;&gt;
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>${native-build-tools.version}</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>build-native</id>
+            <goals>
+              <goal>compile-no-fork</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <imageName>${project.artifactId}</imageName>
+          <mainClass>com.example.started.code.gateway.GatewayApplication</mainClass>
+          <buildArgs>
+            <buildArg>-J-Xmx6g</buildArg>
+            <buildArg>&#45;&#45;enable-https</buildArg>
+            <buildArg>&#45;&#45;enable-url-protocols=http,https</buildArg>
+            <buildArg>-H:+AddAllCharsets</buildArg>
+            <buildArg>-H:IncludeResources=.*</buildArg>
+            <buildArg>&#45;&#45;initialize-at-build-time=org.slf4j.LoggerFactory</buildArg>
+            <buildArg>&#45;&#45;allow-incomplete-classpath</buildArg>
+            <buildArg>&#45;&#45;report-unsupported-elements-at-runtime</buildArg>
+            &lt;!&ndash; Netty 特定配置 &ndash;&gt;
+            <buildArg>&#45;&#45;initialize-at-build-time=io.netty</buildArg>
+            <buildArg>&#45;&#45;initialize-at-run-time=io.netty.util.internal.logging.Log4JLogger</buildArg>
+          </buildArgs>
+          <useArgFile>true</useArgFile>
+          <quickBuild>false</quickBuild>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    &lt;!&ndash; 原生镜像构建 Profile &ndash;&gt;
+    <profile>
+      <id>native</id>
+      <properties>
+        &lt;!&ndash; 启用 AOT 处理 &ndash;&gt;
+        <spring.aot.enabled>true</spring.aot.enabled>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    &lt;!&ndash; Docker 构建 Profile &ndash;&gt;
+    <profile>
+      <id>docker-native</id>
+      <properties>
+        <native.buildtools.buildArg>&#45;&#45;docker-build</native.buildtools.buildArg>
+      </properties>
+      <activation>
+        <property>
+          <name>env.DOCKER_HOST</name>
+        </property>
+      </activation>
+    </profile>
+
+    &lt;!&ndash; Buildpacks 构建 Profile &ndash;&gt;
+    <profile>
+      <id>buildpack-native</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+              <image>
+                <builder>paketobuildpacks/builder-jammy-tiny:latest</builder>
+                <env>
+                  <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                  <BP_JVM_VERSION>21</BP_JVM_VERSION>
+                </env>
+              </image>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>-->
 </project>

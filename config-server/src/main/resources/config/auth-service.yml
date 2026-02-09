@@ -1,0 +1,24 @@
+# 认证服务默认配置
+app:
+  name: 鉴权服务
+server:
+  post: 80
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 10
+  servlet:
+    # 应用的访问路径
+    context-path: /auth
+spring:
+  application:
+    name: auth-service
+eureka:
+  instance:
+    prefer-ip-address: true  # 使用IP地址而不是主机名
+    # instance-id: ${spring.cloud.client.ip-address}:${server.port}  # 明确的实例ID
+    instance-id: ${spring.application.name}:${server.port}
+    hostname: localhost  # 明确设置主机名
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Eureka服务器地址

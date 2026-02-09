@@ -2,7 +2,6 @@ package com.example.started.modules.auth.server.config;
 
 import com.example.started.modules.auth.server.sys.user.SecutiryUserService;
 import com.example.started.modules.auth.validate.filter.JwtAuthenticationFilter;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -17,12 +16,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Log4j2
 @Configuration
@@ -32,7 +31,6 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final ObjectMapper objectMapper;
     private final SecutiryUserService secutiryUserService;
 
     @Bean
@@ -40,30 +38,24 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)  // 禁用 CSRF
-                .securityMatcher("/**")
                 .authorizeHttpRequests(auth -> auth
                         // 公开接口（不需要认证）
+                        .requestMatchers("/").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/public/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // 需要认证的接口
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated() // 需要认证的接口
                 )
-                // 禁用表单登录
-                .formLogin(AbstractHttpConfigurer::disable)
-                // 禁用HTTP Basic认证
-                .httpBasic(AbstractHttpConfigurer::disable)
-                // 禁用匿名认证
-                .anonymous(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
-                .rememberMe(AbstractHttpConfigurer::disable)
                 // 禁用 session，使用无状态 API
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // 不使用Basic认证，使用JWT
-//                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthenticationFilter, AuthorizationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable) // 不使用Basic认证，使用JWT
+                .anonymous(AbstractHttpConfigurer::disable) // 禁用匿名认证
+                .logout(AbstractHttpConfigurer::disable)
+                .rememberMe(AbstractHttpConfigurer::disable)
         ;
         return http.build();
     }
@@ -77,15 +69,45 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(Arrays.asList("http://localhost:*", "*"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowCredentials(true);
-        config.setMaxAge(3600L); // 预检请求缓存时间（秒）
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOriginPatterns(List.of(
+                "http://localhost:*",
+                "https://gshmd.org"
+        ));
+
+        // 设置允许的方法
+        configuration.setAllowedMethods(List.of(
+                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"
+        ));
+        // 3. 设置允许的头部（必须明确指定）
+        configuration.setAllowedHeaders(List.of(
+                "Authorization",
+                "Content-Type",
+                "Accept",
+                "Origin",
+                "X-Requested-With",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers",
+                "Cache-Control",
+                "Pragma"
+        ));
+        // 4. 设置暴露的头部
+        configuration.setExposedHeaders(List.of(
+                "Authorization",
+                "Content-Type",
+                "Content-Disposition",
+                "Access-Control-Allow-Origin",
+                "Access-Control-Allow-Credentials"
+        ));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+
+        // configuration.setAllowPrivateNetwork(true);  // 对于本地网络
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 

@@ -12,9 +12,7 @@ server:
   servlet:
     # 应用的访问路径
     context-path: /api
-    session:
-      cookie:
-        http-only: true
+
 spring:
   cloud:
     config:

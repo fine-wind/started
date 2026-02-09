@@ -31,12 +31,15 @@
     <maven.compiler.source>21</maven.compiler.source>
     <java.version>21</java.version>
     <spring-cloud.version>2025.0.0</spring-cloud.version>
+    <spring-boot.version>3.5.7</spring-boot.version>
     <junit.version>4.13.1</junit.version>
     <mybatisplus.version>3.5.7</mybatisplus.version>
     <mysql.version>8.0.31</mysql.version>
     <commons.lang.version>3.7</commons.lang.version>
     <commons.io.version>2.7</commons.io.version>
     <maven.build.timestamp.format>yyyyMMddHH</maven.build.timestamp.format>
+    <graalvm.version>25.0.1</graalvm.version>  <!-- 或使用最新版本 -->
+    <native-build-tools.version>0.10.4</native-build-tools.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -50,7 +53,7 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>3.5.7</version>
+        <version>${spring-boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

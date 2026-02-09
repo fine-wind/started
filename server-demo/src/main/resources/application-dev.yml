@@ -7,12 +7,7 @@ server:
     uri-encoding: UTF-8
     threads:
       max: 10
-  servlet:
-    # 应用的访问路径
-    context-path: /
-    session:
-      cookie:
-        http-only: true
+
 spring:
   data:
     redis:
