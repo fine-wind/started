@@ -103,6 +103,12 @@
       <groupId>com.example.started</groupId>
       <artifactId>common-exception</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.example.started</groupId>
+      <artifactId>cache</artifactId>
+      <version>${version}</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
   <build>
     <finalName>${project.name}-${project.version}</finalName>

@@ -1,5 +1,6 @@
-package com.example.started.common.v0.utils;
+package com.example.started.modules.auth.util;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,7 @@ public class IpUtils {
      * <p>
      * 使用Nginx等反向代理软件， 则不能通过request.getRemoteAddr()获取IP地址
      * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，X-Forwarded-For中第一个非unknown的有效IP字符串，则为真实IP地址
-     *//*
+     */
     public static String getIpAddr(HttpServletRequest request) {
         String unknown = "unknown";
         String ip = null;
@@ -40,8 +41,7 @@ public class IpUtils {
         } catch (Exception e) {
             logger.error("IPUtils ERROR ", e);
         }
-
         return ip;
-    }*/
+    }
 
 }

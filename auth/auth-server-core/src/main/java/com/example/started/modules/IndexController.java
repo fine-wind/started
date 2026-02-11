@@ -16,7 +16,7 @@ public class IndexController {
     @GetMapping(value = "/")
     public Result<?> index() {
         HashMap<String, Object> conf = new HashMap<>();
-        conf.put("name", "公司黑名单");
+        conf.put("name", "公司好名单");
         return Result.ok(conf);
     }
 

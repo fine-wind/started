@@ -300,4 +300,39 @@ public class RedisUtils {
         }
         return increment;
     }
+
+
+    /**
+     * 添加锁，默认60秒
+     *
+     * @param key key
+     * @return 是否获取锁了
+     */
+    public boolean lock(String key) {
+        return this.lock(key, 60);
+    }
+
+    /**
+     * 加锁
+     *
+     * @param key     key
+     * @param timeout 锁时间 秒
+     * @return 加锁是否成功
+     */
+    public boolean lock(String key, int timeout) {
+        return this.lock(key, timeout, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 加锁
+     *
+     * @param key      key
+     * @param timeout  锁时间
+     * @param timeUnit 时间单位
+     * @return 加锁是否成功
+     */
+    public boolean lock(String key, int timeout, TimeUnit timeUnit) {
+        String key1 = "lock:" + key;
+        return Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(key1, "_", timeout, timeUnit));
+    }
 }

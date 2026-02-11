@@ -40,12 +40,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 if (StringUtils.hasText(jwt) && jwtService.validateToken(jwt)) {
                     // 从 JWT 中提取用户名
-                    String username = jwtService.getUsernameFromToken(jwt);
+                    String userId = jwtService.getUserIdFromToken(jwt);
 
                     // 创建认证对象
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
-                                    username,
+                                    userId,
                                     null, // 证书（密码）不需要在这里设置
                                     null// 这里设置没权限就行，后面单独处理
                             );
@@ -56,7 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     // 将认证对象设置到 SecurityContext
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                    log.trace("Set Authentication to security context for user: {}", username);
+                    log.trace("Set Authentication to security context for user: {}", userId);
                 }
             } catch (Exception ex) {
                 logger.error("Could not set user authentication in security context", ex);

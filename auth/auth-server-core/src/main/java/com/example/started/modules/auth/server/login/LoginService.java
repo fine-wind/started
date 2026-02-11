@@ -9,7 +9,6 @@ import com.example.started.modules.auth.validate.TokenPair;
 import com.example.started.modules.auth.validate.config.JwtService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class LoginService {
         AuthUserAddBo bo = new AuthUserAddBo();
         bo.setUsername(username);
         bo.setPassword(password);
-        authUserService.register(null, bo);
+        authUserService.register(null, bo);// 注册
         return Result.ok("注册成功");
     }
 

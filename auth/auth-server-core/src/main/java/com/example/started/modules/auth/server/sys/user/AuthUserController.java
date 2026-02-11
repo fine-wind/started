@@ -42,7 +42,7 @@ public class AuthUserController {
     @GetMapping("/info")
     public Result<UserInfoVo> info(@LoginUserId TokenUserId tokenUserId) {
 
-        AuthUserEntity byUsername = authUserService.getByUsername(tokenUserId.getUserId());
+        AuthUserEntity byUsername = authUserService.getByUserId(tokenUserId.getUserId());
 
         return Result.ok(AuthUserEntity.toVo(byUsername));
     }

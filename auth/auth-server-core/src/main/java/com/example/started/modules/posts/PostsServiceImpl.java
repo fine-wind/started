@@ -3,8 +3,10 @@ package com.example.started.modules.posts;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.started.common.v0.utils.ConvertUtils;
+import com.example.started.modules.auth.validate.dto.TokenUserId;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -53,5 +55,17 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         eq.last("limit 10");
         List<PostsEntity> postsEntities = baseMapper.selectList(eq);
         return ConvertUtils.sourceToTarget(postsEntities, PostsInfoCommentVo.class);
+    }
+
+    @Override
+    public void create(TokenUserId userId, PostsCreateBo body) {
+        PostsEntity entity = new PostsEntity();
+        BeanUtils.copyProperties(body, entity);
+        entity.setFromId(userId.getUserId());
+        entity.setCircleId(0);
+        entity.setUv(0);
+        entity.setPv(0);
+        entity.setCreatedAt(new Date());
+        baseMapper.insert(entity);
     }
 }

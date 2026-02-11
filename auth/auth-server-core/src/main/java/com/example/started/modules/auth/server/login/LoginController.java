@@ -31,10 +31,10 @@ public class LoginController {
     public Result<?> register(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String password = request.get("password");
-        if (validateTokenService.validateToken(username, password)) {
+//        if (validateTokenService.validateToken(username, password)) {
             return loginService.register(username, password);
-        }
-        return Result.error(Constant.UniversalCode.UN400);
+//        }
+//        return Result.error(Constant.UniversalCode.UN400);
     }
 
     @PostMapping("/login")

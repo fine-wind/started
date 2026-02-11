@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface AuthUserService extends IService<AuthUserEntity> {
 
+    AuthUserEntity getByUserId(String userId);
     AuthUserEntity getByUsername(String username);
 
     Long count(String userId, AuthUserAllBo bo);

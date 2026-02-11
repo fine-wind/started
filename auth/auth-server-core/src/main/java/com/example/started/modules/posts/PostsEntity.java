@@ -17,10 +17,7 @@ import java.util.HashMap;
 @TableName("posts")
 public class PostsEntity {
 
-    /**
-     * id
-     */
-    @TableId()
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     /* 父id*/private String parentId;
     /* 主id*/private String rootId;
