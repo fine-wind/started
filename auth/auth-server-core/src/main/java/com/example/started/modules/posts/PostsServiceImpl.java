@@ -3,6 +3,7 @@ package com.example.started.modules.posts;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.started.common.v0.utils.ConvertUtils;
+import com.example.started.common.v0.utils.StringUtil;
 import com.example.started.modules.auth.validate.dto.TokenUserId;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -39,7 +40,12 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         }
         where.last("limit 10");
         List<PostsEntity> postsEntities = baseMapper.selectList(where);
-        return ConvertUtils.sourceToTarget(postsEntities, PostsFindVo.class);
+        List<PostsFindVo> postsFindVos = ConvertUtils.sourceToTarget(postsEntities, PostsFindVo.class);
+        postsFindVos.forEach(e -> {
+            String content = StringUtil.defaultValue(e.getContent(), "");
+            e.setContent(content.length() > 100 ? content.substring(0, 100) : content);
+        });
+        return postsFindVos;
     }
 
     @Override
