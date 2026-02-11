@@ -43,7 +43,7 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         List<PostsFindVo> postsFindVos = ConvertUtils.sourceToTarget(postsEntities, PostsFindVo.class);
         postsFindVos.forEach(e -> {
             String content = StringUtil.defaultValue(e.getContent(), "");
-            e.setContent(content.length() > 100 ? content.substring(0, 100) : content);
+            e.setContent(Objects.nonNull(content) && content.length() > 100 ? content.substring(0, 100) + "……………": content);
         });
         return postsFindVos;
     }
