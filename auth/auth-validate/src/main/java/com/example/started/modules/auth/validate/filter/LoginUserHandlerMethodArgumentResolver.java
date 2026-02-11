@@ -12,6 +12,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import java.util.Objects;
+
 /**
  * 有@LoginUser注解的方法参数，注入当前登录用户
  */
@@ -35,7 +37,10 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
 
         //获取用户信息
 //        UserEntity user = userService.getUserByUserId((Long) object);
-        String principal = String.valueOf(context.getAuthentication().getPrincipal());
+        String principal = null;
+        if (Objects.nonNull(context.getAuthentication())) {
+            principal = String.valueOf(context.getAuthentication().getPrincipal());
+        }
         return new TokenUserId(principal);
     }
 }

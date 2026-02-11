@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.started.common.v0.utils.ConvertUtils;
 import com.example.started.common.v0.utils.StringUtil;
+import com.example.started.demo.cache.RedisUtils;
 import com.example.started.modules.auth.validate.dto.TokenUserId;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * service
@@ -22,6 +24,8 @@ import java.util.Objects;
 @AllArgsConstructor
 public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> implements PostsService {
 
+
+    private final RedisUtils redisUtils;
 
     @Override
     public List<PostsFindVo> find(PostsFindBo body) {
@@ -43,14 +47,28 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         List<PostsFindVo> postsFindVos = ConvertUtils.sourceToTarget(postsEntities, PostsFindVo.class);
         postsFindVos.forEach(e -> {
             String content = StringUtil.defaultValue(e.getContent(), "");
-            e.setContent(Objects.nonNull(content) && content.length() > 100 ? content.substring(0, 100) + "……………": content);
+            e.setContent(Objects.nonNull(content) && content.length() > 100 ? content.substring(0, 100) + "……………" : content);
         });
         return postsFindVos;
     }
 
     @Override
-    public PostsFindVo info(String id) {
+    public PostsFindVo info(TokenUserId userId, PostsInfoBo bo) {
+        String id = bo.getId();
         PostsEntity postsEntity = baseMapper.selectById(id);
+        PostsEntity upv = new PostsEntity();
+        upv.setId(id);
+        boolean lockPv = redisUtils.lock("pv:" + id + ":" + bo.getIp(), 1, TimeUnit.HOURS);
+        if (lockPv) {
+            upv.setPv(postsEntity.getPv() + 1);
+        }
+        boolean lockUv = redisUtils.lock("pv:" + id + ":" + bo.getIp() + ":" + userId.getUserId(), 1, TimeUnit.HOURS);
+        if (lockUv) {
+            upv.setUv(postsEntity.getUv() + 1);
+        }
+        if (lockPv && lockUv) {
+            baseMapper.updateById(upv);
+        }
         return ConvertUtils.sourceToTarget(postsEntity, PostsFindVo.class);
     }
 

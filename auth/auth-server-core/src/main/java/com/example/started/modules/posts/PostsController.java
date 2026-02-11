@@ -32,8 +32,8 @@ public class PostsController {
     }
 
     @GetMapping(value = "find/info/{id}")
-    public Result<PostsFindVo> info(@PathVariable("id") String id) {
-        return Result.ok(postsService.info(id));
+    public Result<PostsFindVo> info(HttpServletRequest httpRequest, @LoginUserId TokenUserId userId, @PathVariable("id") String id) {
+        return Result.ok(postsService.info(userId, new PostsInfoBo(id, IpUtils.getIpAddr(httpRequest))));
     }
 
     @GetMapping(value = "find/info/comment/{id}")

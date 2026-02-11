@@ -14,7 +14,7 @@ public interface PostsService extends IService<PostsEntity> {
 
     List<PostsFindVo> find(PostsFindBo body);
 
-    PostsFindVo info(String id);
+    PostsFindVo info(TokenUserId userId, PostsInfoBo bo);
 
     List<PostsInfoCommentVo> infoComment(String id);
 
