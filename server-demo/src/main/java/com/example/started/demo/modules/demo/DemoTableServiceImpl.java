@@ -1,19 +1,31 @@
 package com.example.started.demo.modules.demo;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * demo table service
  */
 @Service
-public class DemoTableServiceImpl extends ServiceImpl<DemoTableMapper, DemoTableEntity> implements DemoTableService {
-    public List<DemoTableEntity> ins() {
+@AllArgsConstructor
+public class DemoTableServiceImpl implements DemoTableService {
+
+    private DemoTableRepository demoTableRepository;
+
+
+    public void test() {
         List<DemoTableEntity> list = Arrays.asList(new DemoTableEntity(), new DemoTableEntity());
-        this.saveBatch(list);
-        return list;
+        demoTableRepository.saveAllAndFlush(list);
+        for (DemoTableEntity in : list) {
+            in.setB(22);
+        }
+        demoTableRepository.saveAllAndFlush(list);
+        Set<String> collect = list.stream().map(DemoTableEntity::getId).collect(Collectors.toSet());
+        demoTableRepository.deleteAllByIdInBatch(collect);
     }
 }

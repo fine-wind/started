@@ -1,9 +1,7 @@
 package com.example.started.plan.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.started.common.v0.utils.ConvertUtils;
 import com.example.started.common.v0.utils.DateUtil;
-import com.example.started.plan.bo.PlanEventBo;
 import com.example.started.plan.dao.PlanEventDao;
 import com.example.started.plan.dto.PlanEventDto;
 import com.example.started.plan.entity.PlanEventEntity;
@@ -20,28 +18,18 @@ import java.util.*;
 @AllArgsConstructor
 public class PlanEventServiceImpl implements PlanDayService {
 
-    final PlanEventDao baseDao;
+    final PlanEventDao planEventDao;
 
-    public LambdaQueryWrapper<PlanEventEntity> getWrapper(PlanEventBo params) {
-        return new LambdaQueryWrapper<PlanEventEntity>()
-                .eq(Objects.nonNull(params.getDt()), PlanEventEntity::getDt, DateUtil.dateToStr(params.getDt()))
-                .orderByDesc(PlanEventEntity::getSort)
-                ;
-    }
 
     @Override
     public void save(PlanEventDto bo) {
         PlanEventEntity entity = ConvertUtils.sourceToTarget(bo, PlanEventEntity.class);
-        baseDao.insert(entity);
+        planEventDao.save(entity);
     }
 
     @Override
     public List<PlanEventDto> getOneDay() {
-        PlanEventBo params = new PlanEventBo();
-        LambdaQueryWrapper<PlanEventEntity> wrapper = this.getWrapper(params);
-        wrapper.ge(PlanEventEntity::getDt, DateUtil.getLastDate(12));
-        wrapper.le(PlanEventEntity::getDt, DateUtil.getLastDate(-12));
-        List<PlanEventEntity> list = baseDao.selectList(wrapper);
+        List<PlanEventEntity> list = planEventDao.findByDtBetween(DateUtil.getLastDate(12), DateUtil.getLastDate(-12));
         return ConvertUtils.sourceToTarget(list, PlanEventDto.class);
     }
 
@@ -50,9 +38,7 @@ public class PlanEventServiceImpl implements PlanDayService {
         if (Objects.isNull(day)) {
             return List.of();
         }
-        PlanEventBo params = new PlanEventBo();
-        params.setDt(day);
-        List<PlanEventEntity> list = baseDao.selectList(this.getWrapper(params));
+        List<PlanEventEntity> list = planEventDao.findByDtEquals(day);
         return ConvertUtils.sourceToTarget(list, PlanEventDto.class);
     }
 

@@ -1,24 +1,30 @@
 package com.example.started.modules.auth.server.sys.menu.t;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.started.dynamic.datasource.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.Date;
 
 /**
  * 系统菜单
  *
  * @since 1.0.0
  */
-@Data
-@TableName("sys_menu")
-@EqualsAndHashCode(callSuper = true)
-public class MenuEntity extends BaseEntity {
-
+@Data@Entity
+@Accessors(chain = true)
+@Table(name = "sys_menu")
+public class MenuEntity {
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    private String id;
     /**
      * pid
      */
-    private Long pid;
+    private String pid;
 
     private Integer type;
     /**
@@ -43,4 +49,27 @@ public class MenuEntity extends BaseEntity {
      * 排序
      */
     private Integer sort;
+
+
+    /**
+     * 创建者
+     */
+    private String creator;
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+    /**
+     * 更新者
+     */
+    private Long updater;
+    /**
+     * 更新时间
+     */
+    private Date updateDate;
+
+    /**
+     * 删除标志
+     */
+    private Integer delFlag;
 }

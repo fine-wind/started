@@ -8,10 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.core.annotation.Order;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 
 import java.util.stream.Collectors;
 

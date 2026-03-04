@@ -28,26 +28,9 @@ spring:
 #  aop:
 #    proxy-target-class: true
 
-#mybatis
-mybatis-plus:
-  #实体扫描，多个package用逗号或者分号分隔
-  type-aliases-package: com.example.modules.*.entity
-  global-config:
-    #数据库相关配置
-    db-config:
-      id-type: ASSIGN_ID
-    banner: false
-  #原生配置
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-    call-setters-on-nulls: true
-    jdbc-type-for-null: 'null'
 # 日志配置
 logging:
   level:
-    org:
-      mybatis: debug
     com:
       example: trace
   file:

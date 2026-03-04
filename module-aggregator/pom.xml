@@ -13,17 +13,6 @@
   <description>聚合模块</description>
 
   <dependencies>
-    <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-      <version>${mybatisplus.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.baomidou</groupId>
-          <artifactId>mybatis-plus-generator</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
     <!-- 依赖所有需要聚合的模块 -->
     <dependency>
       <groupId>com.example.started</groupId>

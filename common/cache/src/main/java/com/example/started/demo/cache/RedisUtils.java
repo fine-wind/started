@@ -63,11 +63,6 @@ public class RedisUtils {
         this.redisTemplate.opsForValue().set(key, value, expire > NOT_EXPIRE ? expire : DEFAULT_EXPIRE, timeUnit);
     }
 
-    @Deprecated
-    public SetOperations<String, Object> opsForSet() {
-        return redisTemplate.opsForSet();
-    }
-
     // region SET
 
     /**
@@ -84,12 +79,25 @@ public class RedisUtils {
     }
 
     /**
+     * 向制定的key里删除value
+     *
+     * @param key   .
+     * @param value .
+     */
+    public void opsSetRemove(String key, Object... value) {
+        if (Objects.isNull(value) || value.length == 0) {
+            return;
+        }
+        redisTemplate.opsForSet().remove(key, value);
+    }
+
+    /**
      * 从key里获取到value
      *
      * @param key .
      * @return value
      */
-    public Set<Object> members(String key) {
+    public Set<Object> opsSetMembers(String key) {
         return redisTemplate.opsForSet().members(key);
     }
     // endregion

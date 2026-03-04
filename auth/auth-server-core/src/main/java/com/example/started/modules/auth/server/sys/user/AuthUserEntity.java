@@ -1,22 +1,27 @@
 package com.example.started.modules.auth.server.sys.user;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.started.common.v0.utils.StringUtil;
-import com.example.started.dynamic.datasource.BaseEntity;
 import com.example.started.modules.auth.validate.dto.UserInfoVo;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.Date;
 
 /**
  * 用户实体
  *
  * @since 1.0.0
  */
+@Entity
 @Data
-@TableName("auth_user")
-@EqualsAndHashCode(callSuper = true)
-public class AuthUserEntity extends BaseEntity {
-
+@Table(name = "auth_user")
+public class AuthUserEntity {
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    private String id;
     /**
      * 登录名
      */
@@ -42,4 +47,27 @@ public class AuthUserEntity extends BaseEntity {
         userInfoVo.setShowName(StringUtil.defaultValue(entity.getShowName(), entity.getUsername()));
         return userInfoVo;
     }
+
+
+    /**
+     * 创建者
+     */
+    private String creator;
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+    /**
+     * 更新者
+     */
+    private Long updater;
+    /**
+     * 更新时间
+     */
+    private Date updateDate;
+
+    /**
+     * 删除标志
+     */
+    private Integer delFlag;
 }

@@ -24,15 +24,8 @@
       <artifactId>mysql-connector-j</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-      <version>${mybatisplus.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.baomidou</groupId>
-          <artifactId>mybatis-plus-generator</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
@@ -58,11 +51,6 @@
       <artifactId>jakarta.validation-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.example.started</groupId>
-      <artifactId>dynamic-datasource</artifactId>
-      <version>0.0.1</version>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
@@ -81,12 +69,6 @@
       <groupId>com.example.started</groupId>
       <artifactId>auth-validate</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-      <version>0.12.5</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.data</groupId>
@@ -108,6 +90,15 @@
       <artifactId>cache</artifactId>
       <version>${version}</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>

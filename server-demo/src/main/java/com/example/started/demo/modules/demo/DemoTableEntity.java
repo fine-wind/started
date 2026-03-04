@@ -1,12 +1,10 @@
 package com.example.started.demo.modules.demo;
 
-import com.example.started.dynamic.datasource.BaseEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import com.baomidou.mybatisplus.annotation.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
 
@@ -16,11 +14,14 @@ import java.util.Date;
  * @since 1.0.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("demo_table")
-public class DemoTableEntity extends BaseEntity {
+@Entity
+@Table(name = "demo_table")
+public class DemoTableEntity {
+    @Id()
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    private String id;
 
     /**
      * 状态  0：失败    1：成功
@@ -30,4 +31,25 @@ public class DemoTableEntity extends BaseEntity {
      * 用户代理
      */
     private Integer b;
+    /**
+     * 创建者
+     */
+    private String creator;
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+    /**
+     * 更新者
+     */
+    private Long updater;
+    /**
+     * 更新时间
+     */
+    private Date updateDate;
+
+    /**
+     * 删除标志
+     */
+    private Integer delFlag;
 }

@@ -19,7 +19,7 @@ spring:
       host: 59.110.152.124
       port: 6379
       password:
-      database: 6
+      database: 0
       timeout: 5s
   servlet:
     multipart:
@@ -49,6 +49,3 @@ spring:
 #      password: toor
 #
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -127,6 +127,9 @@ public class JwtService {
     }
 
     private String getUsernameFromToken(String token, SecretKey secret) {
+        if (Objects.isNull(token)) {
+            return null;
+        }
         if (token.startsWith(Constant.REQUEST.HEADER.TOKEN_PREFIX)) {
             token = token.substring(7);
         }
@@ -140,6 +143,9 @@ public class JwtService {
     }
 
     private Date getExpiration(String token, SecretKey secret) {
+        if (Objects.isNull(token)) {
+            return null;
+        }
         if (token.startsWith(Constant.REQUEST.HEADER.TOKEN_PREFIX)) {
             token = token.substring(7);
         }
@@ -156,6 +162,9 @@ public class JwtService {
      * 从Token中获取用户ID
      */
     public String getUserIdFromToken(String token) {
+        if (Objects.isNull(token)) {
+            return null;
+        }
         if (token.startsWith(Constant.REQUEST.HEADER.TOKEN_PREFIX)) {
             token = token.substring(7);
         }

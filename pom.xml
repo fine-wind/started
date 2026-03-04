@@ -15,12 +15,9 @@
     <module>auth</module>
     <module>config-server</module>
     <module>eureka-server</module>
-    <module>gateway</module>
+    <!--    <module>gateway</module>-->
     <module>server-demo</module>
-    <module>generator</module>
     <module>api</module>
-    <module>dynamic-datasource</module>
-    <module>forum</module>
     <module>module-aggregator</module>
   </modules>
 
@@ -33,8 +30,8 @@
     <spring-cloud.version>2025.0.0</spring-cloud.version>
     <spring-boot.version>3.5.7</spring-boot.version>
     <junit.version>4.13.1</junit.version>
-    <mybatisplus.version>3.5.7</mybatisplus.version>
     <mysql.version>8.0.31</mysql.version>
+    <lombok.version>1.18.42</lombok.version>
     <commons.lang.version>3.7</commons.lang.version>
     <commons.io.version>2.7</commons.io.version>
     <maven.build.timestamp.format>yyyyMMddHH</maven.build.timestamp.format>
@@ -78,12 +75,6 @@
         <version>${commons.io.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.baomidou</groupId>
-        <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-        <version>${mybatisplus.version}</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
@@ -95,11 +86,37 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
-
+  <profiles>
+    <profile>
+      <id>native</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>${native-build-tools.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <!-- 简化的配置 -->
+              <buildArgs>
+                <buildArg>-H:+AddAllCharsets</buildArg>
+                <buildArg>--enable-url-protocols=http,https</buildArg>
+                <buildArg>--initialize-at-build-time=org.hibernate</buildArg>
+              </buildArgs>
+              <metadataRepository>
+                <enabled>true</enabled>
+              </metadataRepository>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <build>
-    <finalName>${project.name}-${project.version}-${maven.build.timestamp}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -109,9 +126,18 @@
           <source>21</source>
           <target>21</target>
           <encoding>UTF-8</encoding>
-          <verbose>true</verbose>
-          <fork>true</fork>
-          <executable>${java.home}/bin/javac</executable>
+          <parameters>true</parameters>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+          <!-- 确保注解处理被启用 -->
+          <compilerArgs>
+            <arg>-proc:full</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
     </plugins>

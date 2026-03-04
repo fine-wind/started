@@ -1,6 +1,5 @@
 package com.example.started.modules.auth.server.sys.user;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.started.modules.auth.validate.dto.TokenUserId;
 
 import java.util.List;
@@ -10,14 +9,21 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface AuthUserService extends IService<AuthUserEntity> {
+public interface AuthUserService {
 
     AuthUserEntity getByUserId(String userId);
+
     AuthUserEntity getByUsername(String username);
 
-    Long count(String userId, AuthUserAllBo bo);
-
+    /**
+     *
+     * @param userId 当前登录id
+     * @param bo     查询参数
+     * @return
+     */
     List<AuthUserAllVo> all(String userId, AuthUserAllBo bo);
 
     void register(TokenUserId tokenUserId, AuthUserAddBo bo);
+
+    long count(String userId, AuthUserAllBo bo);
 }

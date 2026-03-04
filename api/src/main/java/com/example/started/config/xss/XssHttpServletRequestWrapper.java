@@ -1,6 +1,5 @@
 package com.example.started.config.xss;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.started.common.v0.xss.XssUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +9,7 @@ import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -44,7 +44,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         //为空，直接返回
         ServletInputStream inputStream = super.getInputStream();
         String json = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining(System.lineSeparator()));
-        if (StringUtils.isBlank(json)) {
+        if (!StringUtils.hasText(json)) {
             return super.getInputStream();
         }
         //xss过滤
@@ -91,7 +91,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public String getParameter(String name) {
         String value = super.getParameter(xssEncode(name));
-        if (StringUtils.isNotBlank(value)) {
+        if (!StringUtils.hasText(value)) {
             value = xssEncode(value);
         }
         return value;
@@ -127,7 +127,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public String getHeader(String name) {
         String value = super.getHeader(xssEncode(name));
-        if (StringUtils.isNotBlank(value)) {
+        if (!StringUtils.hasText(value)) {
             value = xssEncode(value);
         }
         return value;

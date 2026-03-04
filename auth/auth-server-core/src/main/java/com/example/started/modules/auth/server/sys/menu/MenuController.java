@@ -1,25 +1,19 @@
 package com.example.started.modules.auth.server.sys.menu;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.started.common.v0.utils.Result;
 import com.example.started.common.v0.utils.TreeNode2;
 import com.example.started.common.v0.utils.TreeUtils;
-import com.example.started.common.v0.validator.ValidatorUtils;
 import com.example.started.common.v0.validator.group.AddGroup;
 import com.example.started.modules.auth.server.sys.menu.t.*;
-import com.example.started.modules.auth.server.sys.menu.nav.NavVo;
 import com.example.started.modules.auth.validate.annotation.LoginUserId;
 import com.example.started.modules.auth.validate.dto.TokenUserId;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,6 +26,7 @@ import java.util.List;
 public class MenuController {
 
     private final NemuService menuService;
+    private final MenuRepository menuRepository;
 
     /**
      * 添加菜单
@@ -64,13 +59,13 @@ public class MenuController {
         BeanUtils.copyProperties(menuDtoEdit, entity);
         entity.setCreator(userId.getUserId());
         entity.setCreateDate(new Date());
-        menuService.updateById(entity);
+        menuRepository.save(entity);
         return Result.ok();
     }
 
     @GetMapping("info")
     public Result<MenuEntity> info(@LoginUserId TokenUserId userId, @RequestParam("id") String id) {
-        MenuEntity byId = menuService.getById(id);
+        MenuEntity byId = menuRepository.findById(id).get();
         return Result.ok(byId);
     }
 
@@ -80,9 +75,9 @@ public class MenuController {
     @PostMapping("list")
     @Transactional(readOnly = true)
     public Result<List<TreeNode2<MenuEntity>>> page(@LoginUserId TokenUserId userId) {
-        LambdaQueryWrapper<MenuEntity> where = new LambdaQueryWrapper<>();
-        where.orderByAsc(MenuEntity::getSort);
-        List<MenuEntity> list = menuService.list(where);
+//        LambdaQueryWrapper<MenuEntity> where = new LambdaQueryWrapper<>();
+//        where.orderByAsc(MenuEntity::getSort);
+        List<MenuEntity> list = menuRepository.findAll();
         List<TreeNode2<MenuEntity>> build = TreeUtils.build(list, MenuEntity::getId, MenuEntity::getPid);
         return Result.ok(build);
     }
@@ -93,7 +88,7 @@ public class MenuController {
     @PostMapping("tree")
     @Transactional(readOnly = true)
     public Result<List<MenuTreeVo>> tree(@LoginUserId TokenUserId userId) {
-        List<MenuEntity> list = menuService.list(new LambdaQueryWrapper<>());
+        List<MenuEntity> list = menuRepository.findAll();
         List<MenuTreeVo> list1 = list.stream().map(MenuTreeVo::new).toList();
         List<MenuTreeVo> build = TreeUtils.build3(list1);
         return Result.ok(build);

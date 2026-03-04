@@ -1,12 +1,7 @@
 package com.example.started.modules.auth.server.sys.menu.t;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.started.common.v0.utils.TreeNode;
-import com.example.started.common.v0.utils.TreeNode2;
 import com.example.started.common.v0.utils.TreeNode3;
-import com.example.started.dynamic.datasource.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;

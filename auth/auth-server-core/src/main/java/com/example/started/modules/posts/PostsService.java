@@ -1,6 +1,5 @@
 package com.example.started.modules.posts;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.started.modules.auth.validate.dto.TokenUserId;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
  *
  * @since 1.0.0
  */
-public interface PostsService extends IService<PostsEntity> {
+public interface PostsService {
 
     List<PostsFindVo> find(PostsFindBo body);
 

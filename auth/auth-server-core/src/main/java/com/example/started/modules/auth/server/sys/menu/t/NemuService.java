@@ -1,9 +1,10 @@
 package com.example.started.modules.auth.server.sys.menu.t;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 
-public interface NemuService extends IService<MenuEntity> {
+public interface NemuService {
 
 
     void delById(String id);
+
+    void save(MenuEntity entity);
 }

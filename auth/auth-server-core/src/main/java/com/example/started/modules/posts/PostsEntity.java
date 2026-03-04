@@ -1,28 +1,23 @@
 package com.example.started.modules.posts;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.example.started.common.v0.utils.Result;
-import com.example.started.dynamic.datasource.TableConstant;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
-import java.util.HashMap;
 
-@Data
-@TableName("posts")
+@Data@Entity
+@Table(name = "posts")
 public class PostsEntity {
 
-    @TableId(type = IdType.ASSIGN_UUID)
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     private String id;
     /* 父id*/private String parentId;
     /* 主id*/private String rootId;
     /* 发布人*/
-    @TableField(fill = FieldFill.INSERT)
     private String fromId;
     /* 回复人*/private String toId;
     /* 回复的用户昵称*/private String toNickname;
@@ -38,15 +33,11 @@ public class PostsEntity {
     /* 最近评论时间*/private Date lastCommentAt;
     /* 最近修改时间*/private Date lastUpdateAt;
     /* 创建时间*/
-    @TableField(fill = FieldFill.INSERT)
     private Date createdAt;
-    @TableField(fill = FieldFill.UPDATE)
     /* 更新时间*/ private Date updatedAt;
     /**
      * 删除标志
      */
-    @TableLogic(value = TableConstant.DEL_FLAG.SHOW, delval = TableConstant.DEL_FLAG.DEL)
-    @TableField(fill = FieldFill.INSERT)
     private Integer delFlag;
 
 }

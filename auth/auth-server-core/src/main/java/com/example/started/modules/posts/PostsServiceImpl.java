@@ -1,16 +1,21 @@
 package com.example.started.modules.posts;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.started.common.v0.utils.ConvertUtils;
 import com.example.started.common.v0.utils.StringUtil;
 import com.example.started.demo.cache.RedisUtils;
 import com.example.started.modules.auth.validate.dto.TokenUserId;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -22,28 +27,55 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 @Service
 @AllArgsConstructor
-public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> implements PostsService {
+public class PostsServiceImpl implements PostsService {
+
+    private PostsRepository baseMapper;
 
 
     private final RedisUtils redisUtils;
 
     @Override
     public List<PostsFindVo> find(PostsFindBo body) {
-        LambdaQueryWrapper<PostsEntity> where = new LambdaQueryWrapper<>();
 
         if (Objects.isNull(body.getLastDt())) {
             body.setLastDt(new Date());
         }
-        where.isNull(PostsEntity::getParentId);
-        where.like(Objects.nonNull(body.getTitle()), PostsEntity::getContent, body.getTitle());
-        switch (body.getSearchType()) {
-            case "createdAt" ->
-                    where.lt(PostsEntity::getCreatedAt, body.getLastDt()).orderByDesc(PostsEntity::getCreatedAt);
-            case "lastCommentAt" ->
-                    where.lt(PostsEntity::getLastCommentAt, body.getLastDt()).orderByDesc(PostsEntity::getLastCommentAt);
-        }
-        where.last("limit 10");
-        List<PostsEntity> postsEntities = baseMapper.selectList(where);
+        Specification<PostsEntity> spec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            // parentId is null
+            predicates.add(cb.isNull(root.get("parentId")));
+
+            // title like (如果title不为空)
+            if (Objects.nonNull(body.getTitle())) {
+                predicates.add(cb.like(root.get("content"), "%" + body.getTitle() + "%"));
+            }
+
+            // 根据 searchType 添加不同的条件
+            String searchType = body.getSearchType();
+            Path<Date> orderField;
+
+            if ("createdAt".equals(searchType)) {
+                predicates.add(cb.lessThan(root.get("createdAt"), body.getLastDt()));
+                orderField = root.get("createdAt");
+            } else if ("lastCommentAt".equals(searchType)) {
+                predicates.add(cb.lessThan(root.get("lastCommentAt"), body.getLastDt()));
+                orderField = root.get("lastCommentAt");
+            } else {
+                orderField = root.get("createdAt"); // 默认排序字段
+            }
+
+            // 应用排序
+            query.orderBy(cb.desc(orderField));
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        // 分页限制（取前10条）
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Slice<PostsEntity> slice = baseMapper.findAll(spec, pageable);
+        List<PostsEntity> postsEntities = slice.getContent();
         List<PostsFindVo> postsFindVos = ConvertUtils.sourceToTarget(postsEntities, PostsFindVo.class);
         postsFindVos.forEach(e -> {
             String content = StringUtil.defaultValue(e.getContent(), "");
@@ -55,29 +87,25 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
     @Override
     public PostsFindVo info(TokenUserId userId, PostsInfoBo bo) {
         String id = bo.getId();
-        PostsEntity postsEntity = baseMapper.selectById(id);
-        PostsEntity upv = new PostsEntity();
-        upv.setId(id);
+        PostsEntity postsEntity = baseMapper.findById(id).get();
+        postsEntity.setId(id);
         boolean lockPv = redisUtils.lock("pv:" + id + ":" + bo.getIp(), 1, TimeUnit.HOURS);
         if (lockPv) {
-            upv.setPv(postsEntity.getPv() + 1);
+            postsEntity.setPv(postsEntity.getPv() + 1);
         }
         boolean lockUv = redisUtils.lock("pv:" + id + ":" + bo.getIp() + ":" + userId.getUserId(), 1, TimeUnit.HOURS);
         if (lockUv) {
-            upv.setUv(postsEntity.getUv() + 1);
+            postsEntity.setUv(postsEntity.getUv() + 1);
         }
         if (lockPv && lockUv) {
-            baseMapper.updateById(upv);
+            baseMapper.save(postsEntity);
         }
         return ConvertUtils.sourceToTarget(postsEntity, PostsFindVo.class);
     }
 
     @Override
     public List<PostsInfoCommentVo> infoComment(String id) {
-        LambdaQueryWrapper<PostsEntity> eq = new LambdaQueryWrapper<>();
-        eq.eq(PostsEntity::getParentId, id);
-        eq.last("limit 10");
-        List<PostsEntity> postsEntities = baseMapper.selectList(eq);
+        List<PostsEntity> postsEntities = baseMapper.findByParentId(id);
         return ConvertUtils.sourceToTarget(postsEntities, PostsInfoCommentVo.class);
     }
 
@@ -90,6 +118,6 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         entity.setUv(0);
         entity.setPv(0);
         entity.setCreatedAt(new Date());
-        baseMapper.insert(entity);
+        baseMapper.save(entity);
     }
 }
