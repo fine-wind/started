@@ -27,7 +27,7 @@ public class JwtService {
      */
     public Result<TokenPair> refreshToken(String refreshToken, String accessToken) {
         if (!this.validateToken(refreshToken, jwtConfig.getRefreshSecretKey())) {
-            return Result.error(Constant.UniversalCode.UNAUTHORIZED);
+            return Result.ok();
         }
         Date expiration = this.getExpiration(refreshToken, jwtConfig.getRefreshSecretKey());
         if (Objects.nonNull(expiration)) {
@@ -47,7 +47,7 @@ public class JwtService {
             }
             return Result.ok(new TokenPair(refreshToken, accessToken));
         }
-        return Result.error(Constant.UniversalCode.UNAUTHORIZED);
+        return Result.ok();
     }
 
     /**

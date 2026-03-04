@@ -32,7 +32,7 @@ public class LoginController {
         String username = request.get("username");
         String password = request.get("password");
 //        if (validateTokenService.validateToken(username, password)) {
-            return loginService.register(username, password);
+        return loginService.register(username, password);
 //        }
 //        return Result.error(Constant.UniversalCode.UN400);
     }
@@ -60,8 +60,8 @@ public class LoginController {
             HttpServletResponse response) {
 
         Result<TokenPair> tokenPairResult = jwtService.refreshToken(refreshToken, accessToken);
-        if (tokenPairResult.isSuccess()) {
-            TokenPair data = tokenPairResult.getData();
+        TokenPair data = tokenPairResult.getData();
+        if (tokenPairResult.isSuccess() && Objects.nonNull(data)) {
             if (Objects.equals(accessToken, data.getAccessToken())) {
                 data.setAccessToken(null);
             }
