@@ -9,6 +9,7 @@ import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -87,8 +88,12 @@ public class PostsServiceImpl implements PostsService {
     @Override
     public PostsFindVo info(TokenUserId userId, PostsInfoBo bo) {
         String id = bo.getId();
-        PostsEntity postsEntity = baseMapper.findById(id).get();
-        postsEntity.setId(id);
+        PostsEntity postsEntity;
+        if ("random".equals(id)) {
+            postsEntity = this.random();
+        } else {
+            postsEntity = baseMapper.findById(id).get();
+        }
         boolean lockPv = redisUtils.lock("pv:" + id + ":" + bo.getIp(), 1, TimeUnit.HOURS);
         if (lockPv) {
             postsEntity.setPv(postsEntity.getPv() + 1);
@@ -101,6 +106,23 @@ public class PostsServiceImpl implements PostsService {
             baseMapper.save(postsEntity);
         }
         return ConvertUtils.sourceToTarget(postsEntity, PostsFindVo.class);
+    }
+
+    public PostsEntity random() {
+        Specification<PostsEntity> spec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            predicates.add(cb.isNull(root.get("parentId")));
+
+            query.where(predicates.toArray(new Predicate[0]));
+            // MySQL 使用 RAND() 函数
+            query.orderBy(cb.asc(cb.function("RAND", Double.class)));
+            return cb.conjunction();
+        };
+
+        Pageable pageable = PageRequest.of(0, 1);
+        Page<PostsEntity> page = baseMapper.findAll(spec, pageable);
+        return page.getContent().isEmpty() ? null : page.getContent().get(0);
     }
 
     @Override

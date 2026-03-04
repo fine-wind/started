@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostsInfoBo {
-
+    /**
+     * 帖子ip
+     */
     private String id;
     /**
      * 请求ip

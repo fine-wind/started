@@ -26,6 +26,11 @@ spring:
       password:
       database: 0
       timeout: 5s
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        use_sql_comments: true
   servlet:
     multipart:
       max-file-size: 100MB
@@ -60,12 +65,12 @@ spring:
 # 日志配置
 logging:
   level:
-    org.mybatis: debug
-    org.hibernate.SQL: debug           # 打印 SQL 语句
-    org.hibernate.type.descriptor.sql: trace  # 打印 SQL 参数值
-    org.hibernate.orm.jdbc.bind: trace        # 另一种参数打印方式（Hibernate 6+）
-    org.hibernate: debug                # 打印所有 Hibernate 日志
-    org.hibernate.stat: debug           # 打印统计信息
+    #    org.mybatis: debug
+    #    org.hibernate.SQL: debug           # 打印 SQL 语句
+    #    org.hibernate.type.descriptor.sql: trace  # 打印 SQL 参数值
+    #    org.hibernate.orm.jdbc.bind: trace        # 另一种参数打印方式（Hibernate 6+）
+    #    org.hibernate: debug                # 打印所有 Hibernate 日志
+    #    org.hibernate.stat: debug           # 打印统计信息
     com.example: trace
   file:
     name: logs/log.log
