@@ -118,7 +118,7 @@ public class PostsServiceImpl implements PostsService {
             query.where(predicates.toArray(new Predicate[0]));
             // MySQL 使用 RAND() 函数
             query.orderBy(cb.asc(cb.function("RAND", Double.class)));
-            return cb.conjunction();
+            return cb.and(predicates.toArray(new Predicate[0]));
         };
 
         Pageable pageable = PageRequest.of(0, 1);
