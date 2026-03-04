@@ -94,6 +94,7 @@ public class PostsServiceImpl implements PostsService {
         } else {
             postsEntity = baseMapper.findById(id).get();
         }
+        id = postsEntity.getId();
         boolean lockPv = redisUtils.lock("pv:" + id + ":" + bo.getIp(), 1, TimeUnit.HOURS);
         if (lockPv) {
             postsEntity.setPv(postsEntity.getPv() + 1);
