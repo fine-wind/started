@@ -22,40 +22,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>process-aot</id>
-            <goals>
-              <goal>process-aot</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.graalvm.buildtools</groupId>
-        <artifactId>native-maven-plugin</artifactId>
-        <configuration>
-          <buildArgs>
-            <buildArg>-H:+AddAllCharsets</buildArg>
-            <buildArg>--enable-url-protocols=http,https</buildArg>
-            <buildArg>--initialize-at-build-time=org.hibernate</buildArg>
-            <buildArg>--initialize-at-build-time=org.apache.logging.log4j</buildArg>
-            <buildArg>--initialize-at-build-time=org.springframework.data.jpa</buildArg>
-            <buildArg>--no-fallback</buildArg>
-          </buildArgs>
-          <metadataRepository>
-            <enabled>true</enabled>
-          </metadataRepository>
-        </configuration>
-        <executions>
-          <execution>
-            <id>build-native</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <phase>package</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>

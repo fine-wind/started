@@ -43,10 +43,13 @@ public class PostsController {
 
     @PostMapping(value = "create")
     public Result<?> create(HttpServletRequest httpRequest, @LoginUserId TokenUserId userId, @RequestBody PostsCreateBo body) {
-        if (!redisUtils.lock("ostsController:create:" + IpUtils.getIpAddr(httpRequest), 1, TimeUnit.HOURS)) {
+        if (!redisUtils.lock("ostsController:create:" + IpUtils.getIpAddr(httpRequest), 1, TimeUnit.MINUTES)) {
             return Result.error("您的ip最近有发帖，请稍后再发吧");
         }
         postsService.create(userId, body);
+        if (!redisUtils.lock("ostsController:create:" + IpUtils.getIpAddr(httpRequest), 1, TimeUnit.MINUTES)) {
+            return Result.error("您的ip最近有发帖，请稍后再发吧");
+        }
         return Result.ok();
     }
 

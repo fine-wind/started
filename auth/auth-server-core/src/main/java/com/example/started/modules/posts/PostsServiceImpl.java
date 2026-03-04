@@ -136,10 +136,15 @@ public class PostsServiceImpl implements PostsService {
         PostsEntity entity = new PostsEntity();
         BeanUtils.copyProperties(body, entity);
         entity.setFromId(userId.getUserId());
+        entity.setState("1");
+        entity.setAnon(0);
+        entity.setDis(0);
         entity.setCircleId(0);
         entity.setUv(0);
         entity.setPv(0);
+        entity.setIsHide(0);
         entity.setCreatedAt(new Date());
+        entity.setDelFlag(0);
         baseMapper.save(entity);
     }
 }
