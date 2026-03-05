@@ -17,7 +17,8 @@ public class PostsInfoCommentVo {
     private String content;
 
 
-     private Integer uv;
-     private Integer pv;
+    private Integer uv;
+    private Integer pv;
+    /* 回复的用户昵称*/private String toNickname;
     private Date createdAt;
 }

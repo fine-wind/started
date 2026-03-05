@@ -21,6 +21,7 @@ public class PostsFindVo {
 
     private Integer uv;
     private Integer pv;
+    /* 回复的用户昵称*/private String toNickname;
 
     @JsonFormat(pattern = DateUtil.DATE_TIME)
     private Date createdAt;
